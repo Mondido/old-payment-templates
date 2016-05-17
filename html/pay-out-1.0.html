@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Mondido PayOut v1.0, (c) Mondido Payments AB 2016, hello@mondido.com -->
+        <script>
+            var mondidoSettings = {
+                supportedCards: {
+                    amex: {active: true, currencies: ['sek']},
+                    diners: {active: false},
+                    jcb: {active: false},
+                    laser: {active: false},
+                    electron: {active: true, currencies: ['all']},
+                    visa: {active: true, currencies: ['all']},
+                    mastercard: {active: true, currencies: ['all']},
+                    maestro: {active: true, currencies: ['all']},
+                    discover: {active: false}
+                },
+                supportedPaymentMethods: [
+                    {name: 'swish_tab', active: false, currencies:['sek'], countries:['se']},
+                    {name: 'credit_card_tab', active: true, currencies:['all'], countries:['all']},
+                    {name: 'paypal_tab', active: true, currencies:['all'], countries:['all']},
+                    {name: 'trustly_tab', active: false, currencies:['all'], countries:['se','at','be','bg','hr','cz','cy','dk','ee','fi','fr','de','gr','hu','ie','it','lv','lt','lu','mt','nl','no','pl','pt','ro','sk','si','es','gb']},
+                    {name: 'invoice_tab', active: false, currencies:['sek'], countries:['se']}
+                ],
+                metadata: '{{ transaction.metadata }}',
+                activePaymentMethod: 'credit_card_tab',
+                currency: '{{ transaction.currency }}'
+            }
+        </script>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="robots" content="noindex, nofollow"/>
+        <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn-02.mondido.com/www/css/multi.1.4.css" rel="stylesheet" />
+        <title>Payment</title>
+    </head>
+    <body>
+        <div id="main_area">
+                <div class="row logoRow" style="">
+                    <img class="logo" src="https://cdn-02.mondido.com/www/img/mondido-2015.png?1462876334" alt="Logo" />
+                </div>
+            <div id="payform" class="container grayc">
+                <div data-mulang="choose_payment_option" class="row text-center choose mulang">
+                    Please choose payment option
+                </div>
+                <!-- ######### Nav tabs ######### -->
+                <div role="tabpanel">
+                    <ul id="myTab" class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="credit_card_tab" style="display:none;">
+                            <a href="#credit_card_tab" aria-controls="credit_card_tab" role="tab" data-toggle="tab" class="card-tab">
+                                <img src="https://cdn-02.mondido.com/www/img/visa-mc.png" alt="Visa/MasterCard" />
+                                <br/>
+                                <small data-mulang="card_payment">
+                                    Card
+                                </small>
+                            </a>
+                        </li>
+                        <li role="presentation" class="swish_tab" style="display:none;">
+                            <a href="#swish_tab" aria-controls="swish_tab" role="tab" data-toggle="tab"><img src="https://cdn-02.mondido.com/www/img/swish-logo.png" alt="Swish" />
+                                <br/>
+                                <small data-mulang="swish_payment">Swish</small>
+                            </a>
+                        </li>
+                        <li role="presentation" class="trustly_tab" style="display:none;">
+                            <a href="#trustly_tab" aria-controls="trustly_tab" role="tab" data-toggle="tab">
+                                <img src="https://cdn-02.mondido.com/www/img/trustly-logo.png" alt="Trustly" />
+                                <br/>
+                                <small data-mulang="bank_payment">
+                                    Bank
+                                </small>
+                            </a>
+                        </li>
+                        <li role="presentation" class="paypal_tab" style="display:none;">
+                            <a href="#paypal_tab" aria-controls="paypal_tab" role="tab" data-toggle="tab">
+                                <img src="https://cdn-02.mondido.com/www/img/paypal-1.png?1459615937" alt="PayPal" />
+                                <br/>
+                                <small data-mulang="paypal_payment">
+                                    PayPal
+                                </small>
+                            </a>
+                        </li>
+                        <li role="presentation" class="invoice_tab" style="display:none;">
+                            <a href="#invoice_tab" aria-controls="invoice_tab" role="tab" data-toggle="tab" class="card-tab">
+                                <img src="https://cdn-02.mondido.com/www/img/faktura2.png" alt="Faktura"/>
+                                <br/>
+                                <small data-mulang="invoice_payment">
+                                    Invoice
+                                </small>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- ######### Tab panes ######### -->
+                <div id="myTabContent" class="row tab-content">
+                    <div class="row header">
+                        <div class="col-xs-12 text-center">
+                            <p class="amount mulang" data-mulang="amount['{{ transaction.amount | round }}','{{ currency }}']">
+                                {{ transaction.amount | round }} {{ currency }}
+                            </p>
+                            <div id="errors" class="alert alert-danger">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- invoice -->
+                    <div role="tabpanel" class="tab-pane fade" id="invoice_tab" aria-labelledBy="invoice_tab">
+                        <!--
+                            ######### Invoice #########
+                            s******** START   *********
+                        -->
+                        <form id="invoiceform" class="form-signin go-bottom" method="post" role="form">
+                            <input type="hidden" id="payment_method" name="payment_method"/>
+                            <input type="hidden" id="country_code" name="country_code" value="{{ transaction.payment_details.country_code }}"/>
+                            <input type="hidden" id="pending_payment_customer" name="pending_payment_customer"/>
+                            <div class="row spacer" id="row-email">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <input type="text" coolname="E-post" class="form-control next-email" min="3" max="255" id="email" name="email" placeholder="E-post" tabindex="1" value="{{ transaction.payment_details.email }}"/>
+                                         <label for="email">Din e-postadress</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row hidden spacer" id="row-phone-details">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <input data-numeric type="text" class="form-control next-phone" id="phone" name="phone" placeholder="Telefonnummer" value="{{ transaction.payment_details.phone }}" maxlength="20" tabindex="2" coolname="Telefonnummer" />
+                                         <label for="phone">Ditt telefonnummer</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row hidden spacer" id="row-ssn-details">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <input data-numeric type="tel" class="form-control next-ssn" id="ssn" name="ssn" placeholder="ååååmmdd ••••" value="{{ transaction.payment_details.ssn }}" maxlength="13" tabindex="3" coolname="Personnummer" />
+                                         <label for="ssn">Ditt personnummer</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row hidden" id="row-ssn-details-loading">
+                                <div class="row">
+                                    <div class="col-xs-12" id="loading">
+                                        Laddar adress:
+                                        <img src="https://cdn-02.mondido.com/www/img/loading.gif" alt="Loading..."/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row hidden" id="row-ssn-details-error">
+                                <div class="row">
+                                    <div class="col-xs-12 error try-again">
+                                        Din adress kunde inte hämtas. Kontrollera att du har skrivit rätt personnummer.
+                                        Exempel 198605141234
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row hidden" id="row-customer-details">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <input type="text" coolname="Förnamn" class="form-control" min="1" max="12" id="first_name" name="first_name" placeholder="Förnamn" tabindex="4" value="{{ transaction.payment_details.mask_first_name }}" disabled/>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <input type="text" coolname="Efternamn" class="form-control" min="1" max="12" id="last_name" name="last_name" placeholder="Efternamn" tabindex="4" value="{{ transaction.payment_details.mask_last_name }}" disabled/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="address">
+                                            <input data-text type="text" class="form-control" id="address_1" name="address_1" value="{{ transaction.payment_details.mask_address_1 }}" maxlength="255" placeholder="Gatuadress" tabindex="5" coolname="Adress 1" disabled/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="address">
+                                            <input data-text type="text" class="form-control" id="address_2" name="address_2" value="{{ transaction.payment_details.mask_address_2 }}" maxlength="255" placeholder="C/O Adress" tabindex="6" coolname="C/O adress" disabled/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <input type="text" coolname="Postnummer" class="form-control" min="5" max="12" id="zip" name="zip" placeholder="Postnummer" tabindex="7" value="{{ transaction.payment_details.mask_zip }}" disabled/>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <input type="text" coolname="Stad" class="form-control" min="1" max="255" id="city" name="city" placeholder="Stad" tabindex="8" value="{{ transaction.payment_details.mask_city }}" disabled/>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <input type="checkbox" coolname="accept" class="form-control" id="accept" name="accept" placeholder="jag accepterar" tabindex="9" style="width:15px;display:inline;"/>
+                                        Ja, jag accepterar
+                                        <a target="_new" href="https://www.collector.se/upload/Partners/Agreements/SUCUSE/Credit_terms_All_SE.pdf">
+                                            Allmänna villkor för faktura och kontokredit
+                                        </a> 
+                                        och 
+                                        <a target="_new" href=" http://www.collector.se/upload/Partners/Agreements/SUCUSE/SECCI_SE.pdf">
+                                            Standardiserad Europeisk konsumentkreditinformation
+                                        </a>
+                                        , samt 
+                                        <a target="_new" href="http://bokborgen.se/home/customerservice">
+                                            köpvillkor hos BokBorgen.se
+                                        </a>
+                                    </div>
+                                </div>
+                                <input id="paybtn" class="btn btn-lg btn-success btn-block" type="submit" value="Slutför köp" tabindex="9"/>
+                            </div>
+                            
+                            <div class="row footer comodotext" id="invoice_foot">
+                                <img src="https://www.collector.se/img/logos/collector-bank.svg" alt="faktura från Collector">
+                                <p>
+                                    När du väljer faktura får du hem dina varor innan du betalar. Du kan sedan välja att betala hela beloppet på en gång eller dela upp betalningen i mindre delar. För att kunna handla med Collectors faktura ska du vara minst 18 år. Fakturan kommer att skickas per e-post. Mer information hittar du på
+                                    <a target="_new" href="https://www.collector.se">https://www.collector.se</a>
+                                </p>
+                            </div>
+                        </form>
+                        <!--
+                        ********* END   *********
+                        ######### Invoice #########
+                        -->
+                    </div>
+                    <!-- /invoice -->
+                    <!-- card -->
+                    <div role="tabpanel" class="tab-pane fade" id="credit_card_tab" aria-labelledBy="credit_card_tab">
+                        <!--
+                            ######### CARD #########
+                            ********* START   *********
+                        -->
+                        <div class="row">
+                        <form id="mondidopayform" class="form-signin" method="post" role="form" autocomplete="off" aria-autocomplete="none">
+                            <input type="hidden" name="card_expiry" id="card_expiry" value="" />
+                            <div class="card_number_div">
+                                <input type="text" class="form-control semi" name="card_holder" value="{{ transaction.metadata['customer']['firstname'] }} {{ transaction.metadata['customer']['lastname'] }}" tabindex="1" />
+                            </div>
+                            <label data-mulang="card_number" class="mulang">
+                                Card number:
+                            </label>
+                            <div class="card_number_div">
+                                <span class="cc-brand">
+                                </span>
+                                <input data-mulang="card_number_placeholder:placeholder" data-numeric type="tel" autocomplete="cc-number" class="mulang form-control cc-number" id="card_number" name="card_number" placeholder="•••• •••• •••• ••••" value="" maxlength="19" tabindex="2" coolname="Kortnummer" autofocus="true" />
+                                <div class="cards">
+                                    <div data-mulang="card_not_accepted" class="arrow_box mulang">Card is currently not supported</div>
+                                </div>
+                            </div>
+                            <label hidden>
+                                Card Type
+                            </label>
+                            <input readonly="true" coolname="Korttyp" type="hidden" class="form-control" name="card_type" id="card_type"/>
+                            <div class="row">
+                                <div class="col-xs-4 nopadleft">
+                                    <label data-mulang="exp_month" class="mulang">
+                                        Month:
+                                    </label>
+                                    <input type="tel" coolname="Förfallodatum månad" class="form-control cc-exp" maxlength="2" min="1" max="12"id="expMM" name="expMM" placeholder="01" tabindex="3" required pattern="\d*" />
+                                </div>
+                                <div class="col-xs-4">
+                                    <label data-mulang="exp_year" class="mulang">
+                                        Year:
+                                    </label>
+                                    <input type="tel" coolname="Förfallodatum år" class="form-control cc-exp" maxlength="2" min="16" max="36" id="expYY" name="expYY" placeholder="18" tabindex="4" required pattern="\d*" />
+                                </div>
+                                <div class="col-xs-4 nopadright">
+                                    <label data-mulang="cvc" class="mulang">
+                                        CVV:
+                                    </label>
+                                    <input type="tel" class="form-control cc-cvc" maxlength="4" min="0" max="9999" id="card_cvv" name="card_cvv" coolname="CVV" placeholder="123" tabindex="5" required pattern="\d*" />
+                                </div>
+                            </div>
+                            <input data-mulang="pay_button:value" id="paybtn" class="mulang btn btn-lg btn-success btn-block" type="submit" value="Pay" tabindex="6"/>
+                            <div id="loading" class="hidden mulang" data-mulang="loading">
+                                Loading:
+                                <img src="https://cdn-02.mondido.com/www/img/loading.gif" alt="Loading..."/>
+                            </div>
+                            <div class="footer">
+                                <div>
+                                    <div class="col-md-6">
+                                        <img class="card-img" src="https://cdn-02.mondido.com/www/img/visa-mastercard-amex.png" alt="cards"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <img class="card-img" src="https://cdn-02.mondido.com/www/img/3dsecure.png" alt="3d secure"/>
+                                    </div>
+                                    <div class="comodotext mulang" data-mulang="safe_text">
+                                        Din betalning sker säkert genom Mondido. Butiken kommer aldrig i kontakt med dina kortuppgifter, all information skickas krypterad till din bank. Mondido är PCI DSS Level 1 och använder HTTPS/TLS vilket är industribankstandard för säkra e-handelstransaktioner.
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="clearfix">
+                            </p>
+                        </form>
+                        </div>
+                        <!--
+                            ######### CARD #########
+                            ********* STOP   *********
+                        -->
+                    </div>
+                    <!-- /card -->
+                    <!-- trustly -->
+                    <div role="tabpanel" class="tab-pane fade" id="trustly_tab" aria-labelledBy="trustly_tab" style="text-align: center;">
+                        <!--
+                            ######### Trustly #########
+                        -->
+                        <form action="" id="trustlyform" method="post" role="form" target="trustly">
+                            <input type="hidden" name="trustly" value="1" />
+                            <input type="hidden" name="trustly_locale" value="sv_SE" />
+                            <input type="hidden" name="trustly_country" value="SE" />
+                        </form>
+
+                        <base target="_top">
+                            <iframe src="" name="trustly" width="95%" height="400" style="border: 0"></iframe>
+                            <a href="https://trustly.com/en/whatistrustly" target="_blank">
+                                What is Trustly?
+                            </a>
+                        </base>
+                        <!--
+                        ######### Trustly #########
+                        -->
+                    </div>
+                    <!-- /trustly -->
+                    <!-- swish -->
+                    <div role="tabpanel" class="tab-pane fade" id="swish_tab" aria-labelledBy="swish_tab" style="text-align: center;">
+                        <form action="" class="form-signin go-bottom" id="swishform" method="post" role="form">
+                            <input type="hidden" name="swish" value="1" />
+                            <div class="row">
+                                <div>Här kan du enkelt betala med Swish i mobilen</div>
+                                <img class="swish-img" src="https://d3isqtzzzuv2nl.cloudfront.net/www/img/swish_tre_mobiler.png" alt="Swish"/>
+                            </div>
+                            <div class="row spacer col-xs-12">
+                                <input novalidate type="tel" autocomplete="cc-number" class="form-control cc-number" id="swish_number" name="swish_number" placeholder="4670112233" value="" tabindex="1" coolname="Telefonnummer" autofocus="true" />
+                                <label for="swish_number">Ditt mobilnummer</label>
+                            </div>
+                            <div class="row spacer">
+                                <input id="paybtn-swish" class="btn btn-lg btn-success btn-block" type="submit" value="Betala" tabindex="5">
+                            </div>
+                        </form>
+
+                    </div>
+                    <!-- /swish -->
+                    <!-- paypal-->
+                    <div role="tabpanel" class="tab-pane fade" id="paypal_tab" aria-labelledBy="paypal_tab" style="text-align: center;">
+                        <form action="" class="form-signin" id="paypalform" method="post" role="form">
+                            <input type="hidden" name="paypal" value="1" />
+                            <div class="row spacer">
+                                <div class="mulang" data-mulang="paypal_hl">Här kan du enkelt betala med PayPal</div>
+                                <img class="paypal-img" src="https://cdn-02.mondido.com/www/img/paypal-1.png?1459615937" alt="PayPal logo"/>
+                            </div>
+                            <div class="row spacer">
+                                <input data-mulang="paypal_btn:value" id="paybtn-paypal" class="mulang btn btn-lg btn-success btn-block" type="submit" value="Betala med PayPal" tabindex="5">
+                            </div>
+                        </form>
+
+                    </div>
+                    <!-- /paypal-->
+                    <div class="col-md-3"></div>
+                    <div id="languages" class="row col-md-6"></div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+        </div>  
+        
+        <div data-mulang="failed_message" id="try-again" class="hidden mulang">
+            Your payment was declined, please try again with a new card or verify your numbers.
+        </div>
+        <div data-mulang="validation_message" id="validation-error" class="hidden mulang">
+            All fields need to be filled in. Whats missing is:\n
+        </div>
+        <div data-mulang="card_not_accepted" id="badcard" class="hidden mulang">
+            {card} is not accepted
+        </div>
+        <div data-mulang="card_number" id="err_cardnumber" class="hidden mulang">
+            Card number, 
+        </div>
+        <div data-mulang="card_holder" id="err_cardholder" class="hidden mulang">
+            Card holder name, 
+        </div>
+        <div data-mulang="cvc" id="err_cvv" class="hidden mulang">
+            CVV/CVV2-code, 
+        </div>
+        <div data-mulang="expiry" id="err_expiry" class="hidden mulang">
+            Expiry date 
+        </div>
+        
+        <script src="https://cdn-02.mondido.com/www/js/lang.1.5.js"></script>    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="https://cdn-02.mondido.com/www/js/bootstrap.min.js?v=3.0"></script>
+        <script src="https://cdn-02.mondido.com/www/js/mondido.payment.1.7.js"></script>
+        <script>
+                $('.mulang').mulang({data: mondidoSettings.metadata});
+                createLangSwitch($('#languages'));
+                
+                if(document.location.href.indexOf('declined') > -1 || document.location.href.indexOf('fail') > -1) {
+                    alert($('#try-again').text().replace(/\s+/, ""));
+                }
+        </script>
+    </body>
+</html>
