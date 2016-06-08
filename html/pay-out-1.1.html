@@ -24,7 +24,7 @@
                 ],
                 metadata: '{{ transaction.metadata }}',
                 activePaymentMethod: 'credit_card_tab',
-                currency: 'sek'
+                currency: '{{ transaction.currency }}'
             }
             if(document.Mondido != undefined && document.Mondido.systemInfo){
                 //problems:[{type: 'swish', message: 'Swish is out of order'},{type: 'credit_card', issuer: 'nordea', message: 'Nordea kräver 3D Secure'}]
