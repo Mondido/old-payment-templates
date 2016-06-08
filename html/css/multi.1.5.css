@@ -1,0 +1,485 @@
+/*signin.css*/
+body {
+  background-color: #eee;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+/*floatlabel.css*/
+* {
+  box-sizing: border-box;
+}
+
+.form-signin input[type="text"] {
+    margin: auto;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+form.go-bottom > div {
+  position: relative;
+  overflow: hidden;
+}
+form.go-bottom input.form-control, form.go-bottom textarea {
+  width: 100%;
+  background: none;
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  padding: 8px 12px;
+  outline: 0;
+}
+form.go-bottom input.form-control:valid, form.go-bottom textarea.form-control:valid {
+  background: white;
+}
+form.go-bottom input.form-control:focus, form.go-bottom textarea:focus {
+  border-color: #f06d06;
+  padding: 6px!important;
+}
+
+form.go-bottom input.form-control:focus + label, form.go-bottom textarea:focus + label {
+  color: #333;
+  font-size: 70%;
+  padding: 1px 16px;
+  z-index: 2;
+  text-transform: uppercase;
+}
+form.go-bottom label {
+  transition: background 0.2s, color 0.2s, top 0.2s, bottom 0.2s, right 0.2s, left 0.2s;
+  position: absolute;
+  color: #999;
+  padding: 7px 6px;
+  text-align: left;
+}
+form.go-bottom textarea {
+  display: block;
+  resize: vertical;
+}
+
+form.go-bottom input.form-control, form.go-bottom textarea {
+    transition: padding 0.2s, color 0.2s, top 0.2s, bottom 0.2s, right 0.2s, left 0.2s;
+    padding: 12px 12px 12px 12px!important;
+}
+form.go-bottom input.form-control:focus, form.go-bottom textarea:focus {
+    transition: padding 0.2s, color 0.2s, top 0.2s, bottom 0.2s, right 0.2s, left 0.2s;
+    padding: 4px 12px 20px 12px!important;
+}
+form.go-bottom label {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+form.go-bottom input.form-control:focus + label, form.go-bottom textarea:focus + label {
+  top: 100%;
+  margin-top: -16px;
+}
+
+form.go-right label {
+  top: 2px;
+  right: 100%;
+  width: 100%;
+  margin-right: -100%;
+  bottom: 2px;
+}
+form.go-right input.form-control:focus + label, form.go-right textarea:focus + label {
+  right: 0;
+  margin-right: 0;
+  width: 40%;
+  padding-top: 5px;
+}
+
+/*mondido*/
+    body {
+    padding-top: 0px!important;
+    padding-bottom: 0px!important;
+    }
+    #main_area {
+    height: auto;
+    position: relative;
+    margin: 0 auto;
+    }
+    .logo {
+    height: 20px;
+    margin: 10px;
+    }
+    .content-white {
+    background-color: white;
+    }
+    select {
+    font-size: 16px!important;
+    margin-right: 10px;
+    padding: 8px!important;
+    }
+    label {
+    margin-top: 10px;
+    }
+    .semi{
+        border: none!important;
+        box-shadow: none!important;
+    }
+
+    .invalid, .not-valid {
+    background-color: white;
+    border: 1px solid #F00 !important;
+    }
+    .valid {
+    background-color: white;
+    border: 1px solid #00E600 !important;
+    }
+    .footer {
+    color: #aaa;
+    }
+    .card_number_div {
+    position: relative;
+    width: 100%;
+    }
+    .cards {
+    background: url(https://cdn-02.mondido.com/www/img/card-logos-3.png);
+    height: 32px;
+    top: 10.5%;
+    right: 2.5%;
+    z-index: 9999;
+    width: 51px;
+    height: 32px;
+    position: absolute;
+    display: none;
+    }
+    .maestro {
+    background-position: -153px 0px;
+    }
+    .mastercard {
+    background-position: -102px 0px;
+    }
+    .electron {
+    background-position: -51px 0px;
+    }
+    .visa {
+    background-position: 0px 0px;
+    }
+    .discover {
+    background-position: -204px 0px;
+    }
+    .amex {
+    background-position: -255px 0px;
+    }
+    .not_accepted{
+        background-position-y: -32px;
+    }
+    .active {
+    display: block;
+    }
+    .hidden {
+    display: none;
+    }
+    #loading {
+    text-align: center;
+    margin-top: 20px;
+    }
+    #errors {
+    display: none;
+    }
+    #paybtn, #paybtn-cc {
+    margin: 20px 0;
+    }
+    #comodo_secure {
+    margin-top: 15px;
+    }
+    .comodotext {
+    margin-top: 15px;
+    font-size: 11px;
+    }
+    .nav-tabs >
+    li, .nav-pills >
+    li {
+    float: none;
+    display: inline-block;
+    *display: inline;
+    /* ie7 fix */
+    zoom: 1;
+    /* hasLayout ie7 trigger */
+    }
+    .nav-tabs, .nav-pills {
+    text-align: center;
+    }
+    ul li {
+        width: 90px;
+    }
+    ul li img {
+    width: 50px;
+    }
+    #myTab .fa {
+    font-size: 20px;
+    }
+    @media screen {
+        .has-error input {
+            border-width: 2px;
+        }
+        .validation.text-danger:after {
+            content: 'Validation failed';
+        }
+        .validation.text-success:after {
+            content: 'Validation passed';
+        }
+        .col-xs-6, .col-xs-12 {
+            padding-left: 2px!important;
+            padding-right: 2px!important;
+        }
+        .header {
+            padding-top: 10px!important;
+            margin: 0 auto;
+        }
+    }
+    .swish-img{
+        height:85px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .paypal-img{
+        height:50px;
+        margin: 10px 0;
+    }
+    #invoice_foot{
+        text-align: center;
+    }
+
+    #invoice_foot p{
+        text-align: left;
+    }
+    #invoice_foot img{
+        margin-top:10px;
+        margin-bottom:10px;
+        width: 150px;
+    }
+    #paybtn-paypal{
+        margin-bottom:100px;
+    }
+    .logoRow{
+        text-align:center;
+        background-color: #eee;
+    }
+    .choose{
+        margin: 20px 0px;
+    }
+    .grayc {
+        background: white; /* For browsers that do not support gradients */    
+        background: -webkit-radial-gradient(white, #f5f5f5); /* Safari 5.1 to 6.0 */
+        background: -o-radial-gradient(white, #f5f5f5); /* For Opera 11.6 to 12.0 */
+        background: -moz-radial-gradient(white, #f5f5f5); /* For Firefox 3.6 to 15 */
+        background: radial-gradient(white, #f5f5f5); /* Standard syntax (must be last) */
+    }
+    .container{
+        padding-bottom:40px;
+    }
+    .spacer{
+        margin-bottom: 20px;  
+    } 
+    .amount{
+        font-size: 20px;
+    }
+    
+    /* bootstrap override */
+    .nav-tabs>li{
+        margin: 2px;
+        border: solid 2px white!important;
+    }
+    .nav-tabs>li>a{
+        border-radius: 0!important;
+    }
+    .nav-tabs>li>a{
+        background-color: #F5F5F5!important;
+        border: solid 2px white!important;
+    }
+    .nav-tabs>li.active, .nav-tabs>li.active:hover, .nav-tabs>li.active:focus{
+        border: solid 2px #71D5DA!important;
+            box-shadow: 0px 2px 2px #ddd;
+    }
+    .nav-tabs>li:hover{
+            box-shadow: 0px 2px 2px #ddd;
+    }
+    .nav-tabs{
+        border: none;
+    }
+    .nav-tabs>li>a{
+        margin: 0;
+    }
+    .row{
+        margin-right: 0px!important;
+        margin-left: 0px!important;
+    }
+    .nopadleft{
+        padding-left: 0px;
+    }
+    .nopadright{
+        padding-right: 0px;
+    }
+
+@media (max-device-width: 414px) {
+    ul li {
+        width: 72px;
+    }
+    ul li img{
+        width:40px;
+    }
+    .nav>li>a{
+            padding: 10px 0px;
+    }
+}
+
+    @media (max-device-width: 376px) {
+    ul li {
+        width: 64px;
+        margin: 2px;
+        border: none;
+    }
+    ul li img{
+        width:42px;
+    }
+    .nav>li>a{
+            padding: 10px 0px;
+    }
+}
+                @media (max-device-width: 360px) {
+    ul li {
+        width: 54px;
+        margin: 2px;
+        border: none;
+    }
+    ul li img{
+        width:43px;
+    }
+    .nav>li>a{
+            padding: 6px 0px;
+    }
+}
+
+        @media (max-device-width: 320px) {
+    ul li {
+        width: 54px;
+        margin: 2px;
+        border: none;
+    }
+    ul li img{
+        width:43px;
+    }
+    .nav>li>a{
+            padding: 6px 0px;
+    }
+}
+.langswitch{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+.langswitch>li{
+     float: left;
+     width: auto;
+}
+.langswitch>li>a {
+    display: block;
+    color: gray;
+    text-align: center;
+    padding: 3px 5px;
+    text-decoration: none;
+}
+.langswitch>li>a:hover, .langswitch>li>a.active {
+    background-color: #ddd;
+}
+.footer .card-img, #comodo_secure{
+    height: 30px;
+    margin-bottom: 10px;
+    
+        filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale"); /* Firefox 10+, Firefox on Android */
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(100%); /* Chrome 19+, Safari 6+, Safari 6+ iOS */
+}
+.footer .card-img:hover, #comodo_secure{
+    filter:none;
+    -webkit-filter: none;
+}
+
+.cards.not_accepted .arrow_box {
+     visibility: visible;
+}
+
+
+
+.arrow_box {
+    
+    color: white;
+    font-size: 10px;
+    text-transform: uppercase;
+    padding: 10px;
+    width: 145px;
+    height: 54px;
+    border-radius: 4px;
+    box-shadow: 0px 2px 2px #aaa;
+    visibility: hidden;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -13px;
+    left: 130%;
+    
+	position: relative;
+	background: #d58888;
+	border: 2px solid #a00;
+}
+.arrow_box:after, .arrow_box:before {
+	right: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow_box:after {
+	border-color: rgba(213, 136, 136, 0);
+	border-right-color: #d58888;
+	border-width: 14px;
+	margin-top: -13px;
+}
+.arrow_box:before {
+	border-color: rgba(83, 96, 105, 0);
+	border-right-color: #a00;
+	border-width: 17px;
+	margin-top: -16px;
+}

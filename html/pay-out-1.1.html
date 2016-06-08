@@ -16,22 +16,26 @@
                     discover: {active: false}
                 },
                 supportedPaymentMethods: [
-                    {name: 'swish_tab', active: false, currencies:['sek'], countries:['se']},
+                    {name: 'swish_tab', active: true, currencies:['sek'], countries:['all']},
                     {name: 'credit_card_tab', active: true, currencies:['all'], countries:['all']},
                     {name: 'paypal_tab', active: true, currencies:['all'], countries:['all']},
-                    {name: 'trustly_tab', active: false, currencies:['all'], countries:['se','at','be','bg','hr','cz','cy','dk','ee','fi','fr','de','gr','hu','ie','it','lv','lt','lu','mt','nl','no','pl','pt','ro','sk','si','es','gb']},
-                    {name: 'invoice_tab', active: false, currencies:['sek'], countries:['se']}
+                    {name: 'trustly_tab', active: true, currencies:['all'], countries:['all','se','at','be','bg','hr','cz','cy','dk','ee','fi','fr','de','gr','hu','ie','it','lv','lt','lu','mt','nl','no','pl','pt','ro','sk','si','es','gb']},
+                    {name: 'invoice_tab', active: true, currencies:['all'], countries:['all','se']}
                 ],
                 metadata: '{{ transaction.metadata }}',
                 activePaymentMethod: 'credit_card_tab',
-                currency: '{{ transaction.currency }}'
+                currency: 'sek'
+            }
+            if(document.Mondido != undefined && document.Mondido.systemInfo){
+                //problems:[{type: 'swish', message: 'Swish is out of order'},{type: 'credit_card', issuer: 'nordea', message: 'Nordea kräver 3D Secure'}]
+                mondidoSettings.systemInfo = document.Mondido.systemInfo;
             }
         </script>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="robots" content="noindex, nofollow"/>
         <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdn-02.mondido.com/www/css/multi.1.4.css" rel="stylesheet" />
+        <link href="https://cdn-02.mondido.com/www/css/multi.1.5.css" rel="stylesheet" />
         <title>Payment</title>
     </head>
     <body>
@@ -261,9 +265,9 @@
                                     <input type="tel" class="form-control cc-cvc" maxlength="4" min="0" max="9999" id="card_cvv" name="card_cvv" coolname="CVV" placeholder="123" tabindex="5" required pattern="\d*" />
                                 </div>
                             </div>
-                            <input data-mulang="pay_button:value" id="paybtn" class="mulang btn btn-lg btn-success btn-block" type="submit" value="Pay" tabindex="6"/>
-                            <div id="loading" class="hidden mulang" data-mulang="loading">
-                                Loading:
+                            <input data-mulang="pay_button:value" id="paybtn-cc" class="mulang btn btn-lg btn-success btn-block" type="submit" value="Pay" tabindex="6"/>
+                            <div id="loading-cc" class="hidden">
+                                <span class="mulang" data-mulang="loading">Loading:</span>
                                 <img src="https://cdn-02.mondido.com/www/img/loading.gif" alt="Loading..."/>
                             </div>
                             <div class="footer">
@@ -377,7 +381,7 @@
         <script src="https://cdn-02.mondido.com/www/js/lang.1.5.js"></script>    
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="https://cdn-02.mondido.com/www/js/bootstrap.min.js?v=3.0"></script>
-        <script src="https://cdn-02.mondido.com/www/js/mondido.payment.1.7.js"></script>
+        <script src="https://cdn-02.mondido.com/www/js/mondido.payment.1.10.js"></script>
         <script>
                 $('.mulang').mulang({data: mondidoSettings.metadata});
                 createLangSwitch($('#languages'));
