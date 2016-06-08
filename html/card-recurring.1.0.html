@@ -38,6 +38,17 @@
         <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn-02.mondido.com/www/css/multi.1.5.css" rel="stylesheet" />
         <title>Payment</title>
+        <style>
+            .col-xs-6 {
+                padding:0px!important;
+            }
+            .col-xs-6.nopadleft{
+                padding-right:15px!important;
+            }
+            .col-xs-6.nopadright{
+                padding-left:15px!important;
+            }
+            </style>
     </head>
     <body>
         <div id="main_area">
@@ -45,11 +56,8 @@
                     <img class="logo" src="https://cdn-02.mondido.com/www/img/mondido-2015.png?1462876334" alt="Logo" />
                 </div>
             <div id="payform" class="container grayc">
-                <div data-mulang="choose_payment_option" class="row text-center choose mulang">
-                    Please choose payment option
-                </div>
                 <!-- ######### Nav tabs ######### -->
-                <div role="tabpanel">
+                <div role="tabpanel" style="display:none;   ">
                     <ul id="myTab" class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="credit_card_tab" style="display:none;">
                             <a href="#credit_card_tab" aria-controls="credit_card_tab" role="tab" data-toggle="tab" class="card-tab">
@@ -57,39 +65,6 @@
                                 <br/>
                                 <small data-mulang="card_payment">
                                     Card
-                                </small>
-                            </a>
-                        </li>
-                        <li role="presentation" class="swish_tab" style="display:none;">
-                            <a href="#swish_tab" aria-controls="swish_tab" role="tab" data-toggle="tab"><img src="https://cdn-02.mondido.com/www/img/swish-logo.png" alt="Swish" />
-                                <br/>
-                                <small data-mulang="swish_payment">Swish</small>
-                            </a>
-                        </li>
-                        <li role="presentation" class="trustly_tab" style="display:none;">
-                            <a href="#trustly_tab" aria-controls="trustly_tab" role="tab" data-toggle="tab">
-                                <img src="https://cdn-02.mondido.com/www/img/trustly-logo.png" alt="Trustly" />
-                                <br/>
-                                <small data-mulang="bank_payment">
-                                    Bank
-                                </small>
-                            </a>
-                        </li>
-                        <li role="presentation" class="paypal_tab" style="display:none;">
-                            <a href="#paypal_tab" aria-controls="paypal_tab" role="tab" data-toggle="tab">
-                                <img src="https://cdn-02.mondido.com/www/img/paypal-1.png?1459615937" alt="PayPal" />
-                                <br/>
-                                <small data-mulang="paypal_payment">
-                                    PayPal
-                                </small>
-                            </a>
-                        </li>
-                        <li role="presentation" class="invoice_tab" style="display:none;">
-                            <a href="#invoice_tab" aria-controls="invoice_tab" role="tab" data-toggle="tab" class="card-tab">
-                                <img src="https://cdn-02.mondido.com/www/img/faktura2.png" alt="Faktura"/>
-                                <br/>
-                                <small data-mulang="invoice_payment">
-                                    Invoice
                                 </small>
                             </a>
                         </li>
@@ -228,8 +203,60 @@
                         <div class="row">
                         <form id="mondidopayform" class="form-signin" method="post" role="form" autocomplete="off" aria-autocomplete="none">
                             <input type="hidden" name="card_expiry" id="card_expiry" value="" />
+                            <div class="plans">
+                                <label>Select subscription plan</label>
+                                <select class="form-control" name="plan_id" id="plans">
+                                    {% for item in transaction.merchant.plans %}
+                                        <option value="{{ item['id'] }}">{{ item['name'] }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                              <div class="row">
+                                <div class="col-xs-6 nopadleft">
+                                     <label>
+                                E-mail:
+                            </label>
+                                    <input type="text" class="form-control" name="metadata[customer][email]" value="" placeholder="Email" tabindex="1" />
+                                </div>
+
+                                <div class="col-xs-6 nopadright">
+                                     <label>
+                                Phone:
+                            </label>
+                                        <input type="text" class="form-control" name="metadata[customer][phone]" value="" placeholder="Phone" tabindex="1" />
+                                </div>
+                              </div>
+
+                              <div class="row">
+                              <label>
+                               Address:
+                            </label>
+
+                                <input type="text" class="form-control" name="metadata[customer][address]" value="" placeholder="address" tabindex="1" />
+                            </div>
+                              <div class="row">
+
+                                   <div class="col-xs-6 nopadleft">
+                                        <label>
+                               Zip:
+                            </label>
+                                        <input type="text" class="form-control" name="metadata[customer][zip]" value="" placeholder="zip" tabindex="1" />
+                                    </div>
+                                    <div class="col-xs-6 nopadright">
+                                         <label>
+                               City:
+                            </label>
+                                        <input type="text" class="form-control" name="metadata[customer][city]" value="" placeholder="city" tabindex="1" />
+                                    </div>
+                              </div>
+
+
+
                             <div class="card_number_div">
-                                <input type="text" class="form-control semi" name="card_holder" value="{{ transaction.metadata['customer']['firstname'] }} {{ transaction.metadata['customer']['lastname'] }}" tabindex="1" />
+                                 <label>
+                               Name:
+                            </label>
+                                <input type="text" class="form-control" name="card_holder" value="" tabindex="1" />
                             </div>
                             <label data-mulang="card_number" class="mulang">
                                 Card number:
@@ -266,6 +293,12 @@
                                     <input type="tel" class="form-control cc-cvc" maxlength="4" min="0" max="9999" id="card_cvv" name="card_cvv" coolname="CVV" placeholder="123" tabindex="5" required pattern="\d*" />
                                 </div>
                             </div>
+
+                            <p class="clearfix"></p>
+                            <div style="margin: 20px 0px;">
+                                <input type="checkbox" id="accept-cc" name="metadata[accept_terms]" /><a href="https://mysite.com/terms" target="_blank"> Yes, I accept the terms and conditions</a>
+                            </div>
+
                             <input data-mulang="pay_button:value" id="paybtn-cc" class="mulang btn btn-lg btn-success btn-block" type="submit" value="Pay" tabindex="6"/>
                             <div id="loading-cc" class="hidden">
                                 <span class="mulang" data-mulang="loading">Loading:</span>
@@ -389,6 +422,10 @@
                 
                 if(document.location.href.indexOf('declined') > -1 || document.location.href.indexOf('fail') > -1) {
                     alert($('#try-again').text().replace(/\s+/, ""));
+                }
+                var amount = parseInt(mondidoSettings.amount) || 0;
+                if(amount == 0){
+                    $('p.amount').hide();
                 }
         </script>
     </body>
