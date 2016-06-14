@@ -221,8 +221,8 @@
                     <div class="col-md-3"></div>
                 </div>
             </div>
-        </div>  
-        
+        </div>
+
         <div data-mulang="failed_message" id="try-again" class="hidden mulang">
             Your payment was declined, please try again with a new card or verify your numbers.
         </div>
@@ -233,16 +233,16 @@
             {card} is not accepted
         </div>
         <div data-mulang="card_number" id="err_cardnumber" class="hidden mulang">
-            Card number, 
+            Card number,
         </div>
         <div data-mulang="card_holder" id="err_cardholder" class="hidden mulang">
-            Card holder name, 
+            Card holder name,
         </div>
         <div data-mulang="cvc" id="err_cvv" class="hidden mulang">
-            CVV/CVV2-code, 
+            CVV/CVV2-code,
         </div>
         <div data-mulang="expiry" id="err_expiry" class="hidden mulang">
-            Expiry date 
+            Expiry date
         </div>
 
         <div id="myModal" class="modal fade terms" role="dialog">
@@ -266,8 +266,8 @@
         </div>
 
 
-        
-        <script src="https://cdn-02.mondido.com/www/js/lang.1.5.js"></script>    
+
+        <script src="https://cdn-02.mondido.com/www/js/lang.1.5.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="https://cdn-02.mondido.com/www/js/bootstrap.min.js?v=3.0"></script>
         <script src="https://cdn-02.mondido.com/www/js/mondido.payment.1.10.js"></script>
@@ -275,7 +275,7 @@
 
             $('.mulang').mulang({data: mondidoSettings.metadata});
             createLangSwitch($('#languages'));
-            
+
             if(document.location.href.indexOf('declined') > -1 || document.location.href.indexOf('fail') > -1) {
                 alert($('#try-again').text().replace(/\s+/, ""));
             }

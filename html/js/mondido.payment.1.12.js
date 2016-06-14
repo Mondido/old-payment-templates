@@ -663,7 +663,7 @@
         init : function(options) {
 
         },
-        getCountry : function(data) { 
+        getCountry : function(data) {
         /*
         Get estimated country from metadata and/or locale string
         returns for example: se,us,unknown
@@ -715,16 +715,16 @@
                 return score[score.length-1];
             }else{
                 return null;
-            }            
+            }
         }
     };
 
-  
+
   $.fn.mulang = function( options ) {
 
     if ( methods[options] ) {
         return methods[ options ].apply( this, Array.prototype.slice.call( arguments, 1 ));
-    } 
+    }
 
     if(!options){
       options = {};
@@ -768,7 +768,7 @@
         }
       }
     }
-    
+
     window.__mulang.current = options.lang;
 
     //find placeholder array
@@ -810,18 +810,18 @@
     this.each(function(){
       var found_attr = false;
       var attr_name = 'mulang'; //old name
-      
+
       if($(this).attr(attr_name) !== undefined){
         found_attr = true;
       }
 
-      if(!found_attr){      
+      if(!found_attr){
         attr_name = 'data-mulang';
         if($(this).attr(attr_name) === undefined){
           return true; //no language settings
         }
       }
-      
+
       var lang_key = $(this).attr(attr_name);
       var attr = 'text';
       //find array
@@ -880,9 +880,9 @@ function createLangSwitch(obj){
         a.addClass(cssAttr);
         var li = $('<li></li>');
         li.append(a);
-        $(ul).append(li);        
+        $(ul).append(li);
     });
-    $(obj).append(ul);  
+    $(obj).append(ul);
     $(obj).find('a').on('click',function(e){
         e.preventDefault;
         $('.langswitch .active').removeClass('active');
@@ -903,7 +903,7 @@ jQuery(function($) {
     $(mondidoSettings.supportedPaymentMethods).each(function(){
         var name = this.name;
         var keep = false;
-        
+
         if(this.active){
             if($.inArray('all', this.currencies) > -1 || $.inArray(mondidoSettings.currency, this.currencies) > -1){ // allowed currency
                 if($.inArray('all', this.countries) > -1 || $.inArray(country.c, this.countries) > -1){ // allowed country
@@ -912,7 +912,7 @@ jQuery(function($) {
                 }
             }
         }
-        
+
         if(keep){
             tarr.push($($('.'+name)[0]).detach());
         }else{
@@ -921,10 +921,10 @@ jQuery(function($) {
     });
 
     $(tarr).each(function(){
-        $('#myTab').append(this);                            
+        $('#myTab').append(this);
         this.show();
     });
-    
+
     if(document.location.href.indexOf('payment.selected') > -1) {
         var tabName = getParameterByName('payment.selected')+"_tab";
         if($('.'+tabName+' a').length > 0){
@@ -1258,7 +1258,7 @@ $(document).ready(function(){
     });
 
     function isSwedishSocialSecurityNumber(ssn){
-        
+
         valid = /^(\d{6}|\d{8})[-|(\s)]{0,1}\d{4}$/.test(ssn);
         if (!valid){
         $('#row-customer-details').addClass('hidden');
@@ -1478,7 +1478,7 @@ function canceled(){
         is_card_accepted = function(card_type) {
             var brand = card_type.name;
             var rule = mondidoSettings.supportedCards[brand];
-            
+
             if(rule && rule.active){
                 if(rule.currencies.indexOf('all') > -1 || rule.currencies.indexOf(mondidoSettings.currency.toLowerCase()) > -1){
                     return true;
@@ -1541,7 +1541,7 @@ String.prototype.removeEnd = function(s) {
 };
 
 (function() {
-    
+
     $('#mondidopayform').on('submit', function() {
         var checks = true;
         var errString = $('#validation-error').text().replace(/\s+/, "");
@@ -1550,7 +1550,7 @@ String.prototype.removeEnd = function(s) {
         $('input[name="card_holder"]').trigger('keydown');
         $('input[name="card_cvv"]').trigger('keydown');
         $('input[name="expMM"], input[name="expYY"]').trigger('change');
-            
+
         $('input[name="card_number"]').removeClass('not-valid');
         $('input[name="card_holder"]').removeClass('invalid');
         $('input[name="card_cvv"]').removeClass('not-valid');
@@ -1588,7 +1588,7 @@ String.prototype.removeEnd = function(s) {
         }
         return true;
     });
-    
+
     $('input[name="card_number"]').validateCreditCard(function(result) {
         if(result && result.card_type != null){
             var text = $('#badcard').text();

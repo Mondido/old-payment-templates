@@ -157,12 +157,12 @@
                                         Ja, jag accepterar
                                         <a target="_new" href="https://www.collector.se/upload/Partners/Agreements/SUCUSE/Credit_terms_All_SE.pdf">
                                             Allmänna villkor för faktura och kontokredit
-                                        </a> 
-                                        och 
+                                        </a>
+                                        och
                                         <a target="_new" href=" http://www.collector.se/upload/Partners/Agreements/SUCUSE/SECCI_SE.pdf">
                                             Standardiserad Europeisk konsumentkreditinformation
                                         </a>
-                                        , samt 
+                                        , samt
                                         <a target="_new" href="http://bokborgen.se/home/customerservice">
                                             köpvillkor hos BokBorgen.se
                                         </a>
@@ -170,7 +170,7 @@
                                 </div>
                                 <input id="paybtn" class="btn btn-lg btn-success btn-block" type="submit" value="Slutför köp" tabindex="9"/>
                             </div>
-                            
+
                             <div class="row footer comodotext" id="invoice_foot">
                                 <img src="https://www.collector.se/img/logos/collector-bank.svg" alt="faktura från Collector">
                                 <p>
@@ -321,8 +321,8 @@
                     <div class="col-md-3"></div>
                 </div>
             </div>
-        </div>  
-        
+        </div>
+
         <div data-mulang="failed_message" id="try-again" class="hidden mulang">
             Your payment was declined, please try again with a new card or verify your numbers.
         </div>
@@ -333,26 +333,26 @@
             {card} is not accepted
         </div>
         <div data-mulang="card_number" id="err_cardnumber" class="hidden mulang">
-            Card number, 
+            Card number,
         </div>
         <div data-mulang="card_holder" id="err_cardholder" class="hidden mulang">
-            Card holder name, 
+            Card holder name,
         </div>
         <div data-mulang="cvc" id="err_cvv" class="hidden mulang">
-            CVV/CVV2-code, 
+            CVV/CVV2-code,
         </div>
         <div data-mulang="expiry" id="err_expiry" class="hidden mulang">
-            Expiry date 
+            Expiry date
         </div>
-        
-        <script src="https://cdn-02.mondido.com/www/js/lang.1.5.js"></script>    
+
+        <script src="https://cdn-02.mondido.com/www/js/lang.1.5.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="https://cdn-02.mondido.com/www/js/bootstrap.min.js?v=3.0"></script>
         <script src="https://cdn-02.mondido.com/www/js/mondido.payment.1.10.js"></script>
         <script>
                 $('.mulang').mulang({data: mondidoSettings.metadata});
                 createLangSwitch($('#languages'));
-                
+
                 if(document.location.href.indexOf('declined') > -1 || document.location.href.indexOf('fail') > -1) {
                     alert($('#try-again').text().replace(/\s+/, ""));
                 }
