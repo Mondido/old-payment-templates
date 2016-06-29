@@ -50,13 +50,56 @@
                 <!-- ######### Nav tabs ######### -->
                 <div role="tabpanel">
                     <ul id="myTab" class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="credit_card_tab" style="display:none;">
+                        <li role="presentation" class="active">
                             <a href="#credit_card_tab" aria-controls="credit_card_tab" role="tab" data-toggle="tab" class="card-tab">
-                                <img src="https://cdn-02.mondido.com/www/img/visa-mc.png" alt="Visa/MasterCard" />
-                                <br/>
-                                <small data-mulang="card_payment">
-                                    Card
+                                <img src="https://mondido.s3.amazonaws.com/www/img/cards/mc-visa_payment_logo.png" alt="Visa/MasterCard">
+                                <br>
+                                <small>
+                                    Kortbetalning
                                 </small>
+                                <div class="mrk">
+                                </div>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#swish_tab" aria-controls="swish_tab" role="tab" data-toggle="tab"><img src="https://d3isqtzzzuv2nl.cloudfront.net/www/img/swish-logo.png" alt="Swish">
+                                <br>
+                                <small>Swish</small>
+                                <div class="mrk"></div>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#trustly_tab" aria-controls="trustly_tab" role="tab" data-toggle="tab">
+                                <img src="https://s3-eu-west-1.amazonaws.com/mondido-dev/tmp/Trustly.png" alt="Trustly">
+                                <br>
+                                <small>
+                                    Bankbetalning
+                                </small>
+                                <div class="mrk">
+                                </div>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#paypal_tab" aria-controls="paypal_tab" role="tab" data-toggle="tab">
+                                <img src="https://mondido.s3.amazonaws.com/merchants/1/63/original/paypal-1.png?1459615937" alt="PayPal">
+                                <br>
+                                <small>
+                                    PayPal
+                                </small>
+                                <div class="mrk">
+                                </div>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#invoice_tab" aria-controls="invoice_tab" role="tab" data-toggle="tab" class="card-tab">
+                                <i class="fa fa-file-text-o">
+                                </i>
+                                <br>
+                                <small>
+                                    Faktura
+                                </small>
+                                <div class="mrk">
+                                </div>
                             </a>
                         </li>
                     </ul>
@@ -217,7 +260,7 @@
                                     <label data-mulang="exp_month" class="mulang">
                                         Month:
                                     </label>
-                                    <input type="tel" coolname="Förfallodatum månad" class="form-control cc-exp" maxlength="2" min="1" max="12"id="expMM" name="expMM" placeholder="01" tabindex="3" required pattern="\d*" />
+                                    <input type="tel" coolname="Förfallodatum månad" class="form-control cc-exp" maxlength="2" min="1" max="12" id="expMM" name="expMM" placeholder="01" tabindex="3" required pattern="\d*" />
                                 </div>
                                 <div class="col-xs-4">
                                     <label data-mulang="exp_year" class="mulang">
