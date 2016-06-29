@@ -22,7 +22,7 @@
                     {name: 'trustly_tab', active: true, currencies:['all'], countries:['all','se','at','be','bg','hr','cz','cy','dk','ee','fi','fr','de','gr','hu','ie','it','lv','lt','lu','mt','nl','no','pl','pt','ro','sk','si','es','gb']},
                     {name: 'invoice_tab', active: true, currencies:['all'], countries:['all','se']}
                 ],
-                metadata: '{{ transaction.metadata }}',
+                metadata: '{{ transaction.metadata | replace: "'", "" }}',
                 activePaymentMethod: 'credit_card_tab',
                 currency: '{{ transaction.currency }}'
             }
