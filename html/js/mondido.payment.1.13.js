@@ -1,5 +1,5 @@
 
-// v 1.1
+// v 1.13
 
 /*
     jQuery Masked Input Plugin
@@ -954,7 +954,8 @@ $(document).ready(function(){
     }
 
     function ssn_lookup(ssn_value){
-        var api_url = "https://pay.mondido.com/v1/";
+        var api_url = mondidoSettings.config.system.endpoint;
+
         var ssn = ssn_value;
         var is_test = 'true';
         var country_code = $('#country_code').val();
