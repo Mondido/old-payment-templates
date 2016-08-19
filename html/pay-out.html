@@ -26,15 +26,19 @@
                 activePaymentMethod: 'credit_card_tab',
                 currency: '{{ transaction.currency }}',
                 layout: {
-                    name: "BokBorgen.se",
+                    name: "Mondido",
                     logo_url: "https://cdn-02.mondido.com/www/img/mondido-2015.png?1462876334",
-                    terms_and_conditions_url: "http://bokborgen.se/home/customerservice",
+                    terms_and_conditions_url: "https://www.mondido.com/terms",
                 },
                 config: {
                     development: true,
                     system: {
                         endpoint: "https://pay.mondido.com/v1/",
-                        log: false
+                        log: false,
+                        payment_js_endpoint: "https://cdn-02.mondido.com/www/js/mondido.payment.1.10.js",
+                        lang_endpoint: "https://cdn-02.mondido.com/www/js/lang.1.5.js",
+                        bootstrap_endpoint: "https://cdn-02.mondido.com/www/js/bootstrap.min.js?v=3.0",
+                        jquery_endpoint: "https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"
                     }
                 }
             }
@@ -54,9 +58,7 @@
 
     <body>
         <div id="main_area">
-            <div class="row logoRow" style="">
-                <img class="logo" src="https://cdn-02.mondido.com/www/img/mondido-2015.png?1462876334" alt="Logo" />
-            </div>
+
             <div id="payform" class="container grayc">
                 <div data-mulang="choose_payment_option" class="row text-center choose mulang">
                     Please choose payment option
@@ -373,11 +375,20 @@
 
                     </div>
                     <!-- /paypal-->
+                </div>
+
+                <div class="row">
                     <div class="col-md-3"></div>
                     <div id="languages" class="row col-md-6"></div>
                     <div class="col-md-3"></div>
                 </div>
+
             </div>
+
+                 <div class="col-md-3"></div>
+                    poverd by <img class="logo" src="https://cdn-02.mondido.com/www/img/mondido-2015.png?1462876334" alt="Logo" />
+                <div class="col-md-3"></div>
+   
         </div>
 
         <div data-mulang="failed_message" id="try-again" class="hidden mulang">
@@ -402,21 +413,20 @@
             Expiry date
         </div>
 
-        <script src="https://cdn-02.mondido.com/www/js/lang.1.5.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="https://cdn-02.mondido.com/www/js/bootstrap.min.js?v=3.0"></script>
         <script>
-            (function() {
               function load(script) {
                 document.write('<'+'script src="'+script+'" type="text/javascript"><' + '/script>');
               }
 
+              load(mondidoSettings.config.system.lang_endpoint);
+              load(mondidoSettings.config.system.jquery_endpoint);
+              load(mondidoSettings.config.system.bootstrap_endpoint);
+
               if (mondidoSettings.config.development == true){
                 load("js/mondido.payment.js");
               } else {
-                load("https://cdn-02.mondido.com/www/js/mondido.payment.1.10.js");
+                load(mondidoSettings.config.system.payment_js_endpoint);
               }
-            })(jQuery);
         </script>
     </body>
 </html>
