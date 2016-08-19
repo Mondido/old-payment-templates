@@ -2,7 +2,7 @@
 https://www.mondido.com/en
 
 ## Templates
-html/pay-out-1.1.html
+html/pay-out.html
 
 Changelog
 - V1.1
