@@ -1019,32 +1019,49 @@
 
       var ssn_url = api_url+"ssn?token="+Mondido.token+"&transaction_id="+Mondido.transaction.id+"&merchant_id="+Mondido.merchant.id+"&test="+is_test+"&ssn="+ssn+"&country="+country_code;
 
-      var jqxhr = $.get( ssn_url, function() {
-          }).done(function(address) {
-              $('#row-ssn-details').removeClass('hidden');
-              $('#first_name').val(address.first_name).addClass('valid');
-              $('#last_name').val(address.last_name).addClass('valid');
-              $('#zip').val(address.zip).addClass('valid');
-              $('#country_code').val(address.country).addClass('valid');
-              $('#city').val(address.city).addClass('valid');
-              $('#address_1').val(address.address_1).addClass('valid');
-              $('#address_2').val(address.address_2).addClass('valid');
-              $('#pending_payment_customer').val(address.id)
+      if (mondidoSettings.config.development == true){
 
-              if (address.address_2 === undefined || address.address_2 === null || isBlank(address.address_2)) {
-                  $('#address_2').addClass('hidden');
-              }
-              $('#row-customer-details').removeClass('hidden');
-              $('#row-ssn-details-error').addClass('hidden');
-          })
-          .fail(function(data) {
-              loading_ssn.addClass('hidden');
-              $('#row-ssn-details-error').removeClass('hidden');
-              $('#ow-ssn-details-loading').addClass('hidden');
-              $('#ssn').addClass('invalid');
-          })
-          .always(function() {
-          });
+          $('#row-ssn-details').removeClass('hidden');
+          $('#first_name').val("Development").addClass('valid');
+          $('#last_name').val("Development").addClass('valid');
+          $('#zip').val("zip Development").addClass('valid');
+          $('#country_code').val("SWE").addClass('valid');
+          $('#city').val("city Development").addClass('valid');
+          $('#address_1').val("address_1 Development").addClass('valid');
+          $('#address_2').val("address_2 Development").addClass('valid');
+          $('#pending_payment_customer').val("123");
+
+          $('#row-customer-details').removeClass('hidden');
+          $('#row-ssn-details-error').addClass('hidden');
+
+      } else {
+        var jqxhr = $.get( ssn_url, function() {
+            }).done(function(address) {
+                $('#row-ssn-details').removeClass('hidden');
+                $('#first_name').val(address.first_name).addClass('valid');
+                $('#last_name').val(address.last_name).addClass('valid');
+                $('#zip').val(address.zip).addClass('valid');
+                $('#country_code').val(address.country).addClass('valid');
+                $('#city').val(address.city).addClass('valid');
+                $('#address_1').val(address.address_1).addClass('valid');
+                $('#address_2').val(address.address_2).addClass('valid');
+                $('#pending_payment_customer').val(address.id);
+
+                if (address.address_2 === undefined || address.address_2 === null || isBlank(address.address_2)) {
+                    $('#address_2').addClass('hidden');
+                }
+                $('#row-customer-details').removeClass('hidden');
+                $('#row-ssn-details-error').addClass('hidden');
+            })
+            .fail(function(data) {
+                loading_ssn.addClass('hidden');
+                $('#row-ssn-details-error').removeClass('hidden');
+                $('#ow-ssn-details-loading').addClass('hidden');
+                $('#ssn').addClass('invalid');
+            })
+            .always(function() {
+            });
+        }
       }
 
       $('#btn-get-address').on('click',function(e){

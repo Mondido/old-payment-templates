@@ -145,87 +145,83 @@
                             <div class="row spacer" id="row-email">
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <input type="text" coolname="E-post" class="form-control next-email" min="3" max="255" id="email" name="email" placeholder="E-post" tabindex="1" value="{{ transaction.payment_details.email }}"/>
-                                         <label for="email">Din e-postadress</label>
+                                        <input type="text" coolname="E-post" class="form-control next-email mulang" min="3" max="255" id="email" name="email" placeholder="Your email address" tabindex="1" value="{{ transaction.payment_details.email }}"/>
+                                         <label for="email" data-mulang="your_email_address" class="mulang">Your email address</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="row hidden spacer" id="row-phone-details">
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <input data-numeric type="text" class="form-control next-phone" id="phone" name="phone" placeholder="Telefonnummer" value="{{ transaction.payment_details.phone }}" maxlength="20" tabindex="2" coolname="Telefonnummer" />
-                                         <label for="phone">Ditt telefonnummer</label>
+                                        <input data-numeric type="text" class="form-control next-phone mulang" id="phone" name="phone" placeholder="Your phone number" value="{{ transaction.payment_details.phone }}" maxlength="20" tabindex="2" coolname="Telefonnummer" />
+                                         <label for="phone" data-mulang="your_phone_number" class="mulang">Your phone number</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="row hidden spacer" id="row-ssn-details">
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <input data-numeric type="tel" class="form-control next-ssn" id="ssn" name="ssn" placeholder="ååååmmdd ••••" value="{{ transaction.payment_details.ssn }}" maxlength="13" tabindex="3" coolname="Personnummer" />
-                                         <label for="ssn">Ditt personnummer</label>
+                                        <input data-numeric type="tel" class="form-control next-ssn mulang" id="ssn" name="ssn" placeholder="ååååmmdd ••••" value="{{ transaction.payment_details.ssn }}" maxlength="13" tabindex="3" coolname="Personnummer" />
+                                         <label for="ssn" data-mulang="your_social_security_number" class="mulang">Your Social Security number</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="row hidden" id="row-ssn-details-loading">
                                 <div class="row">
-                                    <div class="col-xs-12" id="loading">
-                                        Laddar adress:
+                                    <div class="col-xs-12" id="loading" data-mulang="loading" class="mulang">
+                                        Loading
                                         <img src="https://cdn-02.mondido.com/www/img/loading.gif" alt="Loading..."/>
                                     </div>
                                 </div>
                             </div>
                             <div class="row hidden" id="row-ssn-details-error">
                                 <div class="row">
-                                    <div class="col-xs-12 error try-again">
-                                        Din adress kunde inte hämtas. Kontrollera att du har skrivit rätt personnummer.
-                                        Exempel 198605141234
+                                    <div class="col-xs-12 error" data-mulang="invlice_address_could_not_be_retrieved" class="mulang">
+                                        Your address could not be retrieved . Check that you have entered the correct Social Security number. Example 198605141234
                                     </div>
                                 </div>
                             </div>
                             <div class="row hidden" id="row-customer-details">
                                 <div class="row">
                                     <div class="col-xs-6">
-                                        <input type="text" coolname="Förnamn" class="form-control" min="1" max="12" id="first_name" name="first_name" placeholder="Förnamn" tabindex="4" value="{{ transaction.payment_details.mask_first_name }}" disabled/>
+                                        <input type="text" data-mulang="first_name:placeholder"  coolname="Förnamn" class="form-control mulang" min="1" max="12" id="first_name" name="first_name" placeholder="First name" tabindex="4" value="{{ transaction.payment_details.mask_first_name }}" disabled/>
                                     </div>
                                     <div class="col-xs-6">
-                                        <input type="text" coolname="Efternamn" class="form-control" min="1" max="12" id="last_name" name="last_name" placeholder="Efternamn" tabindex="4" value="{{ transaction.payment_details.mask_last_name }}" disabled/>
+                                        <input type="text" data-mulang="last_name:placeholder" coolname="Efternamn" class="form-control mulang" min="1" max="12" id="last_name" name="last_name" placeholder="Last name" tabindex="4" value="{{ transaction.payment_details.mask_last_name }}" disabled/>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="address">
-                                            <input data-text type="text" class="form-control" id="address_1" name="address_1" value="{{ transaction.payment_details.mask_address_1 }}" maxlength="255" placeholder="Gatuadress" tabindex="5" coolname="Adress 1" disabled/>
+                                            <input data-text data-mulang="address:placeholder"  type="text" class="form-control mulang" id="address_1" name="address_1" value="{{ transaction.payment_details.mask_address_1 }}" maxlength="255" placeholder="Address" tabindex="5" coolname="Adress 1" disabled/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="address">
-                                            <input data-text type="text" class="form-control" id="address_2" name="address_2" value="{{ transaction.payment_details.mask_address_2 }}" maxlength="255" placeholder="C/O Adress" tabindex="6" coolname="C/O adress" disabled/>
+                                            <input data-text data-mulang="co_adress:placeholder"  type="text" class="form-control mulang" id="address_2" name="address_2" value="{{ transaction.payment_details.mask_address_2 }}" maxlength="255" placeholder="C/O Adress" tabindex="6" coolname="C/O adress" disabled/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-6">
-                                        <input type="text" coolname="Postnummer" class="form-control" min="5" max="12" id="zip" name="zip" placeholder="Postnummer" tabindex="7" value="{{ transaction.payment_details.mask_zip }}" disabled/>
+                                        <input type="text" data-mulang="zip:placeholder"  coolname="Postnummer" class="form-control mulang" min="5" max="12" id="zip" name="zip" placeholder="zip" tabindex="7" value="{{ transaction.payment_details.mask_zip }}" disabled/>
                                     </div>
                                     <div class="col-xs-6">
-                                        <input type="text" coolname="Stad" class="form-control" min="1" max="255" id="city" name="city" placeholder="Stad" tabindex="8" value="{{ transaction.payment_details.mask_city }}" disabled/>
-                                    </div>
-                                    <div class="col-xs-12">
-                                        <input type="checkbox" coolname="accept" class="form-control" id="accept" name="accept" placeholder="jag accepterar" tabindex="9" style="width:15px;display:inline;"/>
-                                        Ja, jag accepterar
-                                        <a target="_new" href="https://www.collector.se/upload/Partners/Agreements/SUCUSE/Credit_terms_All_SE.pdf">
-                                            Allmänna villkor för faktura och kontokredit
-                                        </a>
-                                        och
-                                        <a target="_new" href="http://www.collector.se/upload/Partners/Agreements/SUCUSE/SECCI_SE.pdf">
-                                            Standardiserad Europeisk konsumentkreditinformation
-                                        </a>
-                                        , samt
-                                        <a target="_new" class="m-layout-terms_and_conditions_url">
-                                            köpvillkor hos <span class="m-layout-name"></span>
-                                        </a>
+                                        <input type="text" data-mulang="city:placeholder" coolname="Stad" class="form-control mulang" min="1" max="255" id="city" name="city" placeholder="City" tabindex="8" value="{{ transaction.payment_details.mask_city }}" disabled/>
+                                    </div><br />
+                                    <div class="col-xs-12"><br /><br />
+                                        <input type="checkbox" data-mulang="i_accept:placeholder" coolname="accept" class="form-control mulang" id="accept" name="accept" placeholder="I accept" tabindex="9" style="width:15px;display:inline;"/>
+                                        <span class="mulang" data-mulang="invoice_accept_conditions">
+                                            Yes, I have read and accept Collector Bank\'s  
+                                            <a target="_new" href="https://www.collector.se/upload/Partners/Agreements/SUCUSE/Credit_terms_All_SE.pdf"> 
+                                            General Conditions For Invoice And Credit Accounts </a>
+                                             and
+                                             <a target="_new" href="http://www.collector.se/upload/Partners/Agreements/SUCUSE/SECCI_SE.pdf"> Standardised European Consumer Credit Information </a> , 
+                                             and <a target="_new" class="m-layout-terms_and_conditions_url"> 
+                                             Conditions <span class="m-layout-name"></span> </a>
+                                        </span>
                                     </div>
                                 </div>
                                 <input data-mulang="pay_button:value" id="paybtn" class="btn btn-lg btn-success btn-block mulang" type="submit" value="Pay" tabindex="9"/>
@@ -233,10 +229,10 @@
 
                             <div class="row footer comodotext" id="invoice_foot">
                                 <img src="https://www.collector.se/img/logos/collector-bank.svg" alt="faktura från Collector">
-                                <p>
-                                    När du väljer faktura får du hem dina varor innan du betalar. Du kan sedan välja att betala hela beloppet på en gång eller dela upp betalningen i mindre delar. För att kunna handla med Collectors faktura ska du vara minst 18 år. Fakturan kommer att skickas per e-post. Mer information hittar du på
-                                    <a target="_new" href="https://www.collector.se">https://www.collector.se</a>
-                                </p>
+                                <br />
+                                <span class="mulang" data-mulang="invoice_footer_conditions">
+                                    When you select the invoice you will receive your goods before you pay. You can then choose to pay the whole amount at once or split the payment into smaller parts . In order to deal with the bill collectors will be at least 18 years. The invoice will be sent by e-mail. More information can be found at
+                                </span> <br /><a target="_new" href="https://www.collector.se">https://www.collector.se</a>
                             </div>
                         </form>
                         <!--
@@ -387,7 +383,9 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
             </div>
 
                  <div class="col-md-3"></div>
-                    Powered by <img class="logo" src="https://cdn-02.mondido.com/www/img/mondido-2015.png?1462876334" alt="Logo" />
+
+                 <span class="mulang" data-mulang="powered_by">Powered by</span>
+                 <img class="logo" src="https://cdn-02.mondido.com/www/img/mondido-2015.png?1462876334" alt="Logo" />
                 <div class="col-md-3"></div>
    
         </div>
