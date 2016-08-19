@@ -63,6 +63,7 @@
                 <div data-mulang="choose_payment_option" class="row text-center choose mulang">
                     Please choose payment option
                 </div>
+
                 <!-- ######### Nav tabs ######### -->
                 <div role="tabpanel">
                     <ul id="myTab" class="nav nav-tabs" role="tablist" >
@@ -70,8 +71,8 @@
                             <a href="#credit_card_tab" aria-controls="credit_card_tab" role="tab" data-toggle="tab" class="card-tab">
                                 <img src="https://mondido.s3.amazonaws.com/www/img/cards/mc-visa_payment_logo.png" alt="Visa/MasterCard">
                                 <br>
-                                <small>
-                                    Kortbetalning
+                                <small data-mulang="card_payment" class="mulang">
+                                    Card
                                 </small>
                                 <div class="mrk">
                                 </div>
@@ -80,7 +81,7 @@
                         <li role="presentation" class="swish_tab" style="display:none;">
                             <a href="#swish_tab" aria-controls="swish_tab" role="tab" data-toggle="tab"><img src="https://d3isqtzzzuv2nl.cloudfront.net/www/img/swish-logo.png" alt="Swish">
                                 <br>
-                                <small>Swish</small>
+                                <small data-mulang="swish_payment" class="mulang">Swish</small>
                                 <div class="mrk"></div>
                             </a>
                         </li>
@@ -88,8 +89,8 @@
                             <a href="#trustly_tab" aria-controls="trustly_tab" role="tab" data-toggle="tab">
                                 <img src="https://s3-eu-west-1.amazonaws.com/mondido-dev/tmp/Trustly.png" alt="Trustly">
                                 <br>
-                                <small>
-                                    Bankbetalning
+                                <small data-mulang="bank_payment" class="mulang">
+                                    Bank
                                 </small>
                                 <div class="mrk">
                                 </div>
@@ -99,7 +100,7 @@
                             <a href="#paypal_tab" aria-controls="paypal_tab" role="tab" data-toggle="tab">
                                 <img src="https://mondido.s3.amazonaws.com/merchants/1/63/original/paypal-1.png?1459615937" alt="PayPal">
                                 <br>
-                                <small>
+                                <small data-mulang="paypal_payment" class="mulang">
                                     PayPal
                                 </small>
                                 <div class="mrk">
@@ -111,8 +112,8 @@
                                 <i class="fa fa-file-text-o">
                                 </i>
                                 <br>
-                                <small>
-                                    Faktura
+                                <small data-mulang="invoice_payment" class="mulang">
+                                    Invoice
                                 </small>
                                 <div class="mrk">
                                 </div>
@@ -227,7 +228,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <input id="paybtn" class="btn btn-lg btn-success btn-block" type="submit" value="Slutför köp" tabindex="9"/>
+                                <input data-mulang="pay_button:value" id="paybtn" class="btn btn-lg btn-success btn-block" type="submit" value="Slutför köp" tabindex="9"/>
                             </div>
 
                             <div class="row footer comodotext" id="invoice_foot">
