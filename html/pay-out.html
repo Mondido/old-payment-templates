@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!-- Mondido PayOut v1.1, (c) Mondido Payments AB 2016, hello@mondido.com -->
+        <!-- Mondido PayOut v1.3, (c) Mondido Payments AB 2016, hello@mondido.com -->
         <script>
             var mondidoSettings = {
                 supportedCards: {
@@ -20,7 +20,13 @@
                     {name: 'credit_card_tab', active: true, currencies:['all'], countries:['all']},
                     {name: 'paypal_tab', active: true, currencies:['all'], countries:['all']},
                     {name: 'trustly_tab', active: true, currencies:['all'], countries:['all','se','at','be','bg','hr','cz','cy','dk','ee','fi','fr','de','gr','hu','ie','it','lv','lt','lu','mt','nl','no','pl','pt','ro','sk','si','es','gb']},
-                    {name: 'invoice_tab', active: true, currencies:['all'], countries:['all','se']}
+                    {name: 'invoice_tab', active: true, currencies:['all'], countries:['all','se'],
+                        segmentation: {
+                            b2b: true, 
+                            b2c: true,
+                            defualt: "b2c"
+                        }
+                    }
                 ],
                 metadata: '{{ transaction.metadata | replace: "\'", "" }}',
                 activePaymentMethod: 'credit_card_tab',
@@ -31,7 +37,7 @@
                     terms_and_conditions_url: "https://www.mondido.com/terms",
                 },
                 config: {
-                    development: false,
+                    development: true,
                     system: {
                         endpoint: "https://pay.mondido.com/v1/",
                         log: false,
@@ -47,12 +53,13 @@
                 //problems:[{type: 'swish', message: 'Swish is out of order'},{type: 'credit_card', issuer: 'nordea', message: 'Nordea kräver 3D Secure'}]
                 mondidoSettings.systemInfo = document.Mondido.systemInfo;
             }
+
         </script>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="robots" content="noindex, nofollow"/>
         <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdn-02.mondido.com/www/css/multi.1.5.css" rel="stylesheet" />
+        <link href="css/multi.1.5.css" rel="stylesheet" />
         <title>Payment</title>
     </head>
 
@@ -142,6 +149,18 @@
                             <input type="hidden" id="payment_method" name="payment_method"/>
                             <input type="hidden" id="country_code" name="country_code" value="{{ transaction.payment_details.country_code }}"/>
                             <input type="hidden" id="pending_payment_customer" name="pending_payment_customer"/>
+                            <input type="hidden" id="segmentation" name="segmentation"/>
+
+                            <div class="row spacer" id="segmentation_toggle">
+                              <div class="row  pull-right">
+                                    <div class="col-xs-12">
+                                        <select id="segmentation_select" name="sweets">
+                                          <option value="b2c"><span class="mulang" data-mulang="individual">Individual</span></option>
+                                          <option value="b2b"><span class="mulang" data-mulang="business">Business</span></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row spacer" id="row-email">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -182,34 +201,41 @@
                                 </div>
                             </div>
                             <div class="row hidden" id="row-customer-details">
-                                <div class="row">
+                                <div class="row" style="margin: 5px;">
                                     <div class="col-xs-6">
                                         <input type="text" data-mulang="first_name:placeholder"  coolname="Förnamn" class="form-control mulang" min="1" max="12" id="first_name" name="first_name" placeholder="First name" tabindex="4" value="{{ transaction.payment_details.mask_first_name }}" disabled/>
+                                        <label for="first_name" data-mulang="first_name" class="mulang">First name</label>
                                     </div>
                                     <div class="col-xs-6">
                                         <input type="text" data-mulang="last_name:placeholder" coolname="Efternamn" class="form-control mulang" min="1" max="12" id="last_name" name="last_name" placeholder="Last name" tabindex="4" value="{{ transaction.payment_details.mask_last_name }}" disabled/>
+                                        <label for="last_name" data-mulang="last_name" class="mulang">Last name</label>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row" style="margin: 5px;">
                                     <div class="col-xs-12">
                                         <div class="address">
                                             <input data-text data-mulang="address:placeholder"  type="text" class="form-control mulang" id="address_1" name="address_1" value="{{ transaction.payment_details.mask_address_1 }}" maxlength="255" placeholder="Address" tabindex="5" coolname="Adress 1" disabled/>
+                                            <label for="address_1" data-mulang="address" class="mulang">Address</label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row" style="margin: 5px;">
                                     <div class="col-xs-12">
                                         <div class="address">
                                             <input data-text data-mulang="co_adress:placeholder"  type="text" class="form-control mulang" id="address_2" name="address_2" value="{{ transaction.payment_details.mask_address_2 }}" maxlength="255" placeholder="C/O Adress" tabindex="6" coolname="C/O adress" disabled/>
+                                            <label for="address_2" data-mulang="co_adress" class="mulang">C/O Adress</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-6">
                                         <input type="text" data-mulang="zip:placeholder"  coolname="Postnummer" class="form-control mulang" min="5" max="12" id="zip" name="zip" placeholder="zip" tabindex="7" value="{{ transaction.payment_details.mask_zip }}" disabled/>
+                                        <label for="zip" data-mulang="zip" class="mulang">Zip code</label>
                                     </div>
                                     <div class="col-xs-6">
                                         <input type="text" data-mulang="city:placeholder" coolname="Stad" class="form-control mulang" min="1" max="255" id="city" name="city" placeholder="City" tabindex="8" value="{{ transaction.payment_details.mask_city }}" disabled/>
+                                        <label for="city" data-mulang="city" class="mulang">City</label>
+
                                     </div><br />
                                     <div class="col-xs-12"><br /><br />
                                         <input type="checkbox" data-mulang="i_accept:placeholder" coolname="accept" class="form-control mulang" id="accept" name="accept" placeholder="I accept" tabindex="9" style="width:15px;display:inline;"/>
@@ -369,26 +395,27 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
                                 <input data-mulang="paypal_btn:value" id="paybtn-paypal" class="mulang btn btn-lg btn-success btn-block" type="submit" value="Betala med PayPal" tabindex="5">
                             </div>
                         </form>
-
                     </div>
                     <!-- /paypal-->
-                </div>
 
-                <div class="row">
-                    <div class="col-md-3"></div>
-                    <div id="languages" class="row col-md-6"></div>
-                    <div class="col-md-3"></div>
                 </div>
-
             </div>
-
-                 <div class="col-md-3"></div>
-
-                 <span class="mulang" data-mulang="powered_by">Powered by</span>
-                 <img class="logo" src="https://cdn-02.mondido.com/www/img/mondido-2015.png?1462876334" alt="Logo" />
-                <div class="col-md-3"></div>
-   
         </div>
+        
+        <div class="row">
+            <div class="col-xs-12" style="text-align:center;">
+               <span class="" id="languages" ></span>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+         <div class="col-xs-12" style="text-align:center;">
+            <span class="mulang" data-mulang="powered_by">Powered by</span>
+            <img class="logo" src="https://cdn-02.mondido.com/www/img/mondido-2015.png?1462876334" alt="Logo" />
+         </div>
+         </div>
 
         <div data-mulang="failed_message" id="try-again" class="hidden mulang">
             Your payment was declined, please try again with a new card or verify your numbers.

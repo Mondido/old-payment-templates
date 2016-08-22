@@ -11,6 +11,20 @@
     if (mondidoSettings.config.development == true){
       do_log("Development mode is on");
     }
+
+    if (typeof Mondido === "undefined") {
+      console.log("Error could not load Mondido object");
+      Mondido = {
+        token: "Mondido",
+        transaction: {
+          id: "0"
+        },
+        merchant: {
+          id: "0"
+        }
+      };
+    }
+
   })(jQuery);
 
 
@@ -968,6 +982,60 @@
   });
 
   $(document).ready(function(){
+
+      invoice = $.grep(mondidoSettings.supportedPaymentMethods, function(e){ return e.name == "invoice_tab"; });
+      segmentation = invoice[0].segmentation;
+
+      if (invoice[0].segmentation.b2b == true && invoice[0].segmentation.b2c == true){
+        $('#segmentation_toggle').removeClass('hidden');
+
+        $( "select#segmentation_select" ).change(function () {
+          var str = "";
+
+        $( "select option:selected" ).each(function() {
+          str += $( this ).val();
+        });
+
+        $('#segmentation').val(str);
+          set_segmentation(str);
+        });
+
+        if (isBlank($('#segmentation').val())){
+          $('#segmentation').val(segmentation.defualt);
+        }
+
+      } else {
+
+
+        if (invoice[0].segmentation.b2c == true){
+          $('#row-ssn-details').removeClass('hidden');
+
+          $('#first_name').addAttr("disabled");
+          $('#last_name').addAttr("disabled");
+          $('#zip').addAttr("disabled");
+          $('#city').addAttr("disabled");
+          $('#address_1').addAttr("disabled");
+          $('#address_2').addAttr("disabled");
+
+          $('#segmentation').val("b2c");
+          $('#segmentation').addClass('hidden');
+        } else {
+          $('#segmentation').val("b2b");
+          $('#segmentation').addClass('hidden');
+        }
+      }
+
+      function set_segmentation(segmentation){
+        $('#ssn').val("");
+        $('#row-customer-details').addClass('hidden');
+        $('#first_name').val("");
+        $('#last_name').val("");
+        $('#zip').val("");
+        $('#city').val("");
+        $('#address_1').val("");
+        $('#address_2').val("");
+      }
+
       var ssn_on_load = $('#ssn').val();
 
       var lastKey = null;
@@ -984,80 +1052,92 @@
           var ssn = ssn_value;
           var is_test = 'true';
           var country_code = $('#country_code').val();
+
           if(ssn.length === 12){
               ssn = ssn.slice(2);
           }
 
           if (isSwedishSocialSecurityNumber(ssn_on_load)){
-          var first_name =  $('#first_name').val();
-          var last_name = $('#last_name').val();
-          var zip = $('#zip').val();
-          var city = $('#city').val();
-          var address_1 = $('#address_1').val();
+            var first_name =  $('#first_name').val();
+            var last_name = $('#last_name').val();
+            var zip = $('#zip').val();
+            var city = $('#city').val();
+            var address_1 = $('#address_1').val();
 
-          if (!isBlank(first_name) && !isBlank(last_name) && !isBlank(zip) && !isBlank(city) && !isBlank(address_1)) {
+            if (!isBlank(first_name) && !isBlank(last_name) && !isBlank(zip) && !isBlank(city) && !isBlank(address_1)) {
               $('#row-ssn-details').removeClass('hidden');
               $('#row-customer-details').removeClass('hidden');
               $('#ow-ssn-details-loading').addClass('hidden');
               ssn_on_load = 0;
               return true;
-          }
-          }
-
-          if (typeof Mondido === "undefined") {
-              console.log("Error could not load Mondido object");
-              Mondido = {
-                  token: "Mondido",
-                  transaction: {
-                  id: "0"
-                  },
-                  merchant: {
-                  id: "0"
-                  }
-              };
+            }
           }
 
       var ssn_url = api_url+"ssn?token="+Mondido.token+"&transaction_id="+Mondido.transaction.id+"&merchant_id="+Mondido.merchant.id+"&test="+is_test+"&ssn="+ssn+"&country="+country_code;
 
-      if (mondidoSettings.config.development == true){
+      if (mondidoSettings.config.development == true || $('#segmentation').val() == "b2b"){
+        $('#row-ssn-details').removeClass('hidden');
 
+        if ($('#segmentation').val() == "b2b"){
           $('#row-ssn-details').removeClass('hidden');
-          $('#first_name').val("Development").addClass('valid');
-          $('#last_name').val("Development").addClass('valid');
-          $('#zip').val("zip Development").addClass('valid');
+
+          $('#first_name').removeAttr("disabled");
+          $('#last_name').removeAttr("disabled");
+          $('#zip').removeAttr("disabled");
+          $('#city').removeAttr("disabled");
+          $('#address_1').removeAttr("disabled");
+          $('#address_2').removeAttr("disabled");
+
+        } else {
+
+          $('#first_name').val("first_name - Development").addClass('valid');
+          $('#last_name').val("last_name - Development").addClass('valid');
+          $('#zip').val("zip - Development").addClass('valid');
           $('#country_code').val("SWE").addClass('valid');
-          $('#city').val("city Development").addClass('valid');
-          $('#address_1').val("address_1 Development").addClass('valid');
-          $('#address_2').val("address_2 Development").addClass('valid');
-          $('#pending_payment_customer').val("123");
+          $('#city').val("city - Development").addClass('valid');
+          $('#address_1').val("address_1 - Development").addClass('valid');
+          $('#address_2').val("address_2 - Development").addClass('valid');
+          $('#pending_payment_customer').val("");
+
+        }
 
           $('#row-customer-details').removeClass('hidden');
           $('#row-ssn-details-error').addClass('hidden');
-
+  
       } else {
+
+        $('#first_name').addAttr("disabled");
+        $('#last_name').addAttr("disabled");
+        $('#zip').addAttr("disabled");
+        $('#city').addAttr("disabled");
+        $('#address_1').addAttr("disabled");
+        $('#address_2').addAttr("disabled");
+    
         var jqxhr = $.get( ssn_url, function() {
             }).done(function(address) {
-                $('#row-ssn-details').removeClass('hidden');
-                $('#first_name').val(address.first_name).addClass('valid');
-                $('#last_name').val(address.last_name).addClass('valid');
-                $('#zip').val(address.zip).addClass('valid');
-                $('#country_code').val(address.country).addClass('valid');
-                $('#city').val(address.city).addClass('valid');
-                $('#address_1').val(address.address_1).addClass('valid');
-                $('#address_2').val(address.address_2).addClass('valid');
-                $('#pending_payment_customer').val(address.id);
 
-                if (address.address_2 === undefined || address.address_2 === null || isBlank(address.address_2)) {
-                    $('#address_2').addClass('hidden');
-                }
-                $('#row-customer-details').removeClass('hidden');
-                $('#row-ssn-details-error').addClass('hidden');
+              $('#row-ssn-details').removeClass('hidden');
+              $('#first_name').val(address.first_name).addClass('valid');
+              $('#last_name').val(address.last_name).addClass('valid');
+              $('#zip').val(address.zip).addClass('valid');
+              $('#country_code').val(address.country).addClass('valid');
+              $('#city').val(address.city).addClass('valid');
+              $('#address_1').val(address.address_1).addClass('valid');
+              $('#address_2').val(address.address_2).addClass('valid');
+              $('#pending_payment_customer').val(address.id);
+
+              if (address.address_2 === undefined || address.address_2 === null || isBlank(address.address_2)) {
+                $('#address_2').addClass('hidden');
+              }
+
+              $('#row-customer-details').removeClass('hidden');
+              $('#row-ssn-details-error').addClass('hidden');
             })
             .fail(function(data) {
-                loading_ssn.addClass('hidden');
-                $('#row-ssn-details-error').removeClass('hidden');
-                $('#ow-ssn-details-loading').addClass('hidden');
-                $('#ssn').addClass('invalid');
+              loading_ssn.addClass('hidden');
+              $('#row-ssn-details-error').removeClass('hidden');
+              $('#ow-ssn-details-loading').addClass('hidden');
+              $('#ssn').addClass('invalid');
             })
             .always(function() {
             });
@@ -1065,20 +1145,13 @@
       }
 
       $('#btn-get-address').on('click',function(e){
-          var ssn=$('#ssn').val();
-          ssn_lookup(ssn);
+        var ssn=$('#ssn').val();
+        ssn_lookup(ssn);
       });
 
-      $("#trustlyform").attr(
-              "action", $("#mondidopayform").attr("action")
-      );
-      $("#swishform").attr(
-              "action", $("#mondidopayform").attr("action")
-      );
-      $("#paypalform").attr(
-              "action", $("#mondidopayform").attr("action")
-      );
-
+      $("#trustlyform").attr("action", $("#mondidopayform").attr("action"));
+      $("#swishform").attr("action", $("#mondidopayform").attr("action"));
+      $("#paypalform").attr("action", $("#mondidopayform").attr("action"));
 
       $('#myTab a').click(function (e) {
           e.preventDefault();
@@ -1098,7 +1171,9 @@
           }
           $(this).tab('show');
       });
+
       $('#myTab li[class="active"] a').trigger('click');
+
       $.changeFocus = function(object){
           // Enable Pay Button
           if(object.attr("id")=="card_cvv"){
@@ -1387,8 +1462,6 @@
       $("#errors").hide();
       $('.card-tab').tab('show');
   }
-
-
 
   // payment card scripts
   (function() {
