@@ -10,7 +10,7 @@ Changelog
 - Add update translations
 - Add more config options
 - Add fontawesome
-- Update invoic implementation
+- Update invoice implementation
 
 - V1.1
 - Added css, js files to repo
