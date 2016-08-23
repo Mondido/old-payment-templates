@@ -63,6 +63,11 @@ form.go-bottom input.form-control, form.go-bottom textarea {
   padding: 8px 12px;
   outline: 0;
 }
+
+form.go-bottom input.form-control:disabled {
+  background: white;
+}
+
 form.go-bottom input.form-control:valid, form.go-bottom textarea.form-control:valid {
   background: white;
 }
