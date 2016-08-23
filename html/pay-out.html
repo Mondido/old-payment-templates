@@ -355,9 +355,7 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
 
                         <base target="_top">
                             <iframe src="" name="trustly" width="95%" height="400" style="border: 0"></iframe>
-                            <a href="https://trustly.com/en/whatistrustly" target="_blank">
-                                What is Trustly?
-                            </a>
+                            <div class="mulang" data-mulang="what_is_trustly">What is Trustly?</div>
                         </base>
                         <!--
                         ######### Trustly #########
@@ -369,12 +367,12 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
                         <form action="" class="form-signin go-bottom" id="swishform" method="post" role="form">
                             <input type="hidden" name="swish" value="1" />
                             <div class="row">
-                                <div>Här kan du enkelt betala med Swish i mobilen</div>
+                                <div class="mulang" data-mulang="easily_pay_with_swish_mobile">Pay with Swish Mobile</div>
                                 <img class="swish-img" src="https://d3isqtzzzuv2nl.cloudfront.net/www/img/swish_tre_mobiler.png" alt="Swish"/>
                             </div>
                             <div class="row spacer col-xs-12">
                                 <input novalidate type="tel" autocomplete="cc-number" class="form-control cc-number" id="swish_number" name="swish_number" placeholder="4670112233" value="" tabindex="1" coolname="Telefonnummer" autofocus="true" />
-                                <label for="swish_number">Ditt mobilnummer</label>
+                                <label for="swish_number" class="mulang" data-mulang="your_mobile_number">>Your mobile number</label>
                             </div>
                             <div class="row spacer">
                                 <input id="paybtn-swish" class="btn btn-lg btn-success btn-block" type="submit" value="Betala" tabindex="5">
@@ -388,7 +386,7 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
                         <form action="" class="form-signin" id="paypalform" method="post" role="form">
                             <input type="hidden" name="paypal" value="1" />
                             <div class="row spacer">
-                                <div class="mulang" data-mulang="paypal_hl">Här kan du enkelt betala med PayPal</div>
+                                <div class="mulang" data-mulang="paypal_hl">Pay easily with PayPal</div>
                                 <img class="paypal-img" src="https://cdn-02.mondido.com/www/img/paypal-1.png?1459615937" alt="PayPal logo"/>
                             </div>
                             <div class="row spacer">
