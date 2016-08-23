@@ -1006,16 +1006,15 @@
 
       } else {
 
-
         if (invoice[0].segmentation.b2c == true){
           $('#row-ssn-details').removeClass('hidden');
 
-          $('#first_name').addAttr("disabled");
-          $('#last_name').addAttr("disabled");
-          $('#zip').addAttr("disabled");
-          $('#city').addAttr("disabled");
-          $('#address_1').addAttr("disabled");
-          $('#address_2').addAttr("disabled");
+          $('#first_name').attr('disabled', 'disabled');
+          $('#last_name').attr('disabled', 'disabled');
+          $('#zip').attr('disabled', 'disabled');
+          $('#city').attr('disabled', 'disabled');
+          $('#address_1').attr('disabled', 'disabled');
+          $('#address_2').attr('disabled', 'disabled');
 
           $('#segmentation').val("b2c");
           $('#segmentation').addClass('hidden');
@@ -1099,19 +1098,19 @@
           $('#address_2').val("address_2 - Development").addClass('valid');
           $('#pending_payment_customer').val("");
 
+          $('#first_name').attr('disabled', 'disabled');
+          $('#last_name').attr('disabled', 'disabled');
+          $('#zip').attr('disabled', 'disabled');
+          $('#city').attr('disabled', 'disabled');
+          $('#address_1').attr('disabled', 'disabled');
+          $('#address_2').attr('disabled', 'disabled');
+
         }
 
           $('#row-customer-details').removeClass('hidden');
           $('#row-ssn-details-error').addClass('hidden');
   
       } else {
-
-        //$('#first_name').addAttr("disabled");
-        //$('#last_name').addAttr("disabled");
-        //$('#zip').addAttr("disabled");
-        //$('#city').addAttr("disabled");
-        //$('#address_1').addAttr("disabled");
-        //$('#address_2').addAttr("disabled");
     
         var jqxhr = $.get( ssn_url, function() {
             }).done(function(address) {
@@ -1132,6 +1131,8 @@
 
               $('#row-customer-details').removeClass('hidden');
               $('#row-ssn-details-error').addClass('hidden');
+
+               $('#ssn').addClass('valid');
             })
             .fail(function(data) {
               loading_ssn.addClass('hidden');
@@ -1140,6 +1141,14 @@
               $('#ssn').addClass('invalid');
             })
             .always(function() {
+              if ($('#segmentation').val() == "b2c"){
+                $('#first_name').attr('disabled', 'disabled');
+                $('#last_name').attr('disabled', 'disabled');
+                $('#zip').attr('disabled', 'disabled');
+                $('#city').attr('disabled', 'disabled');
+                $('#address_1').attr('disabled', 'disabled');
+                $('#address_2').attr('disabled', 'disabled');
+              }
             });
         }
       }
