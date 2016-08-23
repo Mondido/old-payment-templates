@@ -5,6 +5,13 @@ https://www.mondido.com/en
 html/pay-out.html
 
 Changelog
+- v1.3.1
+- Fix css/js bugs
+- Add update translations
+- Add more config options
+- Add fontawesome
+- Update invoic implementation
+
 - V1.1
 - Added css, js files to repo
 - Fixed bugs with hiding/showing paybutton and loader

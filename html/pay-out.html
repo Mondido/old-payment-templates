@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!-- Mondido PayOut v1.3, (c) Mondido Payments AB 2016, hello@mondido.com -->
+        <!-- Mondido PayOut v1.3.1, (c) Mondido Payments AB 2016, hello@mondido.com -->
         <script>
             var mondidoSettings = {
                 supportedCards: {
@@ -16,7 +16,7 @@
                     discover: {active: false}
                 },
                 supportedPaymentMethods: [
-                    {name: 'swish_tab', active: true, currencies:['sek'], countries:['all']},
+                    {name: 'swish_tab', active: false, currencies:['sek'], countries:['all']},
                     {name: 'credit_card_tab', active: true, currencies:['all'], countries:['all']},
                     {name: 'paypal_tab', active: true, currencies:['all'], countries:['all']},
                     {name: 'trustly_tab', active: true, currencies:['all'], countries:['all','se','at','be','bg','hr','cz','cy','dk','ee','fi','fr','de','gr','hu','ie','it','lv','lt','lu','mt','nl','no','pl','pt','ro','sk','si','es','gb']},
@@ -41,8 +41,8 @@
                     system: {
                         endpoint: "https://pay.mondido.com/v1/",
                         log: false,
-                        payment_js_endpoint: "https://cdn-02.mondido.com/www/js/mondido.payment.1.13.js",
-                        lang_endpoint: "https://cdn-02.mondido.com/www/js/lang.1.6.js",
+                        payment_js_endpoint: "https://cdn-02.mondido.com/www/js/mondido.payment.1.13.1.js",
+                        lang_endpoint: "https://cdn-02.mondido.com/www/js/lang.1.6.1.js",
                         bootstrap_endpoint: "https://cdn-02.mondido.com/www/js/bootstrap.min.js?v=3.0",
                         jquery_endpoint: "https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js",
                         fontawesome: "https://use.fontawesome.com/c66b4c0ee0.js"
@@ -60,7 +60,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="robots" content="noindex, nofollow"/>
         <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdn-02.mondido.com/www/css/multi.1.6.css" rel="stylesheet" />
+        <link href="https://cdn-02.mondido.com/www/css/multi.1.6.1.css" rel="stylesheet" />
         <title>Payment</title>
     </head>
 
