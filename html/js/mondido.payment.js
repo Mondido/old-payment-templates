@@ -1106,12 +1106,12 @@
   
       } else {
 
-        $('#first_name').addAttr("disabled");
-        $('#last_name').addAttr("disabled");
-        $('#zip').addAttr("disabled");
-        $('#city').addAttr("disabled");
-        $('#address_1').addAttr("disabled");
-        $('#address_2').addAttr("disabled");
+        //$('#first_name').addAttr("disabled");
+        //$('#last_name').addAttr("disabled");
+        //$('#zip').addAttr("disabled");
+        //$('#city').addAttr("disabled");
+        //$('#address_1').addAttr("disabled");
+        //$('#address_2').addAttr("disabled");
     
         var jqxhr = $.get( ssn_url, function() {
             }).done(function(address) {
