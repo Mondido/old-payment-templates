@@ -1,46 +1,45 @@
   // v 1.13.1
 
-  // Mondido settings
-  (function($) {
-    var do_log = function(str){
-      if(window.console){
-        console.log(str);
+// Mondido settings
+(function($) {
+  var do_log = function(str){
+    if(window.console){
+      console.log(str);
+    }
+  };
+
+  if (mondidoSettings.config.development == true){
+    do_log("Development mode is on");
+  }
+
+  if (typeof Mondido === "undefined") {
+    console.log("Error could not load Mondido object");
+    Mondido = {
+      token: "Mondido",
+      transaction: {
+        id: "0"
+      },
+      merchant: {
+        id: "0"
       }
     };
+  }
 
-    if (mondidoSettings.config.development == true){
-      do_log("Development mode is on");
-    }
+})(jQuery);
 
-    if (typeof Mondido === "undefined") {
-      console.log("Error could not load Mondido object");
-      Mondido = {
-        token: "Mondido",
-        transaction: {
-          id: "0"
-        },
-        merchant: {
-          id: "0"
-        }
-      };
-    }
+/*
+    jQuery Masked Input Plugin
+    Copyright (c) 2007 - 2014 Josh Bush (digitalbush.com)
+    Licensed under the MIT license (http://digitalbush.com/projects/masked-input-plugin/#license)
+    Version: 1.4.0
+*/
+!function(a){"function"==typeof define&&define.amd?define(["jquery"],a):a("object"==typeof exports?require("jquery"):jQuery)}(function(a){var b,c=navigator.userAgent,d=/iphone/i.test(c),e=/chrome/i.test(c),f=/android/i.test(c);a.mask={definitions:{9:"[0-9]",a:"[A-Za-z]","*":"[A-Za-z0-9]"},autoclear:!0,dataName:"rawMaskFn",placeholder:"_"},a.fn.extend({caret:function(a,b){var c;if(0!==this.length&&!this.is(":hidden"))return"number"==typeof a?(b="number"==typeof b?b:a,this.each(function(){this.setSelectionRange?this.setSelectionRange(a,b):this.createTextRange&&(c=this.createTextRange(),c.collapse(!0),c.moveEnd("character",b),c.moveStart("character",a),c.select())})):(this[0].setSelectionRange?(a=this[0].selectionStart,b=this[0].selectionEnd):document.selection&&document.selection.createRange&&(c=document.selection.createRange(),a=0-c.duplicate().moveStart("character",-1e5),b=a+c.text.length),{begin:a,end:b})},unmask:function(){return this.trigger("unmask")},mask:function(c,g){var h,i,j,k,l,m,n,o;if(!c&&this.length>0){h=a(this[0]);var p=h.data(a.mask.dataName);return p?p():void 0}return g=a.extend({autoclear:a.mask.autoclear,placeholder:a.mask.placeholder,completed:null},g),i=a.mask.definitions,j=[],k=n=c.length,l=null,a.each(c.split(""),function(a,b){"?"==b?(n--,k=a):i[b]?(j.push(new RegExp(i[b])),null===l&&(l=j.length-1),k>a&&(m=j.length-1)):j.push(null)}),this.trigger("unmask").each(function(){function h(){if(g.completed){for(var a=l;m>=a;a++)if(j[a]&&C[a]===p(a))return;g.completed.call(B)}}function p(a){return g.placeholder.charAt(a<g.placeholder.length?a:0)}function q(a){for(;++a<n&&!j[a];);return a}function r(a){for(;--a>=0&&!j[a];);return a}function s(a,b){var c,d;if(!(0>a)){for(c=a,d=q(b);n>c;c++)if(j[c]){if(!(n>d&&j[c].test(C[d])))break;C[c]=C[d],C[d]=p(d),d=q(d)}z(),B.caret(Math.max(l,a))}}function t(a){var b,c,d,e;for(b=a,c=p(a);n>b;b++)if(j[b]){if(d=q(b),e=C[b],C[b]=c,!(n>d&&j[d].test(e)))break;c=e}}function u(){var a=B.val(),b=B.caret();if(a.length<o.length){for(A(!0);b.begin>0&&!j[b.begin-1];)b.begin--;if(0===b.begin)for(;b.begin<l&&!j[b.begin];)b.begin++;B.caret(b.begin,b.begin)}else{for(A(!0);b.begin<n&&!j[b.begin];)b.begin++;B.caret(b.begin,b.begin)}h()}function v(){A(),B.val()!=E&&B.change()}function w(a){if(!B.prop("readonly")){var b,c,e,f=a.which||a.keyCode;o=B.val(),8===f||46===f||d&&127===f?(b=B.caret(),c=b.begin,e=b.end,e-c===0&&(c=46!==f?r(c):e=q(c-1),e=46===f?q(e):e),y(c,e),s(c,e-1),a.preventDefault()):13===f?v.call(this,a):27===f&&(B.val(E),B.caret(0,A()),a.preventDefault())}}function x(b){if(!B.prop("readonly")){var c,d,e,g=b.which||b.keyCode,i=B.caret();if(!(b.ctrlKey||b.altKey||b.metaKey||32>g)&&g&&13!==g){if(i.end-i.begin!==0&&(y(i.begin,i.end),s(i.begin,i.end-1)),c=q(i.begin-1),n>c&&(d=String.fromCharCode(g),j[c].test(d))){if(t(c),C[c]=d,z(),e=q(c),f){var k=function(){a.proxy(a.fn.caret,B,e)()};setTimeout(k,0)}else B.caret(e);i.begin<=m&&h()}b.preventDefault()}}}function y(a,b){var c;for(c=a;b>c&&n>c;c++)j[c]&&(C[c]=p(c))}function z(){B.val(C.join(""))}function A(a){var b,c,d,e=B.val(),f=-1;for(b=0,d=0;n>b;b++)if(j[b]){for(C[b]=p(b);d++<e.length;)if(c=e.charAt(d-1),j[b].test(c)){C[b]=c,f=b;break}if(d>e.length){y(b+1,n);break}}else C[b]===e.charAt(d)&&d++,k>b&&(f=b);return a?z():k>f+1?g.autoclear||C.join("")===D?(B.val()&&B.val(""),y(0,n)):z():(z(),B.val(B.val().substring(0,f+1))),k?b:l}var B=a(this),C=a.map(c.split(""),function(a,b){return"?"!=a?i[a]?p(b):a:void 0}),D=C.join(""),E=B.val();B.data(a.mask.dataName,function(){return a.map(C,function(a,b){return j[b]&&a!=p(b)?a:null}).join("")}),B.one("unmask",function(){B.off(".mask").removeData(a.mask.dataName)}).on("focus.mask",function(){if(!B.prop("readonly")){clearTimeout(b);var a;E=B.val(),a=A(),b=setTimeout(function(){z(),a==c.replace("?","").length?B.caret(0,a):B.caret(a)},10)}}).on("blur.mask",v).on("keydown.mask",w).on("keypress.mask",x).on("input.mask paste.mask",function(){B.prop("readonly")||setTimeout(function(){var a=A(!0);B.caret(a),h()},0)}),e&&f&&B.off("input.mask").on("input.mask",u),A()})}})});
 
-  })(jQuery);
-
-
-  /*
-      jQuery Masked Input Plugin
-      Copyright (c) 2007 - 2014 Josh Bush (digitalbush.com)
-      Licensed under the MIT license (http://digitalbush.com/projects/masked-input-plugin/#license)
-      Version: 1.4.0
-  */
-  !function(a){"function"==typeof define&&define.amd?define(["jquery"],a):a("object"==typeof exports?require("jquery"):jQuery)}(function(a){var b,c=navigator.userAgent,d=/iphone/i.test(c),e=/chrome/i.test(c),f=/android/i.test(c);a.mask={definitions:{9:"[0-9]",a:"[A-Za-z]","*":"[A-Za-z0-9]"},autoclear:!0,dataName:"rawMaskFn",placeholder:"_"},a.fn.extend({caret:function(a,b){var c;if(0!==this.length&&!this.is(":hidden"))return"number"==typeof a?(b="number"==typeof b?b:a,this.each(function(){this.setSelectionRange?this.setSelectionRange(a,b):this.createTextRange&&(c=this.createTextRange(),c.collapse(!0),c.moveEnd("character",b),c.moveStart("character",a),c.select())})):(this[0].setSelectionRange?(a=this[0].selectionStart,b=this[0].selectionEnd):document.selection&&document.selection.createRange&&(c=document.selection.createRange(),a=0-c.duplicate().moveStart("character",-1e5),b=a+c.text.length),{begin:a,end:b})},unmask:function(){return this.trigger("unmask")},mask:function(c,g){var h,i,j,k,l,m,n,o;if(!c&&this.length>0){h=a(this[0]);var p=h.data(a.mask.dataName);return p?p():void 0}return g=a.extend({autoclear:a.mask.autoclear,placeholder:a.mask.placeholder,completed:null},g),i=a.mask.definitions,j=[],k=n=c.length,l=null,a.each(c.split(""),function(a,b){"?"==b?(n--,k=a):i[b]?(j.push(new RegExp(i[b])),null===l&&(l=j.length-1),k>a&&(m=j.length-1)):j.push(null)}),this.trigger("unmask").each(function(){function h(){if(g.completed){for(var a=l;m>=a;a++)if(j[a]&&C[a]===p(a))return;g.completed.call(B)}}function p(a){return g.placeholder.charAt(a<g.placeholder.length?a:0)}function q(a){for(;++a<n&&!j[a];);return a}function r(a){for(;--a>=0&&!j[a];);return a}function s(a,b){var c,d;if(!(0>a)){for(c=a,d=q(b);n>c;c++)if(j[c]){if(!(n>d&&j[c].test(C[d])))break;C[c]=C[d],C[d]=p(d),d=q(d)}z(),B.caret(Math.max(l,a))}}function t(a){var b,c,d,e;for(b=a,c=p(a);n>b;b++)if(j[b]){if(d=q(b),e=C[b],C[b]=c,!(n>d&&j[d].test(e)))break;c=e}}function u(){var a=B.val(),b=B.caret();if(a.length<o.length){for(A(!0);b.begin>0&&!j[b.begin-1];)b.begin--;if(0===b.begin)for(;b.begin<l&&!j[b.begin];)b.begin++;B.caret(b.begin,b.begin)}else{for(A(!0);b.begin<n&&!j[b.begin];)b.begin++;B.caret(b.begin,b.begin)}h()}function v(){A(),B.val()!=E&&B.change()}function w(a){if(!B.prop("readonly")){var b,c,e,f=a.which||a.keyCode;o=B.val(),8===f||46===f||d&&127===f?(b=B.caret(),c=b.begin,e=b.end,e-c===0&&(c=46!==f?r(c):e=q(c-1),e=46===f?q(e):e),y(c,e),s(c,e-1),a.preventDefault()):13===f?v.call(this,a):27===f&&(B.val(E),B.caret(0,A()),a.preventDefault())}}function x(b){if(!B.prop("readonly")){var c,d,e,g=b.which||b.keyCode,i=B.caret();if(!(b.ctrlKey||b.altKey||b.metaKey||32>g)&&g&&13!==g){if(i.end-i.begin!==0&&(y(i.begin,i.end),s(i.begin,i.end-1)),c=q(i.begin-1),n>c&&(d=String.fromCharCode(g),j[c].test(d))){if(t(c),C[c]=d,z(),e=q(c),f){var k=function(){a.proxy(a.fn.caret,B,e)()};setTimeout(k,0)}else B.caret(e);i.begin<=m&&h()}b.preventDefault()}}}function y(a,b){var c;for(c=a;b>c&&n>c;c++)j[c]&&(C[c]=p(c))}function z(){B.val(C.join(""))}function A(a){var b,c,d,e=B.val(),f=-1;for(b=0,d=0;n>b;b++)if(j[b]){for(C[b]=p(b);d++<e.length;)if(c=e.charAt(d-1),j[b].test(c)){C[b]=c,f=b;break}if(d>e.length){y(b+1,n);break}}else C[b]===e.charAt(d)&&d++,k>b&&(f=b);return a?z():k>f+1?g.autoclear||C.join("")===D?(B.val()&&B.val(""),y(0,n)):z():(z(),B.val(B.val().substring(0,f+1))),k?b:l}var B=a(this),C=a.map(c.split(""),function(a,b){return"?"!=a?i[a]?p(b):a:void 0}),D=C.join(""),E=B.val();B.data(a.mask.dataName,function(){return a.map(C,function(a,b){return j[b]&&a!=p(b)?a:null}).join("")}),B.one("unmask",function(){B.off(".mask").removeData(a.mask.dataName)}).on("focus.mask",function(){if(!B.prop("readonly")){clearTimeout(b);var a;E=B.val(),a=A(),b=setTimeout(function(){z(),a==c.replace("?","").length?B.caret(0,a):B.caret(a)},10)}}).on("blur.mask",v).on("keydown.mask",w).on("keypress.mask",x).on("input.mask paste.mask",function(){B.prop("readonly")||setTimeout(function(){var a=A(!0);B.caret(a),h()},0)}),e&&f&&B.off("input.mask").on("input.mask",u),A()})}})});
-
-  // Layout settings
-  (function($) {  
-    $('.m-layout-name').text(mondidoSettings.layout.name);
-    $(".m-layout-terms_and_conditions_url").attr("href", mondidoSettings.layout.terms_and_conditions_url);
-  })(jQuery);
+// Layout settings
+(function($) {  
+  $('.m-layout-name').text(mondidoSettings.layout.name);
+  $(".m-layout-terms_and_conditions_url").attr("href", mondidoSettings.layout.terms_and_conditions_url);
+})(jQuery);
 
 
   //https://github.com/stripe/jquery.payment
@@ -1046,38 +1045,44 @@
       }
 
       function ssn_lookup(ssn_value){
-          var api_url = mondidoSettings.config.system.endpoint;
+        var api_url = mondidoSettings.config.system.endpoint;
 
-          var ssn = ssn_value;
-          var is_test = 'true';
-          var country_code = $('#country_code').val();
+        var ssn = ssn_value;
+        var is_test = 'true';
+        var country_code = mondidoSettings.country_code;
 
-          if(ssn.length === 12){
-              ssn = ssn.slice(2);
+        if(country_code == "SWE" && ssn.length === 12){
+          ssn = ssn.slice(2);
+        }
+
+        if ( country_code != "SWE"){
+            $('#row-ssn-details').removeClass('hidden');
+            $('#row-customer-details').removeClass('hidden');
+            $('#ow-ssn-details-loading').addClass('hidden');
+            ssn_on_load = 0;
+
+        } else if (isSwedishSocialSecurityNumber(ssn_on_load)){
+          var first_name =  $('#first_name').val();
+          var last_name = $('#last_name').val();
+          var zip = $('#zip').val();
+          var city = $('#city').val();
+          var address_1 = $('#address_1').val();
+
+          if (!isBlank(first_name) && !isBlank(last_name) && !isBlank(zip) && !isBlank(city) && !isBlank(address_1)) {
+            $('#row-ssn-details').removeClass('hidden');
+            $('#row-customer-details').removeClass('hidden');
+            $('#ow-ssn-details-loading').addClass('hidden');
+            ssn_on_load = 0;
+            return true;
           }
-
-          if (isSwedishSocialSecurityNumber(ssn_on_load)){
-            var first_name =  $('#first_name').val();
-            var last_name = $('#last_name').val();
-            var zip = $('#zip').val();
-            var city = $('#city').val();
-            var address_1 = $('#address_1').val();
-
-            if (!isBlank(first_name) && !isBlank(last_name) && !isBlank(zip) && !isBlank(city) && !isBlank(address_1)) {
-              $('#row-ssn-details').removeClass('hidden');
-              $('#row-customer-details').removeClass('hidden');
-              $('#ow-ssn-details-loading').addClass('hidden');
-              ssn_on_load = 0;
-              return true;
-            }
-          }
+        }
 
       var ssn_url = api_url+"ssn?token="+Mondido.token+"&transaction_id="+Mondido.transaction.id+"&merchant_id="+Mondido.merchant.id+"&test="+is_test+"&ssn="+ssn+"&country="+country_code;
 
-      if (mondidoSettings.config.development == true || $('#segmentation').val() == "b2b"){
+      if (mondidoSettings.config.development == true || $('#segmentation').val() == "b2b"  || country_code != "SWE"){
         $('#row-ssn-details').removeClass('hidden');
 
-        if ($('#segmentation').val() == "b2b"){
+        if ($('#segmentation').val() == "b2b"  || country_code != "SWE"){
           $('#row-ssn-details').removeClass('hidden');
 
           $('#first_name').removeAttr("disabled");
@@ -1086,7 +1091,7 @@
           $('#city').removeAttr("disabled");
           $('#address_1').removeAttr("disabled");
           $('#address_2').removeAttr("disabled");
-
+          $('#ssn').addClass('valid');
         } else {
 
           $('#first_name').val("first_name - Development").addClass('valid');
@@ -1221,39 +1226,39 @@
           // Else, add "invalid" css class
           var valid = false;
           switch($(this).attr("id")){
-              case "card_number":
-                  $(this).validateCreditCard(function(result){
-                      if(result.luhn_valid && result.length_valid && result.card_accepted){
-                          $("#card_type").val(result.card_type.name);
-                          valid=true;
-                          ccvalid = true;
-                      }
-                  });
-                  break;
-              case "expMM":
-                  expmm = parseInt($(this).val())
-                  if(!isNaN(expmm)){
-                      if (expmm >= 1 && expmm <= 12){
-                          valid = true;
-                      }
-                  }
-                  break;
-              case "expYY":
-                  expyy = parseInt($(this).val());
-                  if(!isNaN(expyy)){
-                      if (expyy >= current_y && expyy <= (current_y+20)){
-                          valid = true;
-                      }
-                  }
-                  break;
-              case "card_cvv":
-                  cvv = parseInt($(this).val());
-                  if(!isNaN(cvv)){
-                      if (cvv >= 0 && cvv <= 9999){
-                          valid = true;
-                      }
-                  }
-                  break;
+            case "card_number":
+                $(this).validateCreditCard(function(result){
+                    if(result.luhn_valid && result.length_valid && result.card_accepted){
+                        $("#card_type").val(result.card_type.name);
+                        valid=true;
+                        ccvalid = true;
+                    }
+                });
+                break;
+            case "expMM":
+                expmm = parseInt($(this).val())
+                if(!isNaN(expmm)){
+                    if (expmm >= 1 && expmm <= 12){
+                        valid = true;
+                    }
+                }
+                break;
+            case "expYY":
+                expyy = parseInt($(this).val());
+                if(!isNaN(expyy)){
+                    if (expyy >= current_y && expyy <= (current_y+20)){
+                        valid = true;
+                    }
+                }
+                break;
+            case "card_cvv":
+                cvv = parseInt($(this).val());
+                if(!isNaN(cvv)){
+                    if (cvv >= 0 && cvv <= 9999){
+                        valid = true;
+                    }
+                }
+                break;
           }
 
           // Cleaning CSS
@@ -1261,29 +1266,31 @@
           $(this).removeClass('invalid');
 
           if(valid){
-              $(this).addClass('valid');
+            $(this).addClass('valid');
           } else {
-              $(this).addClass('invalid');
+            $(this).addClass('invalid');
           }
       });
 
       $('#swishform').submit(function(e){
           sn = $('#swish_number').val();
           sn = sn.replace(/[^0-9.]/g, "");
+
           if(sn.substr(0,2) != '46'){
               sn = sn.substring(1);
               sn = '46'+sn;
           }
-          if(sn.length < 5){
-              $('#swish_number').removeClass('valid');
-              $('#swish_number').addClass('invalid');
-              return false;
-          }else{
-              $('#swish_number').removeClass('invalid');
-              $('#swish_number').addClass('valid');
-          }
-          $('#swish_number').val(sn);
 
+          if(sn.length < 5){
+            $('#swish_number').removeClass('valid');
+            $('#swish_number').addClass('invalid');
+            return false;
+          }else{
+            $('#swish_number').removeClass('invalid');
+            $('#swish_number').addClass('valid');
+          }
+
+          $('#swish_number').val(sn);
       });
 
       $('#invoiceform').submit(function(e){
@@ -1296,67 +1303,67 @@
 
 
       $('#mondidopayform').submit(function(e){
-          var errString = $("#validation-error").text()+"\n";
+        var errString = $("#validation-error").text()+"\n";
 
-          $.errFields = Array();
-          $("#card_number, #expMM, #expYY, #card_cvv").each(function(){
-              if(!$(this).hasClass("valid")){
-                  $.errFields.push($(this).attr("placeholder"));
-              }
-          });
-          errString = errString + $.errFields.join(", ");
+        $.errFields = Array();
+        $("#card_number, #expMM, #expYY, #card_cvv").each(function(){
+            if(!$(this).hasClass("valid")){
+                $.errFields.push($(this).attr("placeholder"));
+            }
+        });
+        errString = errString + $.errFields.join(", ");
 
-          if($.errFields.length > 0 && $("#trustly1").length===0){
-              $("#errors").html(errString);
-              $("#errors").show();
+        if($.errFields.length > 0 && $("#trustly1").length===0){
+            $("#errors").html(errString);
+            $("#errors").show();
 
-              $('#paybtn-cc').show();
-              $('#loading-cc').addClass('hidden');
-              $('.footer').show();
-              return false;
-          }
+            $('#paybtn-cc').show();
+            $('#loading-cc').addClass('hidden');
+            $('.footer').show();
+            return false;
+        }
 
-          $("#card_expiry").val(
-              $("#expMM").val() + $("#expYY").val()
-          );
+        $("#card_expiry").val(
+            $("#expMM").val() + $("#expYY").val()
+        );
 
-          $("#errors").hide();
-          return true;
+        $("#errors").hide();
+        return true;
       });
 
       var errMsg = getParameterByName('error_name');
       if(errMsg){
-          switch(errMsg){
-              case 'errors.personal_number.missing':
-                  alert('personnummer saknas');
-                  break;
-              case 'errors.missing_or_invalid.phone_number':
-                  alert('Telefonnummer saknas');
-                  break;
-              case 'errors.invalid.email':
-                  alert('E-post Ã¤r inte korrekt');
-                  break;
-              case 'errors.invoice.credit_approval_failed':
-                  alert('Kreditypplysningen misslyckades');
-                  break;
-              case 'errors.invoice.credit_not_approved':
-                  alert('Kreditupplysningen nekades');
-                  break;
-              case 'errors.invoice.amount.requested.lower_than_minimum_purchase_amount':
-                  alert('Beloppet Ã¤r fÃ¶r lÃ¥gt fÃ¶r fakturabetalning');
-                  break;
-              case 'errors.invoice.amount.requested.higher_than_maximum_purchase_amount':
-                  alert('Beloppet Ã¤r fÃ¶r hÃ¶gt fÃ¶r fakturabetalning');
-                  break;
-              case 'errors.invoice.account_error':
-                  alert('Fakturakontot Ã¤r felinstÃ¤llt');
-                  break;
-              case 'errors.invoice.account_was_overdrawn':
-                  alert('Kontot Ã¤r Ã¶vertrasserat');
-                  break;
-              default:
-                  break;
-          }
+        switch(errMsg){
+          case 'errors.personal_number.missing':
+              alert('personnummer saknas');
+              break;
+          case 'errors.missing_or_invalid.phone_number':
+              alert('Telefonnummer saknas');
+              break;
+          case 'errors.invalid.email':
+              alert('E-post Ã¤r inte korrekt');
+              break;
+          case 'errors.invoice.credit_approval_failed':
+              alert('Kreditypplysningen misslyckades');
+              break;
+          case 'errors.invoice.credit_not_approved':
+              alert('Kreditupplysningen nekades');
+              break;
+          case 'errors.invoice.amount.requested.lower_than_minimum_purchase_amount':
+              alert('Beloppet Ã¤r fÃ¶r lÃ¥gt fÃ¶r fakturabetalning');
+              break;
+          case 'errors.invoice.amount.requested.higher_than_maximum_purchase_amount':
+              alert('Beloppet Ã¤r fÃ¶r hÃ¶gt fÃ¶r fakturabetalning');
+              break;
+          case 'errors.invoice.account_error':
+              alert('Fakturakontot Ã¤r felinstÃ¤llt');
+              break;
+          case 'errors.invoice.account_was_overdrawn':
+              alert('Kontot Ã¤r Ã¶vertrasserat');
+              break;
+          default:
+              break;
+        }
       }
 
       function input_change() {
@@ -1381,17 +1388,26 @@
       }
 
       $(function() {
-          $(':input').change(input_change).keyup(input_change);
+        $(':input').change(input_change).keyup(input_change);
       });
 
       function isSwedishSocialSecurityNumber(ssn){
+        valid = false;
 
+        if (mondidoSettings.country_code != "SWE"){
+
+          if (ssn.length == 12){
+            valid = true;
+            $('#row-customer-details').addClass('hidden');
+          }
+        } else {
           valid = /^(\d{6}|\d{8})[-|(\s)]{0,1}\d{4}$/.test(ssn);
           if (!valid){
-          $('#row-customer-details').addClass('hidden');
+            $('#row-customer-details').addClass('hidden');
           }
+        }
 
-          return valid;
+        return valid;
       }
 
       /// ON LOAD
@@ -1420,43 +1436,43 @@
       var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
       if(!regex.test(email)) {
           if (isBlank(email)) {
-          $('#email').removeClass('valid');
-          $('#email').removeClass('invalid');
+            $('#email').removeClass('valid');
+            $('#email').removeClass('invalid');
           } else {
-          $('#email').addClass('invalid');
+            $('#email').addClass('invalid');
           }
           return false;
       } else {
-          $('#email').addClass('valid');
+            $('#email').addClass('valid');
           return true;
       }
   }
 
   function isEmpty(s){
-      return !s.length;
+    return !s.length;
   }
 
   function isBlank(s){
-      if(s){
-          return isEmpty(s.trim());
-      }
-      return true;
+    if(s){
+      return isEmpty(s.trim());
+    }
+    return true;
   }
 
   function validate_phone(phone_number){
-      valid = ((phone_number.length >= 8) && (phone_number.length <= 11));
-      if (valid){
-          $('#phone').addClass('valid');
-      } else {
-          if (isBlank(phone_number)) {
-          $('#phone').removeClass('valid');
-          $('#phone').removeClass('invalid');
-          } else {
-          $('#phone').addClass('invalid');
-          }
-      }
+    valid = ((phone_number.length >= 8) && (phone_number.length <= 11));
+    if (valid){
+        $('#phone').addClass('valid');
+    } else {
+        if (isBlank(phone_number)) {
+        $('#phone').removeClass('valid');
+        $('#phone').removeClass('invalid');
+        } else {
+        $('#phone').addClass('invalid');
+        }
+    }
 
-      return valid;
+    return valid;
   }
 
   function getParameterByName(name) {
