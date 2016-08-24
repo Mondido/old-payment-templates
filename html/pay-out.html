@@ -31,13 +31,15 @@
                 metadata: '{{ transaction.metadata | replace: "\'", "" }}',
                 activePaymentMethod: 'credit_card_tab',
                 currency: '{{ transaction.currency }}',
+           //     country_code: '{{ transaction.payment_details.country_code }}',
+                country_code: 'NOR',
                 layout: {
                     name: "Mondido",
                     logo_url: "https://cdn-02.mondido.com/www/img/mondido-2015.png?1462876334",
                     terms_and_conditions_url: "https://www.mondido.com/terms",
                 },
                 config: {
-                    development: false,
+                    development: true,
                     system: {
                         endpoint: "https://pay.mondido.com/v1/",
                         log: false,
