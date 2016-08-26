@@ -26,12 +26,13 @@
                             b2c: true,
                             defualt: "b2c"
                         }
-                    }
+                    },
+                    {name: 'masterpass_tab', active: true, currencies:['all'], countries:['all']},
                 ],
                 metadata: '{{ transaction.metadata | replace: "\'", "" }}',
                 activePaymentMethod: 'credit_card_tab',
                 currency: '{{ transaction.currency }}',
-           //     country_code: '{{ transaction.payment_details.country_code }}',
+           //   country_code: '{{ transaction.payment_details.country_code }}',
                 country_code: 'NOR',
                 layout: {
                     name: "Mondido",
@@ -126,6 +127,11 @@
                                 </small>
                                 <div class="mrk">
                                 </div>
+                            </a>
+                        </li>
+                        <li role="presentation" class="masterpass_tab" style="display:none;top:-12px;">
+                            <a href="#masterpass_tab" aria-controls="masterpass_tab" role="tab" data-toggle="tab" class="card-tab">
+                                <img src="https://s3-eu-west-1.amazonaws.com/mondido/merchants/244/135/original/masterpass1.png?1466410646" alt="Masterpass" />
                             </a>
                         </li>
                     </ul>
@@ -397,6 +403,26 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
                         </form>
                     </div>
                     <!-- /paypal-->
+
+                    <!-- masterpass-->
+                    <div role="tabpanel" class="tab-pane fade" id="masterpass_tab" aria-labelledBy="masterpass_tab" style="text-align: center;">
+                        <form action="" class="form-signin" id="masterpassform" method="post" role="form">
+                            <input type="hidden" name="masterpass" value="1" />
+                            <div class="row spacer">
+                                <div style="margin-bottom:30px;">Pay with MasterPass</div>
+                                <a href="#" id="checkoutButtonDiv">
+                                <img src="https://www.mastercard.com/mc_us/wallet/img/en/US/mcpp_wllt_btn_chk_147x034px.png" alt="Buy with MasterPass" >
+                                </a>
+                            </div>
+                            <div id="mpspin" style="">
+                            </div>
+                            <div class="row spacer">
+                                <a href="http://www.mastercard.com/mc_us/wallet/learnmore/se/" target="_blank">Learn more about MasterPass</a>
+                            </div>
+                        </form>
+
+                    </div>
+                    <!-- /masterpass-->
 
                 </div>
             </div>

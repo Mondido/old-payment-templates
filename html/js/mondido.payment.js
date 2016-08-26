@@ -1823,6 +1823,157 @@
       });
   }).call(this);
 
+
+$(document).ready(function(){
+
+    var api_url = "https://pay.mondido.com/v1/";
+    var is_test = false;
+    var log_it = function(str){
+        if(console){
+            console.log(str);
+        }
+    };
+    
+    var Spinner = {};
+    try{
+    var spinner = new Spinner().spin();
+    $('#mpspin').append(spinner.el);
+    $('.spinner').css({'position':'relative','top':'-29px'});
+    spinner.stop();
+
+}catch(e){
+    
+}
+    var spin_it = function(start){
+        return;
+        if(start == true){
+            $("#checkoutButtonDiv img").hide();
+            spinner = new Spinner().spin();
+            $('#mpspin').append(spinner.el);
+            $('.spinner').css({'position':'relative','top':'-29px','z-index':'200'});
+        }else{
+            $("#checkoutButtonDiv img").show();
+            spinner.stop();
+        }
+    };
+
+    if (typeof Mondido === "undefined") {
+      log_it("Error could not load Mondido object");
+      Mondido = {
+        token: "Mondido",
+        transaction: {
+          id: "0"
+        },
+        merchant: {
+          id: "0"
+        }
+      }
+    }
+
+
+    $("#checkoutButtonDiv").click(function(){
+       log_it("checkoutButtonDiv");
+        spin_it(true);
+       var request_token = api_url+"request_token?token="+Mondido.token+"&transaction_id="+Mondido.transaction.id+"&merchant_id="+Mondido.merchant.id+"&test="+is_test;
+
+       log_it("LINK -> "  + request_token);
+
+       var jqxhr = $.get( request_token, function() {
+        }).done(function(data) {
+            log_it(data.masterpass);
+           handleConnectWithMasterPass(data.masterpass);
+
+
+          }).fail(function() {
+            log_it("checkoutButtonDiv -> fail");
+            spin_it(false);
+          }).always(function() {
+            log_it("checkoutButtonDiv -> always");
+          }).done(function() {
+            spin_it(false);
+          });
+
+    });
+
+    function handleConnectWithMasterPass(mp_obj) {
+      var connect_data;
+
+      connect_data =  {
+        "requestToken": mp_obj.request_roken,
+        "callbackUrl": mp_obj.callback_rrl,
+        "merchantCheckoutId": mp_obj.merchant_checkout_id,
+        "allowedCardTypes": mp_obj.allowed_card_types,
+        "requestedDataTypes": mp_obj.requested_data_types,
+        "version":"v6",
+        "loyaltyEnabled":  mp_obj.loyalty_enabled,
+        "requestBasicCheckout":  mp_obj.request_basic_checkout,
+        "suppressShippingAddressEnable":  mp_obj.suppress_shipping_address_enable,
+        "successCallback": handleCallbackSuccess,
+        "failureCallback": handleCallbackFailure,
+        "cancelCallback": handleCallbackCancel
+      };
+      log_it(connect_data);
+
+      MasterPass.client.checkout(connect_data);
+    };
+
+    function handleCallbackSuccess(data) {
+      var fullPath;
+      var callbackPath;
+      spin_it(true);
+      callbackPath = "?oauth_token="+data.oauth_token;
+      callbackPath += "&oauth_verifier="+data.oauth_verifier;
+      callbackPath += "&checkout_resource_url="+data.checkout_resource_url;
+
+      fullPath = window.location.origin + "/oauthcallback";
+      fullPath += callbackPath;
+
+      log_it("handleCallbackSuccess request-->");
+      log_it(fullPath);
+
+      $.get(fullPath, function(data, status){
+        window.location.replace(data);
+      });
+    }
+
+    function handleCallbackFailure(data) {
+      log_it("handleCallbackFailure");
+      log_it(data);
+      spin_it(false);
+    }
+
+    function handleCallbackCancel(data) {
+      log_it("handleCallbackCancel");
+      log_it(data);
+      spin_it(false);
+    }
+
+    function getJsonFromUrl() {
+      var query = location.search.substr(1);
+      var result = {};
+      query.split("&").forEach(function(part) {
+        var item = part.split("=");
+        result[item[0]] = decodeURIComponent(item[1]);
+      });
+      return result;
+    }
+
+    var locationParams = getJsonFromUrl();
+
+    if (locationParams.checkout) {
+    callbackPath += "?connected=true"
+    checkout = true;
+    $("#pairingConfigDiv").css("display", "block");
+    //         $("#checkoutButtonDiv").css("display", "none");
+    $("#merchantInit").css("display", "none");
+    }
+
+    $("#pairingConfigDiv").css("display", "block");
+    //  $("#checkoutButtonDiv").css("display", "none");
+    $("#merchantInit").css("display", "none");
+});
+
+
   (function($) {
       $.QueryString = (function(a) {
           if (a == "") return {};
