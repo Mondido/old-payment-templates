@@ -43,7 +43,7 @@
                     system: {
                         endpoint: "https://pay.mondido.com/v1/",
                         log: false,
-                        payment_js_endpoint: "https://cdn-02.mondido.com/www/js/mondido.payment.1.13.1.js",
+                        payment_js_endpoint: "https://cdn-02.mondido.com/www/js/mondido.payment.1.14.js",
                         lang_endpoint: "https://cdn-02.mondido.com/www/js/lang.1.6.3.js",
                         bootstrap_endpoint: "https://cdn-02.mondido.com/www/js/bootstrap.min.js?v=3.0",
                         jquery_endpoint: "https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js",
@@ -62,10 +62,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="robots" content="noindex, nofollow"/>
         <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdn-02.mondido.com/www/css/multi.1.6.1.css" rel="stylesheet" />
+        <link href="https://cdn-02.mondido.com/www/css/multi.1.7.css" rel="stylesheet" />
         <title>Payment</title>
     </head>
     <body>
+    
         <div id="main_area">
 
             <div id="payform" class="container grayc">
@@ -157,16 +158,13 @@
                             <input type="hidden" id="pending_payment_customer" name="pending_payment_customer"/>
                             <input type="hidden" id="segmentation" name="segmentation"/>
 
-                            <div class="row spacer" id="segmentation_toggle">
-                              <div class="row  pull-right">
-                                    <div class="col-xs-12">
-                                        <select id="segmentation_select" name="sweets">
-                                          <option value="b2c"><span class="mulang" data-mulang="individual">Individual</span></option>
-                                          <option value="b2b"><span class="mulang" data-mulang="business">Business</span></option>
-                                        </select>
-                                    </div>
+                            <div class="row">
+                                <div class="row pull-right">
+                                    <button type="button" id="b2c" data-value="b2c" class="segmentation_select btn btn-sm"><span class="mulang" data-mulang="individual">Individual</span></button>
+                                    <button type="button" id="b2b" data-value="b2b" class="segmentation_select btn btn-sm"><span class="mulang" data-mulang="business">Business</span></button>
                                 </div>
                             </div>
+                            <br />
                             <div class="row spacer" id="row-email">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -242,27 +240,39 @@
                                         <input type="text" data-mulang="city:placeholder" coolname="Stad" class="form-control mulang" min="1" max="255" id="city" name="city" placeholder="City" tabindex="8" value="{{ transaction.payment_details.mask_city }}" disabled/>
                                         <label for="city" data-mulang="city" class="mulang">City</label>
 
-                                    </div><br />
-                                    <div class="col-xs-12"><br /><br />
-                                        <input type="checkbox" data-mulang="i_accept:placeholder" coolname="accept" class="form-control mulang" id="accept" name="accept" placeholder="I accept" tabindex="9" style="width:15px;display:inline;"/>
-                                        <span class="mulang" data-mulang="invoice_accept_conditions">
-                                            Yes, I have read and accept Collector Bank\'s  
-                                            <a target="_new" href="https://www.collector.se/upload/Partners/Agreements/SUCUSE/Credit_terms_All_SE.pdf"> 
-                                            General Conditions For Invoice And Credit Accounts </a>
-                                             and
-                                             <a target="_new" href="http://www.collector.se/upload/Partners/Agreements/SUCUSE/SECCI_SE.pdf"> Standardised European Consumer Credit Information </a> , 
-                                             and <a target="_new" class="m-layout-terms_and_conditions_url"> 
-                                             Conditions <span class="m-layout-name"></span> </a>
-                                        </span>
                                     </div>
                                 </div>
-                                <input data-mulang="pay_button:value" id="paybtn" class="btn btn-lg btn-success btn-block mulang" type="submit" value="Pay" tabindex="9"/>
+
+                                <div class="row">
+                                  <br>
+                                         <div class="col-xs-2">
+                                            <label class="bigcheck">
+                                                <input type="checkbox" class="bigcheck mulang" name="cheese" value="yes"  data-mulang="i_accept:placeholder" tabindex="9"  />
+                                                <span class="bigcheck-target"></span>
+                                            </label>
+                                      </div>                 
+
+                                          <div class="col-xs-10">
+                                        <span class="mulang accept_collector" data-mulang="invoice_accept_conditions" style="font-size: 12px;">
+                                        Yes, I have read and accept Collector Bank\'s  
+                                        <a target="_new" href="https://www.collector.se/upload/Partners/Agreements/SUCUSE/Credit_terms_All_SE.pdf"> 
+                                        General Conditions For Invoice And Credit Accounts </a>
+                                        and
+                                        <a target="_new" href="http://www.collector.se/upload/Partners/Agreements/SUCUSE/SECCI_SE.pdf"> Standardised European Consumer Credit Information </a> , 
+                                        and <a target="_new" class="m-layout-terms_and_conditions_url"> 
+                                        Conditions <span class="m-layout-name"></span> </a>
+                                        </span>
+                                    </div>
+                                    </div>
+                                <div class="row">
+                                    <input data-mulang="pay_button:value" id="paybtn" class="btn btn-lg btn-success btn-block mulang" type="submit" value="Pay" tabindex="9"/>
+                                </div>
                             </div>
 
                             <div class="row footer comodotext" id="invoice_foot">
                                 <img src="https://www.collector.se/img/logos/collector-bank.svg" alt="faktura från Collector">
                                 <br />
-                                <span class="mulang" data-mulang="invoice_footer_conditions">
+                                <span class="mulang" data-mulang="invoice_footer_conditions" >
                                     When you select the invoice you will receive your goods before you pay. You can then choose to pay the whole amount at once or split the payment into smaller parts . In order to deal with the bill collectors will be at least 18 years. The invoice will be sent by e-mail. More information can be found at
                                 </span> <br /><a target="_new" href="https://www.collector.se">https://www.collector.se</a>
                             </div>

@@ -1,4 +1,4 @@
-  // v 1.13.1
+  // v 1.14
 
 // Mondido settings
 (function($) {
@@ -983,16 +983,13 @@
       if (invoice[0].segmentation.b2b == true && invoice[0].segmentation.b2c == true){
         $('#segmentation_toggle').removeClass('hidden');
 
-        $( "select#segmentation_select" ).change(function () {
+        $( ".segmentation_select" ).click(function() {
           var str = "";
+         // alert($(this).attr('data-value'));
+          set_segmentation($(this).attr('data-value'));
 
-        $( "select option:selected" ).each(function() {
-          str += $( this ).val();
         });
 
-        $('#segmentation').val(str);
-          set_segmentation(str);
-        });
 
         if (isBlank($('#segmentation').val())){
           $('#segmentation').val(segmentation.defualt);
@@ -1019,6 +1016,25 @@
       }
 
       function set_segmentation(segmentation){
+
+        if (segmentation == "b2c"){
+          $('#b2c').addClass('btn-primary');
+          $('#b2c').removeClass('btn-secondary');
+
+          $('#b2b').removeClass('btn-primary');
+          $('#b2b').addClass('btn-secondary');
+
+        } else {
+          $('#b2b').addClass('btn-primary');
+          $('#b2b').removeClass('btn-secondary');
+
+          $('#b2c').removeClass('btn-primary');
+          $('#b2c').addClass('btn-secondary');
+        }
+
+
+
+
         $('#ssn').val("");
         $('#row-customer-details').addClass('hidden');
         $('#first_name').val("");
