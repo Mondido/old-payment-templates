@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!-- Mondido PayOut v1.3.1, (c) Mondido Payments AB 2016, hello@mondido.com -->
+        <!-- Mondido PayOut v1.4, (c) Mondido Payments AB 2016, hello@mondido.com -->
         <script>
             var mondidoSettings = {
                 supportedCards: {
@@ -27,13 +27,12 @@
                             defualt: "b2c"
                         }
                     },
-                    {name: 'masterpass_tab', active: true, currencies:['all'], countries:['all']},
+                    {name: 'masterpass_tab', active: false, currencies:['all'], countries:['all']},
                 ],
                 metadata: '{{ transaction.metadata | replace: "\'", "" }}',
                 activePaymentMethod: 'credit_card_tab',
                 currency: '{{ transaction.currency }}',
-           //   country_code: '{{ transaction.payment_details.country_code }}',
-                country_code: 'NOR',
+                country_code: '{{ transaction.payment_details.country_code }}',
                 layout: {
                     name: "Mondido",
                     logo_url: "https://cdn-02.mondido.com/www/img/mondido-2015.png?1462876334",
@@ -45,7 +44,7 @@
                         endpoint: "https://pay.mondido.com/v1/",
                         log: false,
                         payment_js_endpoint: "https://cdn-02.mondido.com/www/js/mondido.payment.1.13.1.js",
-                        lang_endpoint: "https://cdn-02.mondido.com/www/js/lang.1.6.2.js",
+                        lang_endpoint: "https://cdn-02.mondido.com/www/js/lang.1.6.3.js",
                         bootstrap_endpoint: "https://cdn-02.mondido.com/www/js/bootstrap.min.js?v=3.0",
                         jquery_endpoint: "https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js",
                         fontawesome: "https://use.fontawesome.com/c66b4c0ee0.js"
@@ -65,6 +64,7 @@
         <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn-02.mondido.com/www/css/multi.1.6.1.css" rel="stylesheet" />
         <title>Payment</title>
+
     </head>
 
     <body>
@@ -466,21 +466,24 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
         </div>
 
         <script>
-              function load(script) {
-                document.write('<'+'script src="'+script+'" type="text/javascript"><' + '/script>');
-              }
+          function load(script) {
+            document.write('<'+'script src="'+script+'" type="text/javascript"><' + '/script>');
+          }
 
-              load(mondidoSettings.config.system.lang_endpoint);
-              load(mondidoSettings.config.system.jquery_endpoint);
-              load(mondidoSettings.config.system.bootstrap_endpoint);
+          load(mondidoSettings.config.system.lang_endpoint);
+          load(mondidoSettings.config.system.jquery_endpoint);
+          load(mondidoSettings.config.system.bootstrap_endpoint);
 
-              if (mondidoSettings.config.development == true){
-                load("js/mondido.payment.js");
-              } else {
-                load(mondidoSettings.config.system.payment_js_endpoint);
-              }
+          if (mondidoSettings.config.development == true){
+            load("js/mondido.payment.js");
+          } else {
+            load(mondidoSettings.config.system.payment_js_endpoint);
+          }
 
-              load(mondidoSettings.config.system.fontawesome);
+          load(mondidoSettings.config.system.fontawesome);
+              load("https://static.masterpass.com/lightbox/Switch/integration/MasterPass.client.js");
+              load("https://masterpass.com/lightbox/Switch/assets/js/MasterPass.omniture.js");
         </script>
+
     </body>
 </html>
