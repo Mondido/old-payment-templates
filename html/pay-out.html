@@ -39,7 +39,7 @@
                     terms_and_conditions_url: "https://www.mondido.com/terms",
                 },
                 config: {
-                    development: true,
+                    development: false,
                     system: {
                         endpoint: "https://pay.mondido.com/v1/",
                         log: false,
@@ -136,7 +136,7 @@
                     </ul>
                 </div>
                 <!-- ######### Tab panes ######### -->
-                <div id="myTabContent" class="row tab-content">
+                <div id="myTabsegmentation_toggleContent" class="row tab-content">
                     <div class="row header">
                         <div class="col-xs-12 text-center">
                             <p class="amount mulang" data-mulang="amount['{{ transaction.amount | round }}','{{ currency }}']">
@@ -158,7 +158,7 @@
                             <input type="hidden" id="pending_payment_customer" name="pending_payment_customer"/>
                             <input type="hidden" id="segmentation" name="segmentation"/>
 
-                            <div class="row">
+                            <div class="row hidden" id="segmentation_toggle">
                                 <div class="row pull-right">
                                     <button type="button" id="b2c" data-value="b2c" class="segmentation_select btn btn-sm"><span class="mulang" data-mulang="individual">Individual</span></button>
                                     <button type="button" id="b2b" data-value="b2b" class="segmentation_select btn btn-sm"><span class="mulang" data-mulang="business">Business</span></button>

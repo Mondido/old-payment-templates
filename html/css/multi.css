@@ -544,3 +544,9 @@ input[type='checkbox'].bigcheck:checked + span.bigcheck-target:after {
     content: "\f046"; /* fontawesome checked box (fa-check-square-o) */
    position: initial;
 }
+
+
+input:focus {
+  background-color: white;
+  border: 1px solid #71d5da !important;
+}

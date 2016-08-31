@@ -1069,6 +1069,7 @@
         if ( country_code != "SWE"){
             $('#row-ssn-details').removeClass('hidden');
             $('#row-customer-details').removeClass('hidden');
+            $('#ssn').addClass('valid');
             $('#ow-ssn-details-loading').addClass('hidden');
             ssn_on_load = 0;
 
@@ -1082,6 +1083,7 @@
           if (!isBlank(first_name) && !isBlank(last_name) && !isBlank(zip) && !isBlank(city) && !isBlank(address_1)) {
             $('#row-ssn-details').removeClass('hidden');
             $('#row-customer-details').removeClass('hidden');
+            $('#ssn').addClass('valid');
             $('#ow-ssn-details-loading').addClass('hidden');
             ssn_on_load = 0;
             return true;
@@ -1102,7 +1104,9 @@
           $('#city').removeAttr("disabled");
           $('#address_1').removeAttr("disabled");
           $('#address_2').removeAttr("disabled");
-          $('#ssn').addClass('valid');
+
+           $('#ssn').removeClass('invalid');
+           $('#ssn').addClass('valid');
         } else {
 
           $('#first_name').val("first_name - Development").addClass('valid');
@@ -1148,6 +1152,7 @@
               $('#row-customer-details').removeClass('hidden');
               $('#row-ssn-details-error').addClass('hidden');
 
+               $('#ssn').removeClass('invalid');
                $('#ssn').addClass('valid');
             })
             .fail(function(data) {
