@@ -5,6 +5,11 @@ https://www.mondido.com/en
 html/pay-out.html
 
 Changelog
+
+- v1.4
+- Add masterpass
+- Fix css/js bugs
+
 - v1.3.1
 - Fix css/js bugs
 - Add update translations

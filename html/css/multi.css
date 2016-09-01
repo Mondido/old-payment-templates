@@ -1,6 +1,6 @@
 /* 
 
-Mondido PayOut style v1.6.1, (c) Mondido Payments AB 2016, hello@mondido.com
+Mondido PayOut style v1.7, (c) Mondido Payments AB 2016, hello@mondido.com
 
 */
 body {
@@ -92,6 +92,7 @@ form.go-bottom label {
   color: #999;
   padding: 7px 6px;
   text-align: left;
+  margin-top: -20%;
 }
 form.go-bottom textarea {
   display: block;
@@ -493,4 +494,59 @@ form.go-right input.form-control:focus + label, form.go-right textarea:focus + l
 
 #languages{
     text-align: center;
+}
+
+.nav-tabs>li.active, .nav-tabs>li.active:hover, .nav-tabs>li.active:focus{
+    border: solid 2px #71D5DA!important;
+    box-shadow: 0px 2px 2px #ddd;
+}
+
+.btn-sm{
+ color: #FFF;
+}
+
+.btn-sm, .btn-xs{
+  padding: 1px 10px;
+  font-size: 10px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #000;
+  border-color: #000;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #000;
+    border-color: #000;
+}
+
+span.bigcheck-target {
+    position: initial;
+    font-weight: 500;
+    font-size: 4em; /* set this to whatever size you want */
+    font-family: FontAwesome; /* use an icon font for the checkbox */    
+}
+
+input[type='checkbox'].bigcheck {     
+    position: relative;
+    left: -999em; /* hide the real checkbox */
+}
+
+input[type='checkbox'].bigcheck + span.bigcheck-target:after {
+    content: "\f096"; /* In fontawesome, is an open square (fa-square-o) */
+}
+
+input[type='checkbox'].bigcheck:checked + span.bigcheck-target:after {
+    content: "\f046"; /* fontawesome checked box (fa-check-square-o) */
+   position: initial;
+}
+
+
+input:focus {
+  background-color: white;
+  border: 1px solid #71d5da !important;
 }

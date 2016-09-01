@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!-- Mondido PayOut v1.3.1, (c) Mondido Payments AB 2016, hello@mondido.com -->
+        <!-- Mondido PayOut v1.4, (c) Mondido Payments AB 2016, hello@mondido.com -->
         <script>
             var mondidoSettings = {
                 supportedCards: {
@@ -26,11 +26,13 @@
                             b2c: true,
                             defualt: "b2c"
                         }
-                    }
+                    },
+                    {name: 'masterpass_tab', active: false, currencies:['all'], countries:['all']},
                 ],
                 metadata: '{{ transaction.metadata | replace: "\'", "" }}',
                 activePaymentMethod: 'credit_card_tab',
                 currency: '{{ transaction.currency }}',
+                country_code: '{{ transaction.payment_details.country_code }}',
                 layout: {
                     name: "Mondido",
                     logo_url: "https://cdn-02.mondido.com/www/img/mondido-2015.png?1462876334",
@@ -41,8 +43,8 @@
                     system: {
                         endpoint: "https://pay.mondido.com/v1/",
                         log: false,
-                        payment_js_endpoint: "https://cdn-02.mondido.com/www/js/mondido.payment.1.13.1.js",
-                        lang_endpoint: "https://cdn-02.mondido.com/www/js/lang.1.6.2.js",
+                        payment_js_endpoint: "https://cdn-02.mondido.com/www/js/mondido.payment.1.14.js",
+                        lang_endpoint: "https://cdn-02.mondido.com/www/js/lang.1.6.3.js",
                         bootstrap_endpoint: "https://cdn-02.mondido.com/www/js/bootstrap.min.js?v=3.0",
                         jquery_endpoint: "https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js",
                         fontawesome: "https://use.fontawesome.com/c66b4c0ee0.js"
@@ -60,11 +62,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="robots" content="noindex, nofollow"/>
         <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdn-02.mondido.com/www/css/multi.1.6.1.css" rel="stylesheet" />
+        <link href="https://cdn-02.mondido.com/www/css/multi.1.7.css" rel="stylesheet" />
         <title>Payment</title>
     </head>
-
     <body>
+    
         <div id="main_area">
 
             <div id="payform" class="container grayc">
@@ -126,10 +128,15 @@
                                 </div>
                             </a>
                         </li>
+                        <li role="presentation" class="masterpass_tab" style="display:none;top:-12px;">
+                            <a href="#masterpass_tab" aria-controls="masterpass_tab" role="tab" data-toggle="tab" class="card-tab">
+                                <img src="https://s3-eu-west-1.amazonaws.com/mondido/merchants/244/135/original/masterpass1.png?1466410646" alt="Masterpass" />
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- ######### Tab panes ######### -->
-                <div id="myTabContent" class="row tab-content">
+                <div id="myTabsegmentation_toggleContent" class="row tab-content">
                     <div class="row header">
                         <div class="col-xs-12 text-center">
                             <p class="amount mulang" data-mulang="amount['{{ transaction.amount | round }}','{{ currency }}']">
@@ -151,16 +158,13 @@
                             <input type="hidden" id="pending_payment_customer" name="pending_payment_customer"/>
                             <input type="hidden" id="segmentation" name="segmentation"/>
 
-                            <div class="row spacer" id="segmentation_toggle">
-                              <div class="row  pull-right">
-                                    <div class="col-xs-12">
-                                        <select id="segmentation_select" name="sweets">
-                                          <option value="b2c"><span class="mulang" data-mulang="individual">Individual</span></option>
-                                          <option value="b2b"><span class="mulang" data-mulang="business">Business</span></option>
-                                        </select>
-                                    </div>
+                            <div class="row hidden" id="segmentation_toggle">
+                                <div class="row pull-right">
+                                    <button type="button" id="b2c" data-value="b2c" class="segmentation_select btn btn-sm"><span class="mulang" data-mulang="individual">Individual</span></button>
+                                    <button type="button" id="b2b" data-value="b2b" class="segmentation_select btn btn-sm"><span class="mulang" data-mulang="business">Business</span></button>
                                 </div>
                             </div>
+                            <br />
                             <div class="row spacer" id="row-email">
                                 <div class="row">
                                     <div class="col-xs-12">
@@ -222,8 +226,8 @@
                                 <div class="row" style="margin: 5px;">
                                     <div class="col-xs-12">
                                         <div class="address">
-                                            <input data-text data-mulang="co_adress:placeholder"  type="text" class="form-control mulang" id="address_2" name="address_2" value="{{ transaction.payment_details.mask_address_2 }}" maxlength="255" placeholder="C/O Adress" tabindex="6" coolname="C/O adress" disabled/>
-                                            <label for="address_2" data-mulang="co_adress" class="mulang">C/O Adress</label>
+                                            <input data-text data-mulang="co_address:placeholder"  type="text" class="form-control mulang" id="address_2" name="address_2" value="{{ transaction.payment_details.mask_address_2 }}" maxlength="255" placeholder="C/O Adress" tabindex="6" coolname="C/O adress" disabled/>
+                                            <label for="address_2" data-mulang="co_address" class="mulang">C/O Adress</label>
                                         </div>
                                     </div>
                                 </div>
@@ -236,27 +240,39 @@
                                         <input type="text" data-mulang="city:placeholder" coolname="Stad" class="form-control mulang" min="1" max="255" id="city" name="city" placeholder="City" tabindex="8" value="{{ transaction.payment_details.mask_city }}" disabled/>
                                         <label for="city" data-mulang="city" class="mulang">City</label>
 
-                                    </div><br />
-                                    <div class="col-xs-12"><br /><br />
-                                        <input type="checkbox" data-mulang="i_accept:placeholder" coolname="accept" class="form-control mulang" id="accept" name="accept" placeholder="I accept" tabindex="9" style="width:15px;display:inline;"/>
-                                        <span class="mulang" data-mulang="invoice_accept_conditions">
-                                            Yes, I have read and accept Collector Bank\'s  
-                                            <a target="_new" href="https://www.collector.se/upload/Partners/Agreements/SUCUSE/Credit_terms_All_SE.pdf"> 
-                                            General Conditions For Invoice And Credit Accounts </a>
-                                             and
-                                             <a target="_new" href="http://www.collector.se/upload/Partners/Agreements/SUCUSE/SECCI_SE.pdf"> Standardised European Consumer Credit Information </a> , 
-                                             and <a target="_new" class="m-layout-terms_and_conditions_url"> 
-                                             Conditions <span class="m-layout-name"></span> </a>
-                                        </span>
                                     </div>
                                 </div>
-                                <input data-mulang="pay_button:value" id="paybtn" class="btn btn-lg btn-success btn-block mulang" type="submit" value="Pay" tabindex="9"/>
+
+                                <div class="row">
+                                  <br>
+                                         <div class="col-xs-2">
+                                            <label class="bigcheck">
+                                                <input type="checkbox" class="bigcheck mulang" name="cheese" value="yes"  data-mulang="i_accept:placeholder" tabindex="9"  />
+                                                <span class="bigcheck-target"></span>
+                                            </label>
+                                      </div>                 
+
+                                          <div class="col-xs-10">
+                                        <span class="mulang accept_collector" data-mulang="invoice_accept_conditions" style="font-size: 12px;">
+                                        Yes, I have read and accept Collector Bank\'s  
+                                        <a target="_new" href="https://www.collector.se/upload/Partners/Agreements/SUCUSE/Credit_terms_All_SE.pdf"> 
+                                        General Conditions For Invoice And Credit Accounts </a>
+                                        and
+                                        <a target="_new" href="http://www.collector.se/upload/Partners/Agreements/SUCUSE/SECCI_SE.pdf"> Standardised European Consumer Credit Information </a> , 
+                                        and <a target="_new" class="m-layout-terms_and_conditions_url"> 
+                                        Conditions <span class="m-layout-name"></span> </a>
+                                        </span>
+                                    </div>
+                                    </div>
+                                <div class="row">
+                                    <input data-mulang="pay_button:value" id="paybtn" class="btn btn-lg btn-success btn-block mulang" type="submit" value="Pay" tabindex="9"/>
+                                </div>
                             </div>
 
                             <div class="row footer comodotext" id="invoice_foot">
                                 <img src="https://www.collector.se/img/logos/collector-bank.svg" alt="faktura från Collector">
                                 <br />
-                                <span class="mulang" data-mulang="invoice_footer_conditions">
+                                <span class="mulang" data-mulang="invoice_footer_conditions" >
                                     When you select the invoice you will receive your goods before you pay. You can then choose to pay the whole amount at once or split the payment into smaller parts . In order to deal with the bill collectors will be at least 18 years. The invoice will be sent by e-mail. More information can be found at
                                 </span> <br /><a target="_new" href="https://www.collector.se">https://www.collector.se</a>
                             </div>
@@ -396,6 +412,26 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
                     </div>
                     <!-- /paypal-->
 
+                    <!-- masterpass-->
+                    <div role="tabpanel" class="tab-pane fade" id="masterpass_tab" aria-labelledBy="masterpass_tab" style="text-align: center;">
+                        <form action="" class="form-signin" id="masterpassform" method="post" role="form">
+                            <input type="hidden" name="masterpass" value="1" />
+                            <div class="row spacer">
+                                <div style="margin-bottom:30px;">Pay with MasterPass</div>
+                                <a href="#" id="checkoutButtonDiv">
+                                <img src="https://www.mastercard.com/mc_us/wallet/img/en/US/mcpp_wllt_btn_chk_147x034px.png" alt="Buy with MasterPass" >
+                                </a>
+                            </div>
+                            <div id="mpspin" style="">
+                            </div>
+                            <div class="row spacer">
+                                <a href="http://www.mastercard.com/mc_us/wallet/learnmore/se/" target="_blank">Learn more about MasterPass</a>
+                            </div>
+                        </form>
+
+                    </div>
+                    <!-- /masterpass-->
+
                 </div>
             </div>
         </div>
@@ -438,21 +474,24 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
         </div>
 
         <script>
-              function load(script) {
-                document.write('<'+'script src="'+script+'" type="text/javascript"><' + '/script>');
-              }
+          function load(script) {
+            document.write('<'+'script src="'+script+'" type="text/javascript"><' + '/script>');
+          }
 
-              load(mondidoSettings.config.system.lang_endpoint);
-              load(mondidoSettings.config.system.jquery_endpoint);
-              load(mondidoSettings.config.system.bootstrap_endpoint);
+          load(mondidoSettings.config.system.lang_endpoint);
+          load(mondidoSettings.config.system.jquery_endpoint);
+          load(mondidoSettings.config.system.bootstrap_endpoint);
 
-              if (mondidoSettings.config.development == true){
-                load("js/mondido.payment.js");
-              } else {
-                load(mondidoSettings.config.system.payment_js_endpoint);
-              }
+          if (mondidoSettings.config.development == true){
+            load("js/mondido.payment.js");
+          } else {
+            load(mondidoSettings.config.system.payment_js_endpoint);
+          }
 
-              load(mondidoSettings.config.system.fontawesome);
+          load(mondidoSettings.config.system.fontawesome);
+              load("https://static.masterpass.com/lightbox/Switch/integration/MasterPass.client.js");
+              load("https://masterpass.com/lightbox/Switch/assets/js/MasterPass.omniture.js");
         </script>
+
     </body>
 </html>
