@@ -1,4 +1,4 @@
-  // v 1.14
+  // v 1.14.1
 
 // Mondido settings
 (function($) {
@@ -24,6 +24,9 @@
       }
     };
   }
+
+  invoice = $.grep(mondidoSettings.supportedPaymentMethods, function(e){ return e.name == "invoice_tab"; });
+  $("#accept_collector").attr("data-mulang", "invoice_accept_conditions['"+mondidoSettings.layout.name+"','"+mondidoSettings.layout.terms_and_conditions_url+"','"+invoice[0].AgreementCode+"','"+invoice[0].AgreementCode+"']");
 
 })(jQuery);
 
@@ -1968,9 +1971,14 @@ $(document).ready(function(){
 
 // Layout settings
 (function($) {  
-  $('.m-layout-name').text(mondidoSettings.layout.name);
-  $(".m-layout-terms_and_conditions_url").attr("href", mondidoSettings.layout.terms_and_conditions_url);
+
+  if (mondidoSettings.layout.show_logo == true){
+    $(".m-layout-logo").attr("src", mondidoSettings.layout.logo_url);
+    $(".m-layout-show-logo").removeClass("hidden");
+  }
+
 })(jQuery);
+
 
 
 (function($) {
