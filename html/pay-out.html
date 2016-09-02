@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!-- Mondido PayOut v1.4, (c) Mondido Payments AB 2016, hello@mondido.com -->
+        <!-- Mondido PayOut v1.4.1, (c) Mondido Payments AB 2016, hello@mondido.com -->
         <script>
             var mondidoSettings = {
+                /// Company layout settings
+                layout: {
+                    name: "Mondido",
+                    show_logo: true,
+                    logo_url: "https://cdn-02.mondido.com/www/img/mondido-payments-black-2016-2.png",
+                    terms_and_conditions_url: "https://www.mondido.com/terms",
+                },
+
+                /// Cards/Payment layout settings
+                activePaymentMethod: 'credit_card_tab',
+
                 supportedCards: {
                     amex: {active: true, currencies: ['sek']},
                     diners: {active: false},
@@ -22,29 +33,27 @@
                     {name: 'trustly_tab', active: true, currencies:['all'], countries:['all','se','at','be','bg','hr','cz','cy','dk','ee','fi','fr','de','gr','hu','ie','it','lv','lt','lu','mt','nl','no','pl','pt','ro','sk','si','es','gb']},
                     {name: 'invoice_tab', active: true, currencies:['all'], countries:['all','se'],
                         segmentation: {
-                            b2b: true, 
                             b2c: true,
+                            b2b: false,
                             defualt: "b2c"
-                        }
+                        },
+                        AgreementCode: "code"
                     },
                     {name: 'masterpass_tab', active: false, currencies:['all'], countries:['all']},
                 ],
+
+                /// Config settings
                 metadata: '{{ transaction.metadata | replace: "\'", "" }}',
-                activePaymentMethod: 'credit_card_tab',
                 currency: '{{ transaction.currency }}',
                 country_code: '{{ transaction.payment_details.country_code }}',
-                layout: {
-                    name: "Mondido",
-                    logo_url: "https://cdn-02.mondido.com/www/img/mondido-2015.png?1462876334",
-                    terms_and_conditions_url: "https://www.mondido.com/terms",
-                },
+
                 config: {
                     development: false,
                     system: {
                         endpoint: "https://pay.mondido.com/v1/",
                         log: false,
                         payment_js_endpoint: "https://cdn-02.mondido.com/www/js/mondido.payment.1.14.js",
-                        lang_endpoint: "https://cdn-02.mondido.com/www/js/lang.1.6.3.js",
+                        lang_endpoint: "https://cdn-02.mondido.com/www/js/lang.1.6.4.js",
                         bootstrap_endpoint: "https://cdn-02.mondido.com/www/js/bootstrap.min.js?v=3.0",
                         jquery_endpoint: "https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js",
                         fontawesome: "https://use.fontawesome.com/c66b4c0ee0.js"
@@ -56,20 +65,23 @@
                 //problems:[{type: 'swish', message: 'Swish is out of order'},{type: 'credit_card', issuer: 'nordea', message: 'Nordea kräver 3D Secure'}]
                 mondidoSettings.systemInfo = document.Mondido.systemInfo;
             }
-
         </script>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="robots" content="noindex, nofollow"/>
         <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdn-02.mondido.com/www/css/multi.1.7.css" rel="stylesheet" />
+        <link href="https://cdn-02.mondido.com/www/css/multi.1.7.1.css" rel="stylesheet" />
         <title>Payment</title>
     </head>
+
     <body>
     
         <div id="main_area">
 
             <div id="payform" class="container grayc">
+                <div class="m-layout-show-logo col-xs-12 text-center hidden">
+                    <img class="m-layout-logo"/>
+                </div>
                 <div data-mulang="choose_payment_option" class="row text-center choose mulang">
                     Please choose payment option
                 </div>
@@ -79,7 +91,7 @@
                     <ul id="myTab" class="nav nav-tabs" role="tablist" >
                         <li role="presentation" class="credit_card_tab" style="display:none;">
                             <a href="#credit_card_tab" aria-controls="credit_card_tab" role="tab" data-toggle="tab" class="card-tab">
-                                <img src="https://mondido.s3.amazonaws.com/www/img/cards/mc-visa_payment_logo.png" alt="Visa/MasterCard">
+                                <img src="https://cdn-02.mondido.com/www/img/cards/mc-visa_payment_logo.png" alt="Visa/MasterCard">
                                 <br>
                                 <small data-mulang="card_payment" class="mulang">
                                     Card
@@ -89,7 +101,7 @@
                             </a>
                         </li>
                         <li role="presentation" class="swish_tab" style="display:none;">
-                            <a href="#swish_tab" aria-controls="swish_tab" role="tab" data-toggle="tab"><img src="https://d3isqtzzzuv2nl.cloudfront.net/www/img/swish-logo.png" alt="Swish">
+                            <a href="#swish_tab" aria-controls="swish_tab" role="tab" data-toggle="tab"><img src="https://cdn-02.mondido.com/www/img/swish-logo.png" alt="Swish">
                                 <br>
                                 <small data-mulang="swish_payment" class="mulang">Swish</small>
                                 <div class="mrk"></div>
@@ -97,7 +109,7 @@
                         </li>
                         <li role="presentation" class="trustly_tab" style="display:none;">
                             <a href="#trustly_tab" aria-controls="trustly_tab" role="tab" data-toggle="tab">
-                                <img src="https://s3-eu-west-1.amazonaws.com/mondido-dev/tmp/Trustly.png" alt="Trustly">
+                                <img src="https://cdn-02.mondido.com/www/img/Trustly.png" alt="Trustly">
                                 <br>
                                 <small data-mulang="bank_payment" class="mulang">
                                     Bank
@@ -108,7 +120,7 @@
                         </li>
                         <li role="presentation" class="paypal_tab" style="display:none;">
                             <a href="#paypal_tab" aria-controls="paypal_tab" role="tab" data-toggle="tab">
-                                <img src="https://mondido.s3.amazonaws.com/merchants/1/63/original/paypal-1.png?1459615937" alt="PayPal">
+                                <img src="https://cdn-02.mondido.com/www/img/paypal-1.png" alt="PayPal">
                                 <br>
                                 <small data-mulang="paypal_payment" class="mulang">
                                     PayPal
@@ -130,7 +142,7 @@
                         </li>
                         <li role="presentation" class="masterpass_tab" style="display:none;top:-12px;">
                             <a href="#masterpass_tab" aria-controls="masterpass_tab" role="tab" data-toggle="tab" class="card-tab">
-                                <img src="https://s3-eu-west-1.amazonaws.com/mondido/merchants/244/135/original/masterpass1.png?1466410646" alt="Masterpass" />
+                                <img src="https://cdn-02.mondido.com/www/img/masterpass1.png" alt="Masterpass" />
                             </a>
                         </li>
                     </ul>
@@ -252,15 +264,15 @@
                                             </label>
                                       </div>                 
 
-                                          <div class="col-xs-10">
-                                        <span class="mulang accept_collector" data-mulang="invoice_accept_conditions" style="font-size: 12px;">
-                                        Yes, I have read and accept Collector Bank\'s  
-                                        <a target="_new" href="https://www.collector.se/upload/Partners/Agreements/SUCUSE/Credit_terms_All_SE.pdf"> 
+                                        <div class="col-xs-10">
+                                        <span  id="accept_collector"class="mulang accept_collector" data-mulang="invoice_accept_conditions['']" style="font-size: 12px;">
+                                        Yes, I have read and accept Collector Bank\'s 
+                                        <a target="_new" href="https://www.collector.se/upload/Partners/Agreements/<AgreementCode>/Credit_terms_All_SE.pdf"> 
                                         General Conditions For Invoice And Credit Accounts </a>
                                         and
-                                        <a target="_new" href="http://www.collector.se/upload/Partners/Agreements/SUCUSE/SECCI_SE.pdf"> Standardised European Consumer Credit Information </a> , 
-                                        and <a target="_new" class="m-layout-terms_and_conditions_url"> 
-                                        Conditions <span class="m-layout-name"></span> </a>
+                                        <a target="_new" href="http://www.collector.se/upload/Partners/Agreements/<AgreementCode>/SECCI_SE.pdf"> Standardised European Consumer Credit Information </a> , 
+                                        and <a target="_new" href="<url>"> 
+                                        Conditions #COPAMNY# </a>
                                         </span>
                                     </div>
                                     </div>
@@ -270,11 +282,12 @@
                             </div>
 
                             <div class="row footer comodotext" id="invoice_foot">
-                                <img src="https://www.collector.se/img/logos/collector-bank.svg" alt="faktura från Collector">
-                                <br />
+                                <div class="text-center">
+                                    <img src="https://cdn-02.mondido.com/www/img/collector-bank.svg" alt="faktura från Collector">
+                                </div>
                                 <span class="mulang" data-mulang="invoice_footer_conditions" >
                                     When you select the invoice you will receive your goods before you pay. You can then choose to pay the whole amount at once or split the payment into smaller parts . In order to deal with the bill collectors will be at least 18 years. The invoice will be sent by e-mail. More information can be found at
-                                </span> <br /><a target="_new" href="https://www.collector.se">https://www.collector.se</a>
+                                </span>     <a target="_new" href="https://www.collector.se">https://www.collector.se</a>
                             </div>
                         </form>
                         <!--
@@ -384,7 +397,7 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
                             <input type="hidden" name="swish" value="1" />
                             <div class="row">
                                 <div class="mulang" data-mulang="easily_pay_with_swish_mobile">Pay with Swish Mobile</div>
-                                <img class="swish-img" src="https://d3isqtzzzuv2nl.cloudfront.net/www/img/swish_tre_mobiler.png" alt="Swish"/>
+                                <img class="swish-img" src="https://cdn-02.mondido.com/www/img/swish_tre_mobiler.png" alt="Swish"/>
                             </div>
                             <div class="row spacer col-xs-12">
                                 <input novalidate type="tel" autocomplete="cc-number" class="form-control cc-number" id="swish_number" name="swish_number" placeholder="4670112233" value="" tabindex="1" coolname="Telefonnummer" autofocus="true" />
@@ -403,7 +416,7 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
                             <input type="hidden" name="paypal" value="1" />
                             <div class="row spacer">
                                 <div class="mulang" data-mulang="paypal_hl">Pay easily with PayPal</div>
-                                <img class="paypal-img" src="https://cdn-02.mondido.com/www/img/paypal-1.png?1459615937" alt="PayPal logo"/>
+                                <img class="paypal-img" src="https://cdn-02.mondido.com/www/img/paypal-1.png" alt="PayPal logo"/>
                             </div>
                             <div class="row spacer">
                                 <input data-mulang="paypal_btn:value" id="paybtn-paypal" class="mulang btn btn-lg btn-success btn-block" type="submit" value="Betala med PayPal" tabindex="5">
@@ -419,7 +432,7 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
                             <div class="row spacer">
                                 <div style="margin-bottom:30px;">Pay with MasterPass</div>
                                 <a href="#" id="checkoutButtonDiv">
-                                <img src="https://www.mastercard.com/mc_us/wallet/img/en/US/mcpp_wllt_btn_chk_147x034px.png" alt="Buy with MasterPass" >
+                                <img src="https://cdn-02.mondido.com/www/img/mcpp_wllt_btn_chk_147x034px.png" alt="Buy with MasterPass" >
                                 </a>
                             </div>
                             <div id="mpspin" style="">
@@ -442,12 +455,13 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
             </div>
         </div>
 
-        <br />
 
-        <div class="row">
+        <div class="row" id="poweredBy">
          <div class="col-xs-12" style="text-align:center;">
             <span class="mulang" data-mulang="powered_by">Powered by</span>
-            <img class="logo" src="https://cdn-02.mondido.com/www/img/mondido-2015.png?1462876334" alt="Logo" />
+            <a href="https://www.mondido.com/en/about-us" target="_blank">
+                <img class="logo" src="https://cdn-02.mondido.com/www/img/mondido-payments-black-2016-2.png" alt="Logo" />
+            </a>
          </div>
          </div>
 
@@ -489,8 +503,9 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
           }
 
           load(mondidoSettings.config.system.fontawesome);
-              load("https://static.masterpass.com/lightbox/Switch/integration/MasterPass.client.js");
-              load("https://masterpass.com/lightbox/Switch/assets/js/MasterPass.omniture.js");
+          //load("https://static.masterpass.com/lightbox/Switch/integration/MasterPass.client.js");
+          //load("https://masterpass.com/lightbox/Switch/assets/js/MasterPass.omniture.js");
+
         </script>
 
     </body>

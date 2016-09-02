@@ -6,6 +6,13 @@ html/pay-out.html
 
 Changelog
 
+- v1.4.1
+- Add AgreementCode setting
+- Add logo alternative
+- Move all image to load from mondido cdn
+- Update endpoints
+- Fix css/js bugs
+
 - v1.4
 - Add masterpass
 - Fix css/js bugs
