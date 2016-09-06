@@ -75,7 +75,6 @@
     </head>
 
     <body>
-    
         <div id="main_area">
 
             <div id="payform" class="container grayc">
@@ -180,7 +179,7 @@
                             <div class="row spacer" id="row-email">
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <input type="text" coolname="E-post" class="form-control next-email mulang" min="3" max="255" id="email" name="email" placeholder="Your email address" tabindex="1" value="{{ transaction.payment_details.email }}" autocomplete="email" />
+                                        <input type="text" coolname="E-post" class="form-control next-email mulang" min="3" max="255" id="email" name="email" placeholder="Your email address" tabindex="1" value="{{ transaction.payment_details.email }}" autocomplete="email" autofocus="true" />
                                          <label for="email" data-mulang="your_email_address" class="mulang">Your email address</label>
                                     </div>
                                 </div>
@@ -306,7 +305,10 @@
                         <form id="mondidopayform" class="form-signin" method="post" role="form" autocomplete="off" aria-autocomplete="none">
                             <input type="hidden" name="card_expiry" id="card_expiry" value="" />
                             <div class="card_number_div">
-                                <input type="text" class="form-control semi" name="card_holder" value="{{ transaction.metadata['customer']['firstname'] }} {{ transaction.metadata['customer']['lastname'] }}" tabindex="1" />
+                                <label id="label_card_holder" data-mulang="card_holder" class="mulang">
+                                    Card holder name:
+                                </label>
+                                <input id="input_card_holder" data-mulang="card_holder_placeholder:placeholder" placeholder="Firstname Lastname"  type="text" class="form-control mulang" name="card_holder" value="{{ transaction.metadata['customer']['firstname'] }} {{ transaction.metadata['customer']['lastname'] }}" tabindex="1"  />
                             </div>
                             <label data-mulang="card_number" class="mulang">
                                 Card number:
@@ -314,7 +316,7 @@
                             <div class="card_number_div">
                                 <span class="cc-brand">
                                 </span>
-                                <input data-mulang="card_number_placeholder:placeholder" data-numeric type="tel" autocomplete="cc-number" class="mulang form-control cc-number" id="card_number" name="card_number" placeholder="•••• •••• •••• ••••" value="" maxlength="19" tabindex="2" coolname="Kortnummer" autofocus="true" />
+                                <input data-mulang="card_number_placeholder:placeholder" data-numeric type="tel" autocomplete="cc-number" class="mulang form-control cc-number" id="card_number" name="card_number" placeholder="•••• •••• •••• ••••" value="" maxlength="19" tabindex="2" coolname="cardnumber" autofocus="true" />
                                 <div class="cards">
                                     <div data-mulang="card_not_accepted" class="arrow_box mulang">Card is currently not supported</div>
                                 </div>
@@ -328,19 +330,19 @@
                                     <label data-mulang="exp_month" class="mulang">
                                         Month:
                                     </label>
-                                    <input type="tel" coolname="Förfallodatum månad" class="form-control cc-exp" maxlength="2" min="1" max="12" id="expMM" name="expMM" placeholder="01" tabindex="3" required pattern="\d*" />
+                                    <input type="tel" coolname="month" class="form-control cc-exp cc-number" maxlength="2" min="1" max="12" id="expMM" name="expMM" placeholder="01" tabindex="3" required pattern="\d*" />
                                 </div>
                                 <div class="col-xs-4">
                                     <label data-mulang="exp_year" class="mulang">
                                         Year:
                                     </label>
-                                    <input type="tel" coolname="Förfallodatum år" class="form-control cc-exp" maxlength="2" min="16" max="36" id="expYY" name="expYY" placeholder="16" tabindex="4" required pattern="\d*" />
+                                    <input type="tel" coolname="year" class="form-control cc-exp cc-number" maxlength="2" min="16" max="36" id="expYY" name="expYY" placeholder="16" tabindex="4" required pattern="\d*" />
                                 </div>
                                 <div class="col-xs-4 nopadright">
                                     <label data-mulang="cvc" class="mulang">
                                         CVV:
                                     </label>
-                                    <input type="tel" class="form-control cc-cvc" maxlength="4" min="0" max="9999" id="card_cvv" name="card_cvv" coolname="CVV" placeholder="•••" tabindex="5" required pattern="\d*" />
+                                    <input type="tel" class="form-control cc-cvc cc-number" maxlength="4" min="0" max="9999" id="card_cvv" name="card_cvv" coolname="CVV" placeholder="•••" tabindex="5" required pattern="\d*" autocomplete="off" />
                                 </div>
                             </div>
                             <input data-mulang="pay_button:value" id="paybtn-cc" class="mulang btn btn-lg btn-success btn-block" type="submit" value="Pay" tabindex="6"/>

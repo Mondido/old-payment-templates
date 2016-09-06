@@ -1321,6 +1321,11 @@
           }
       });
 
+      if (!isBlank($('#input_card_holder').val())) {
+        $('#input_card_holder').addClass("semi");
+        $('#label_card_holder').addClass("hidden");
+      }
+
       $('#swishform').submit(function(e){
           sn = $('#swish_number').val();
           sn = sn.replace(/[^0-9.]/g, "");
