@@ -198,7 +198,6 @@ form.go-right input.form-control:focus + label, form.go-right textarea:focus + l
     width: 100%;
     }
     .cards {
-    background: url(https://cdn-02.mondido.com/www/img/card-logos-3.png);
     height: 32px;
     top: 10.5%;
     right: 2.5%;

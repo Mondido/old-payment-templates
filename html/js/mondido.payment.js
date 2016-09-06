@@ -1249,7 +1249,7 @@
            if (is_focus == false){
               $('input:visible:enabled:last').focus();
            }
-
+           $("img.lazy").lazyload();
       });
 
       $('#myTab li[class="active"] a').trigger('click');
@@ -2023,6 +2023,7 @@ $(document).ready(function(){
 
 // Layout settings
 (function($) {  
+  $("img.lazy").lazyload();
 
   if (mondidoSettings.layout.show_logo == true){
     $(".m-layout-logo").attr("src", mondidoSettings.layout.logo_url);

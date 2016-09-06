@@ -27,7 +27,7 @@
                     discover: {active: false}
                 },
                 supportedPaymentMethods: [
-                    {name: 'swish_tab', active: false, currencies:['sek'], countries:['all']},
+                    {name: 'swish_tab', active: true, currencies:['se'], countries:['all']},
                     {name: 'credit_card_tab', active: true, currencies:['all'], countries:['all']},
                     {name: 'paypal_tab', active: true, currencies:['all'], countries:['all']},
                     {name: 'trustly_tab', active: true, currencies:['all'], countries:['all','se','at','be','bg','hr','cz','cy','dk','ee','fi','fr','de','gr','hu','ie','it','lv','lt','lu','mt','nl','no','pl','pt','ro','sk','si','es','gb']},
@@ -69,6 +69,7 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="robots" content="noindex, nofollow"/>
+
         <link href="css/multi.css" rel="stylesheet" />
         <title>Payment</title>
     </head>
@@ -88,7 +89,7 @@
                     <ul id="myTab" class="nav nav-tabs" role="tablist" >
                         <li role="presentation" class="credit_card_tab" style="display:none;">
                             <a href="#credit_card_tab" aria-controls="credit_card_tab" role="tab" data-toggle="tab" class="card-tab">
-                                <img src="https://cdn-02.mondido.com/www/img/cards/mc-visa_payment_logo.png" alt="Visa/MasterCard">
+                                <img class="lazy" data-original="https://cdn-02.mondido.com/www/img/cards/mc-visa_payment_logo.png" alt="Visa/MasterCard">
                                 <br>
                                 <small data-mulang="card_payment" class="mulang">
                                     Card
@@ -98,7 +99,8 @@
                             </a>
                         </li>
                         <li role="presentation" class="swish_tab" style="display:none;">
-                            <a href="#swish_tab" aria-controls="swish_tab" role="tab" data-toggle="tab"><img src="https://cdn-02.mondido.com/www/img/swish-logo.png" alt="Swish">
+                            <a href="#swish_tab" aria-controls="swish_tab" role="tab" data-toggle="tab">
+                            <img class="lazy" data-original="https://cdn-02.mondido.com/www/img/swish-logo.png" alt="Swish">
                                 <br>
                                 <small data-mulang="swish_payment" class="mulang">Swish</small>
                                 <div class="mrk"></div>
@@ -106,7 +108,7 @@
                         </li>
                         <li role="presentation" class="trustly_tab" style="display:none;">
                             <a href="#trustly_tab" aria-controls="trustly_tab" role="tab" data-toggle="tab">
-                                <img src="https://cdn-02.mondido.com/www/img/Trustly.png" alt="Trustly">
+                                <img class="lazy" data-original="https://cdn-02.mondido.com/www/img/Trustly.png" alt="Trustly">
                                 <br>
                                 <small data-mulang="bank_payment" class="mulang">
                                     Bank
@@ -117,7 +119,7 @@
                         </li>
                         <li role="presentation" class="paypal_tab" style="display:none;">
                             <a href="#paypal_tab" aria-controls="paypal_tab" role="tab" data-toggle="tab">
-                                <img src="https://cdn-02.mondido.com/www/img/paypal-1.png" alt="PayPal">
+                                <img class="lazy" data-original="https://cdn-02.mondido.com/www/img/paypal-1.png" alt="PayPal">
                                 <br>
                                 <small data-mulang="paypal_payment" class="mulang">
                                     PayPal
@@ -139,7 +141,7 @@
                         </li>
                         <li role="presentation" class="masterpass_tab" style="display:none;top:-12px;">
                             <a href="#masterpass_tab" aria-controls="masterpass_tab" role="tab" data-toggle="tab" class="card-tab">
-                                <img src="https://cdn-02.mondido.com/www/img/masterpass1.png" alt="Masterpass" />
+                                <img class="lazy" data-original="https://cdn-02.mondido.com/www/img/masterpass1.png" alt="Masterpass" />
                             </a>
                         </li>
                     </ul>
@@ -412,7 +414,7 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
                             <input type="hidden" name="swish" value="1" />
                             <div class="row">
                                 <div class="mulang" data-mulang="easily_pay_with_swish_mobile">Pay with Swish Mobile</div>
-                                <img class="swish-img" src="https://cdn-02.mondido.com/www/img/swish_tre_mobiler.png" alt="Swish"/>
+                                <img class="swish-img lazy" data-original="https://cdn-02.mondido.com/www/img/swish_tre_mobiler.png" alt="Swish"/>
                             </div>
                             <div class="row spacer col-xs-12">
                                 <input novalidate type="tel" autocomplete="cc-number" class="form-control cc-number" id="swish_number" name="swish_number" placeholder="4670112233" value="" tabindex="1" coolname="Telefonnummer" autofocus="true" />
@@ -447,7 +449,7 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
                             <div class="row spacer">
                                 <div style="margin-bottom:30px;">Pay with MasterPass</div>
                                 <a href="#" id="checkoutButtonDiv">
-                                <img src="https://cdn-02.mondido.com/www/img/mcpp_wllt_btn_chk_147x034px.png" alt="Buy with MasterPass" >
+                                <img class="lazy" data-original="https://cdn-02.mondido.com/www/img/mcpp_wllt_btn_chk_147x034px.png" alt="Buy with MasterPass" >
                                 </a>
                             </div>
                             <div id="mpspin" style="">
