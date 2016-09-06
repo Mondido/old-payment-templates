@@ -1232,7 +1232,21 @@
           }else if($(this).attr('href') == '#swish_tab'){
               set_payment_method('swish');
           }
+          $('input:enabled').blur();
+
           $(this).tab('show');
+
+           var is_focus = false;
+           $('input:visible:enabled').each(function( i ) {
+              if (isBlank($(this).val()) && is_focus == false ) {
+                $(this).focus();
+                is_focus = true
+              }
+            });
+           if (is_focus == false){
+              $('input:visible:enabled:last').focus();
+           }
+
       });
 
       $('#myTab li[class="active"] a').trigger('click');
