@@ -188,7 +188,7 @@
                             <div class="row hidden spacer" id="row-phone-details">
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <input data-numeric type="text" class="form-control next-phone mulang" id="phone" name="phone" placeholder="Your phone number" value="{{ transaction.payment_details.phone }}" maxlength="20" tabindex="2" coolname="Telefonnummer" />
+                                        <input data-numeric type="tel" class="form-control next-phone mulang" id="phone" name="phone" placeholder="Your phone number" value="{{ transaction.payment_details.phone }}" maxlength="20" tabindex="2" coolname="Telefonnummer"  autocomplete="cc-number" />
                                          <label for="phone" data-mulang="your_phone_number" class="mulang">Your phone number</label>
                                     </div>
                                 </div>
@@ -196,7 +196,7 @@
                             <div class="row hidden spacer" id="row-ssn-details">
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <input data-numeric type="tel" class="form-control next-ssn mulang" id="ssn" name="ssn" placeholder="ååååmmdd ••••" value="{{ transaction.payment_details.ssn }}" maxlength="13" tabindex="3" coolname="Personnummer" />
+                                        <input data-numeric type="tel" class="form-control next-ssn mulang" id="ssn" name="ssn" placeholder="ååååmmdd ••••" value="{{ transaction.payment_details.ssn }}" maxlength="13" tabindex="3" coolname="Personnummer"  autocomplete="cc-number" />
                                          <label for="ssn" data-mulang="your_social_security_number" class="mulang">Your Social Security number</label>
                                     </div>
                                 </div>
