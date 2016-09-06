@@ -1,4 +1,4 @@
-  // v 1.14.1
+  // v 1.14.2
 
 // Mondido settings
 (function($) {
