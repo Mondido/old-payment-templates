@@ -1,4 +1,4 @@
-  // v 1.14.2
+  // v 1.14.2.1
 
 // Mondido settings
 (function($) {
@@ -1021,7 +1021,6 @@
 
         $( ".segmentation_select" ).click(function() {
           var str = "";
-         // alert($(this).attr('data-value'));
           set_segmentation($(this).attr('data-value'));
 
         });
@@ -1068,8 +1067,7 @@
           $('#b2c').addClass('btn-secondary');
         }
 
-
-
+        $('#segmentation').val(segmentation);
 
         $('#ssn').val("");
         $('#row-customer-details').addClass('hidden');
