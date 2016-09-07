@@ -1,10 +1,8 @@
 /* 
 
-Mondido PayOut style v1.7.2, (c) Mondido Payments AB 2016, hello@mondido.com
+Mondido PayOut style v1.7.3, (c) Mondido Payments AB 2016, hello@mondido.com
 
 */
-
-
 
 
 
@@ -29,7 +27,7 @@ body {
 
 .form-signin {
   max-width: 330px;
-  padding: 15px;
+  padding: 0px, 15px, 15px, 15px;
   margin: 0 auto;
 }
 .form-signin .form-signin-heading,

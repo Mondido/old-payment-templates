@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!-- Mondido PayOut v1.4.1, (c) Mondido Payments AB 2016, hello@mondido.com -->
+        <!-- Mondido PayOut v1.4.2, (c) Mondido Payments AB 2016, hello@mondido.com -->
         <script>
             var mondidoSettings = {
                 /// Company layout settings
@@ -27,10 +27,10 @@
                     discover: {active: false}
                 },
                 supportedPaymentMethods: [
-                    {name: 'swish_tab', active: true, currencies:['se'], countries:['all']},
-                    {name: 'credit_card_tab', active: true, currencies:['all'], countries:['all']},
-                    {name: 'paypal_tab', active: true, currencies:['all'], countries:['all']},
-                    {name: 'trustly_tab', active: true, currencies:['all'], countries:['all','se','at','be','bg','hr','cz','cy','dk','ee','fi','fr','de','gr','hu','ie','it','lv','lt','lu','mt','nl','no','pl','pt','ro','sk','si','es','gb']},
+                    {name: 'swish_tab', active: false, currencies:['all'], countries:['all']},
+                    {name: 'credit_card_tab', active: false, currencies:['all'], countries:['all']},
+                    {name: 'paypal_tab', active: false, currencies:['all'], countries:['all']},
+                    {name: 'trustly_tab', active: false, currencies:['all'], countries:['all','se','at','be','bg','hr','cz','cy','dk','ee','fi','fr','de','gr','hu','ie','it','lv','lt','lu','mt','nl','no','pl','pt','ro','sk','si','es','gb']},
                     {name: 'invoice_tab', active: true, currencies:['all'], countries:['all','se'],
                         segmentation: {
                             b2c: true,
@@ -48,7 +48,7 @@
                 country_code: '{{ transaction.payment_details.country_code }}',
 
                 config: {
-                    development: true,
+                    development: false,
                     system: {
                         endpoint: "https://pay.mondido.com/v1/",
                         log: false,
@@ -70,7 +70,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="robots" content="noindex, nofollow"/>
 
-        <link href="https://cdn-02.mondido.com/www/css/multi.1.7.2.css" rel="stylesheet" />
+        <link href="https://cdn-02.mondido.com/www/css/multi.1.7.3.css" rel="stylesheet" />
         <title>Payment</title>
     </head>
 
@@ -167,15 +167,16 @@
                             <input type="hidden" id="payment_method" name="payment_method"/>
                             <input type="hidden" id="country_code" name="country_code" value="{{ transaction.payment_details.country_code }}"/>
                             <input type="hidden" id="pending_payment_customer" name="pending_payment_customer"/>
-                            <input type="hidden" id="segmentation" name="segmentation"/>
+                            <input type="hidden" id="segmentation" name="segmentation" value="{{{ transaction.payment_details.segmentation }}" />
 
                             <div class="row hidden" id="segmentation_toggle">
                                 <div class="row pull-right">
                                     <button type="button" id="b2c" data-value="b2c" class="segmentation_select btn btn-sm"><span class="mulang" data-mulang="individual">Individual</span></button>
                                     <button type="button" id="b2b" data-value="b2b" class="segmentation_select btn btn-sm"><span class="mulang" data-mulang="business">Business</span></button>
                                 </div>
+                                <br />
                             </div>
-                            <br />
+                  
                             <div class="row spacer" id="row-email">
                                 <div class="row">
                                     <div class="col-xs-12">

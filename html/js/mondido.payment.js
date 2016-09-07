@@ -1016,19 +1016,18 @@
       invoice = $.grep(mondidoSettings.supportedPaymentMethods, function(e){ return e.name == "invoice_tab"; });
       segmentation = invoice[0].segmentation;
 
+      if (isBlank($('#segmentation').val())){
+        set_segmentation(segmentation.defualt);
+      } else {
+        set_segmentation($('#segmentation').val());
+      }
+
       if (invoice[0].segmentation.b2b == true && invoice[0].segmentation.b2c == true){
         $('#segmentation_toggle').removeClass('hidden');
 
         $( ".segmentation_select" ).click(function() {
-          var str = "";
           set_segmentation($(this).attr('data-value'));
-
         });
-
-
-        if (isBlank($('#segmentation').val())){
-          $('#segmentation').val(segmentation.defualt);
-        }
 
       } else {
 
@@ -1041,18 +1040,22 @@
           $('#city').attr('disabled', 'disabled');
           $('#address_1').attr('disabled', 'disabled');
           $('#address_2').attr('disabled', 'disabled');
-
-          $('#segmentation').val("b2c");
-          $('#segmentation').addClass('hidden');
+        
         } else {
           $('#segmentation').val("b2b");
-          $('#segmentation').addClass('hidden');
         }
+
+        $('#segmentation').addClass('hidden');
       }
 
       function set_segmentation(segmentation){
+        if (segmentation == "b2c" || segmentation == "b2b"){
+        } else {
+          segmentation = "b2c";
+        }
 
         if (segmentation == "b2c"){
+
           $('#b2c').addClass('btn-primary');
           $('#b2c').removeClass('btn-secondary');
 
@@ -1060,13 +1063,14 @@
           $('#b2b').addClass('btn-secondary');
 
         } else {
+        
           $('#b2b').addClass('btn-primary');
           $('#b2b').removeClass('btn-secondary');
 
           $('#b2c').removeClass('btn-primary');
           $('#b2c').addClass('btn-secondary');
-        }
 
+        }
         $('#segmentation').val(segmentation);
 
         $('#ssn').val("");
@@ -1077,9 +1081,14 @@
         $('#city').val("");
         $('#address_1').val("");
         $('#address_2').val("");
+
       }
 
       var ssn_on_load = $('#ssn').val();
+
+      if (isBlank($('#ssn').val())){
+        $('#row-ssn-details').addClass('hidden');
+      }
 
       var lastKey = null;
       var loading_ssn = $("#row-ssn-details-loading");
@@ -1096,11 +1105,11 @@
         var is_test = 'true';
         var country_code = mondidoSettings.country_code;
 
-        if(country_code == "SWE" && ssn.length === 12){
+        if(country_code.toLowerCase() == "swe" && ssn.length === 12){
           ssn = ssn.slice(2);
         }
 
-        if ( country_code != "SWE"){
+        if ( country_code.toLowerCase() != "swe"){
             $('#row-ssn-details').removeClass('hidden');
             $('#row-customer-details').removeClass('hidden');
             $('#ssn').addClass('valid');
@@ -1126,10 +1135,10 @@
 
       var ssn_url = api_url+"ssn?token="+Mondido.token+"&transaction_id="+Mondido.transaction.id+"&merchant_id="+Mondido.merchant.id+"&test="+is_test+"&ssn="+ssn+"&country="+country_code;
 
-      if (mondidoSettings.config.development == true || $('#segmentation').val() == "b2b"  || country_code != "SWE"){
+      if (mondidoSettings.config.development == true || $('#segmentation').val() == "b2b"  || country_code.toLowerCase() != "swe"){
         $('#row-ssn-details').removeClass('hidden');
 
-        if ($('#segmentation').val() == "b2b"  || country_code != "SWE"){
+        if ($('#segmentation').val() == "b2b"  || country_code.toLowerCase() != "swe"){
           $('#row-ssn-details').removeClass('hidden');
 
           $('#first_name').removeAttr("disabled");
@@ -1141,6 +1150,7 @@
 
            $('#ssn').removeClass('invalid');
            $('#ssn').addClass('valid');
+
         } else {
 
           $('#first_name').val("first_name - Development").addClass('valid');
@@ -1463,7 +1473,7 @@
       function isSwedishSocialSecurityNumber(ssn){
         valid = false;
 
-        if (mondidoSettings.country_code != "SWE"){
+        if (mondidoSettings.country_code.toLowerCase() != "swe"){
 
           if (ssn.length == 12){
             valid = true;
