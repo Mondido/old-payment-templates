@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!-- Mondido PayOut v1.4.1, (c) Mondido Payments AB 2016, hello@mondido.com -->
+        <!-- Mondido PayOut v1.4.2, (c) Mondido Payments AB 2016, hello@mondido.com -->
         <script>
             var mondidoSettings = {
                 /// Company layout settings
@@ -27,11 +27,11 @@
                     discover: {active: false}
                 },
                 supportedPaymentMethods: [
-                    {name: 'swish_tab', active: false, currencies:['sek'], countries:['all']},
+                    {name: 'swish_tab', active: false, currencies:['all'], countries:['all']},
                     {name: 'credit_card_tab', active: true, currencies:['all'], countries:['all']},
-                    {name: 'paypal_tab', active: true, currencies:['all'], countries:['all']},
-                    {name: 'trustly_tab', active: true, currencies:['all'], countries:['all','se','at','be','bg','hr','cz','cy','dk','ee','fi','fr','de','gr','hu','ie','it','lv','lt','lu','mt','nl','no','pl','pt','ro','sk','si','es','gb']},
-                    {name: 'invoice_tab', active: true, currencies:['all'], countries:['all','se'],
+                    {name: 'paypal_tab', active: false, currencies:['all'], countries:['all']},
+                    {name: 'trustly_tab', active: false, currencies:['all'], countries:['all','se','at','be','bg','hr','cz','cy','dk','ee','fi','fr','de','gr','hu','ie','it','lv','lt','lu','mt','nl','no','pl','pt','ro','sk','si','es','gb']},
+                    {name: 'invoice_tab', active: false, currencies:['all'], countries:['all','se'],
                         segmentation: {
                             b2c: true,
                             b2b: false,
@@ -52,8 +52,8 @@
                     system: {
                         endpoint: "https://pay.mondido.com/v1/",
                         log: false,
-                        payment_js_endpoint: "https://cdn-02.mondido.com/www/js/mondido.payment.1.14.js",
-                        lang_endpoint: "https://cdn-02.mondido.com/www/js/lang.1.6.4.js",
+                        payment_js_endpoint: "https://cdn-02.mondido.com/www/js/mondido.payment.1.14.2.1.js",
+                        lang_endpoint: "https://cdn-02.mondido.com/www/js/lang.1.6.5.js",
                         bootstrap_endpoint: "https://cdn-02.mondido.com/www/js/bootstrap.min.js?v=3.0",
                         jquery_endpoint: "https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js",
                         fontawesome: "https://use.fontawesome.com/c66b4c0ee0.js"
@@ -69,15 +69,13 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="robots" content="noindex, nofollow"/>
-        <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdn-02.mondido.com/www/css/multi.1.7.1.css" rel="stylesheet" />
+
+        <link href="https://cdn-02.mondido.com/www/css/multi.1.7.3.css" rel="stylesheet" />
         <title>Payment</title>
     </head>
 
     <body>
-    
         <div id="main_area">
-
             <div id="payform" class="container grayc">
                 <div class="m-layout-show-logo col-xs-12 text-center hidden">
                     <img class="m-layout-logo"/>
@@ -91,7 +89,7 @@
                     <ul id="myTab" class="nav nav-tabs" role="tablist" >
                         <li role="presentation" class="credit_card_tab" style="display:none;">
                             <a href="#credit_card_tab" aria-controls="credit_card_tab" role="tab" data-toggle="tab" class="card-tab">
-                                <img src="https://cdn-02.mondido.com/www/img/cards/mc-visa_payment_logo.png" alt="Visa/MasterCard">
+                                <img class="lazy" data-original="https://cdn-02.mondido.com/www/img/cards/mc-visa_payment_logo.png" alt="Visa/MasterCard">
                                 <br>
                                 <small data-mulang="card_payment" class="mulang">
                                     Card
@@ -101,7 +99,8 @@
                             </a>
                         </li>
                         <li role="presentation" class="swish_tab" style="display:none;">
-                            <a href="#swish_tab" aria-controls="swish_tab" role="tab" data-toggle="tab"><img src="https://cdn-02.mondido.com/www/img/swish-logo.png" alt="Swish">
+                            <a href="#swish_tab" aria-controls="swish_tab" role="tab" data-toggle="tab">
+                            <img class="lazy" data-original="https://cdn-02.mondido.com/www/img/swish-logo.png" alt="Swish">
                                 <br>
                                 <small data-mulang="swish_payment" class="mulang">Swish</small>
                                 <div class="mrk"></div>
@@ -109,7 +108,7 @@
                         </li>
                         <li role="presentation" class="trustly_tab" style="display:none;">
                             <a href="#trustly_tab" aria-controls="trustly_tab" role="tab" data-toggle="tab">
-                                <img src="https://cdn-02.mondido.com/www/img/Trustly.png" alt="Trustly">
+                                <img class="lazy" data-original="https://cdn-02.mondido.com/www/img/Trustly.png" alt="Trustly">
                                 <br>
                                 <small data-mulang="bank_payment" class="mulang">
                                     Bank
@@ -120,7 +119,7 @@
                         </li>
                         <li role="presentation" class="paypal_tab" style="display:none;">
                             <a href="#paypal_tab" aria-controls="paypal_tab" role="tab" data-toggle="tab">
-                                <img src="https://cdn-02.mondido.com/www/img/paypal-1.png" alt="PayPal">
+                                <img class="lazy" data-original="https://cdn-02.mondido.com/www/img/paypal-1.png" alt="PayPal">
                                 <br>
                                 <small data-mulang="paypal_payment" class="mulang">
                                     PayPal
@@ -142,7 +141,7 @@
                         </li>
                         <li role="presentation" class="masterpass_tab" style="display:none;top:-12px;">
                             <a href="#masterpass_tab" aria-controls="masterpass_tab" role="tab" data-toggle="tab" class="card-tab">
-                                <img src="https://cdn-02.mondido.com/www/img/masterpass1.png" alt="Masterpass" />
+                                <img class="lazy" data-original="https://cdn-02.mondido.com/www/img/masterpass1.png" alt="Masterpass" />
                             </a>
                         </li>
                     </ul>
@@ -168,19 +167,20 @@
                             <input type="hidden" id="payment_method" name="payment_method"/>
                             <input type="hidden" id="country_code" name="country_code" value="{{ transaction.payment_details.country_code }}"/>
                             <input type="hidden" id="pending_payment_customer" name="pending_payment_customer"/>
-                            <input type="hidden" id="segmentation" name="segmentation"/>
+                            <input type="hidden" id="segmentation" name="segmentation" value="{{{ transaction.payment_details.segmentation }}" />
 
                             <div class="row hidden" id="segmentation_toggle">
                                 <div class="row pull-right">
                                     <button type="button" id="b2c" data-value="b2c" class="segmentation_select btn btn-sm"><span class="mulang" data-mulang="individual">Individual</span></button>
                                     <button type="button" id="b2b" data-value="b2b" class="segmentation_select btn btn-sm"><span class="mulang" data-mulang="business">Business</span></button>
                                 </div>
+                                <br />
                             </div>
-                            <br />
+                  
                             <div class="row spacer" id="row-email">
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <input type="text" coolname="E-post" class="form-control next-email mulang" min="3" max="255" id="email" name="email" placeholder="Your email address" tabindex="1" value="{{ transaction.payment_details.email }}"/>
+                                        <input type="text" coolname="E-post" class="form-control next-email mulang" min="3" max="255" id="email" name="email" placeholder="Your email address" tabindex="1" value="{{ transaction.payment_details.email }}" autocomplete="email" autofocus="true" />
                                          <label for="email" data-mulang="your_email_address" class="mulang">Your email address</label>
                                     </div>
                                 </div>
@@ -188,7 +188,7 @@
                             <div class="row hidden spacer" id="row-phone-details">
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <input data-numeric type="text" class="form-control next-phone mulang" id="phone" name="phone" placeholder="Your phone number" value="{{ transaction.payment_details.phone }}" maxlength="20" tabindex="2" coolname="Telefonnummer" />
+                                        <input data-numeric type="tel" class="form-control next-phone mulang" id="phone" name="phone" placeholder="Your phone number" value="{{ transaction.payment_details.phone }}" maxlength="20" tabindex="2" coolname="Telefonnummer"  autocomplete="cc-number" />
                                          <label for="phone" data-mulang="your_phone_number" class="mulang">Your phone number</label>
                                     </div>
                                 </div>
@@ -196,7 +196,7 @@
                             <div class="row hidden spacer" id="row-ssn-details">
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <input data-numeric type="tel" class="form-control next-ssn mulang" id="ssn" name="ssn" placeholder="ååååmmdd ••••" value="{{ transaction.payment_details.ssn }}" maxlength="13" tabindex="3" coolname="Personnummer" />
+                                        <input data-numeric type="tel" class="form-control next-ssn mulang" id="ssn" name="ssn" placeholder="ååååmmdd ••••" value="{{ transaction.payment_details.ssn }}" maxlength="13" tabindex="3" coolname="Personnummer"  autocomplete="cc-number" />
                                          <label for="ssn" data-mulang="your_social_security_number" class="mulang">Your Social Security number</label>
                                     </div>
                                 </div>
@@ -205,7 +205,13 @@
                                 <div class="row">
                                     <div class="col-xs-12" id="loading" data-mulang="loading" class="mulang">
                                         Loading
-                                        <img src="https://cdn-02.mondido.com/www/img/loading.gif" alt="Loading..."/>
+                                        <div class="spinner">
+                                          <div class="rect1"></div>
+                                          <div class="rect2"></div>
+                                          <div class="rect3"></div>
+                                          <div class="rect4"></div>
+                                          <div class="rect5"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -283,7 +289,10 @@
 
                             <div class="row footer comodotext" id="invoice_foot">
                                 <div class="text-center">
-                                    <img src="https://cdn-02.mondido.com/www/img/collector-bank.svg" alt="faktura från Collector">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="250" height="18" viewBox="0 0 194 20">
+<path d="M24.74 4.05c-4.71 0-8.19 3.74-8.19 7.85 0 3.81 3.1 8.07 8.19 8.07 5.13 0 8.19-4.33 8.19-8 0-4.32-3.58-7.92-8.19-7.92m0 13.31c-3.17 0-5.33-2.64-5.33-5.39 0-2.71 2.13-5.35 5.33-5.35s5.33 2.64 5.33 5.32c0 2.88-2.27 5.42-5.33 5.42M35.72 0h2.86v19.59h-2.86zM42.74 0h2.86v19.59h-2.86zM98.61 4.05c-4.71 0-8.19 3.74-8.19 7.85 0 3.81 3.1 8.07 8.19 8.07 5.13 0 8.19-4.33 8.19-8 0-4.32-3.61-7.92-8.19-7.92m0 13.31c-3.16 0-5.33-2.64-5.33-5.39 0-2.71 2.13-5.35 5.33-5.35s5.34 2.64 5.34 5.32c0 2.88-2.27 5.42-5.34 5.42M112.24 5.83h-.07V4.46h-2.65v15.09h2.86v-8.26c0-2.16.75-3.3 1.65-3.78.69-.34 1.62-.55 2.06-.55V4.05c-.72.03-2.65.1-3.85 1.78M8.15 6.66c1.93 0 3.48.96 4.41 2.33l2.17-1.72c-1.48-1.92-3.82-3.19-6.54-3.19C3.48 4.08 0 7.82 0 11.94 0 15.75 3.1 20 8.19 20c2.89 0 5.13-1.37 6.5-3.22l-2.13-1.72c-.93 1.37-2.51 2.33-4.37 2.33-3.17 0-5.33-2.64-5.33-5.38-.04-2.71 2.09-5.35 5.29-5.35M73.7 6.66c1.93 0 3.48.96 4.41 2.33l2.16-1.72a8.178 8.178 0 0 0-6.53-3.19c-4.72 0-8.19 3.74-8.19 7.86 0 3.81 3.09 8.06 8.19 8.06 2.89 0 5.12-1.37 6.5-3.22l-2.13-1.72a5.285 5.285 0 0 1-4.37 2.33c-3.17 0-5.34-2.64-5.34-5.38-.03-2.71 2.1-5.35 5.3-5.35M56.12 4.05c-4.27 0-7.78 3.39-7.78 7.92 0 4.29 3.41 7.96 7.71 7.96 2.24 0 5.44-1.1 7.02-4.49h-2.99c-.79 1.06-2.14 1.92-3.93 1.92-1.92 0-4.26-1.2-4.98-4.12h12.55c.04-.2.07-.96.07-1.44.04-4.42-3.58-7.75-7.67-7.75m-4.92 7c.14-2.2 2.17-4.43 4.89-4.43 2.75 0 4.74 2.2 4.88 4.43H51.2zM87.22 0H84.4v4.49h-2.51V7.1h2.51v12.45h2.82V7.07h2.52V4.46h-2.52z" fill="#282828" />
+<path d="M154.91 6.66c-3.47 0-5.19 3.01-5.19 5.38 0 2.71 2.16 5.32 5.16 5.32 2.99 0 5.26-2.44 5.26-5.32.04-3.19-2.3-5.38-5.23-5.38m5.2 12.89v-2.33h-.04c-1.1 1.85-3.09 2.71-5.12 2.71-5.1 0-8.02-3.88-8.02-7.85 0-3.68 2.61-8 8.02-8 2.1 0 4.06.86 5.12 2.54h.04V4.49h2.85v15.1h-2.85zM137.16 6.66c-2.93 0-5.23 2.19-5.23 5.38 0 2.88 2.3 5.32 5.26 5.32 3 0 5.16-2.57 5.16-5.32-.03-2.37-1.72-5.38-5.19-5.38m-7.88 12.89V.51h2.85v5.8h.07c1.1-1.37 3.03-2.26 5.13-2.26 5.37 0 7.88 4.32 7.88 7.99 0 3.98-2.86 7.86-7.88 7.86-2.2 0-4.13-.86-5.37-2.54h-.03v2.16h-2.65zM172.63 4.05c-.62 0-2.89 0-4.44 2.02h-.07V4.46h-2.64v15.09h2.85v-8.23c0-3.02 1.62-4.7 3.99-4.7 3.79 0 3.79 3.53 3.79 4.7v8.2h2.85v-8.95c-.03-1.68-.34-2.89-.96-3.88-1.1-1.61-3.03-2.64-5.37-2.64M181.48 0h2.92v10.39l5.92-5.93h3.51l-6.75 6.62 6.92 8.44h-3.34l-6.26-7.75v7.75h-2.92z" fill="#282828" fill-opacity=".5" />
+</svg>
                                 </div>
                                 <span class="mulang" data-mulang="invoice_footer_conditions" >
                                     When you select the invoice you will receive your goods before you pay. You can then choose to pay the whole amount at once or split the payment into smaller parts . In order to deal with the bill collectors will be at least 18 years. The invoice will be sent by e-mail. More information can be found at
@@ -306,7 +315,10 @@
                         <form id="mondidopayform" class="form-signin" method="post" role="form" autocomplete="off" aria-autocomplete="none">
                             <input type="hidden" name="card_expiry" id="card_expiry" value="" />
                             <div class="card_number_div">
-                                <input type="text" class="form-control semi" name="card_holder" value="{{ transaction.metadata['customer']['firstname'] }} {{ transaction.metadata['customer']['lastname'] }}" tabindex="1" />
+                                <label id="label_card_holder" data-mulang="card_holder" class="mulang">
+                                    Card holder name:
+                                </label>
+                                <input id="input_card_holder" data-mulang="card_holder_placeholder:placeholder" placeholder="Firstname Lastname"  type="text" class="form-control mulang" name="card_holder" value="{{ transaction.metadata['customer']['firstname'] }} {{ transaction.metadata['customer']['lastname'] }}" tabindex="1"  />
                             </div>
                             <label data-mulang="card_number" class="mulang">
                                 Card number:
@@ -314,7 +326,7 @@
                             <div class="card_number_div">
                                 <span class="cc-brand">
                                 </span>
-                                <input data-mulang="card_number_placeholder:placeholder" data-numeric type="tel" autocomplete="cc-number" class="mulang form-control cc-number" id="card_number" name="card_number" placeholder="•••• •••• •••• ••••" value="" maxlength="19" tabindex="2" coolname="Kortnummer" autofocus="true" />
+                                <input data-mulang="card_number_placeholder:placeholder" data-numeric type="tel" autocomplete="cc-number" class="mulang form-control cc-number" id="card_number" name="card_number" placeholder="•••• •••• •••• ••••" value="" maxlength="19" tabindex="2" coolname="cardnumber" autofocus="true" />
                                 <div class="cards">
                                     <div data-mulang="card_not_accepted" class="arrow_box mulang">Card is currently not supported</div>
                                 </div>
@@ -328,25 +340,31 @@
                                     <label data-mulang="exp_month" class="mulang">
                                         Month:
                                     </label>
-                                    <input type="tel" coolname="Förfallodatum månad" class="form-control cc-exp" maxlength="2" min="1" max="12" id="expMM" name="expMM" placeholder="01" tabindex="3" required pattern="\d*" />
+                                    <input type="tel" coolname="month" class="form-control cc-exp cc-number" maxlength="2" min="1" max="12" id="expMM" name="expMM" placeholder="01" tabindex="3" required pattern="\d*" />
                                 </div>
                                 <div class="col-xs-4">
                                     <label data-mulang="exp_year" class="mulang">
                                         Year:
                                     </label>
-                                    <input type="tel" coolname="Förfallodatum år" class="form-control cc-exp" maxlength="2" min="16" max="36" id="expYY" name="expYY" placeholder="18" tabindex="4" required pattern="\d*" />
+                                    <input type="tel" coolname="year" class="form-control cc-exp cc-number" maxlength="2" min="16" max="36" id="expYY" name="expYY" placeholder="16" tabindex="4" required pattern="\d*" />
                                 </div>
                                 <div class="col-xs-4 nopadright">
                                     <label data-mulang="cvc" class="mulang">
                                         CVV:
                                     </label>
-                                    <input type="tel" class="form-control cc-cvc" maxlength="4" min="0" max="9999" id="card_cvv" name="card_cvv" coolname="CVV" placeholder="123" tabindex="5" required pattern="\d*" />
+                                    <input type="tel" class="form-control cc-cvc cc-number" maxlength="4" min="0" max="9999" id="card_cvv" name="card_cvv" coolname="CVV" placeholder="•••" tabindex="5" required pattern="\d*" autocomplete="off" />
                                 </div>
                             </div>
                             <input data-mulang="pay_button:value" id="paybtn-cc" class="mulang btn btn-lg btn-success btn-block" type="submit" value="Pay" tabindex="6"/>
                             <div id="loading-cc" class="hidden">
                                 <span class="mulang" data-mulang="loading">Loading:</span>
-                                <img src="https://cdn-02.mondido.com/www/img/loading.gif" alt="Loading..."/>
+                                <div class="spinner">
+                                  <div class="rect1"></div>
+                                  <div class="rect2"></div>
+                                  <div class="rect3"></div>
+                                  <div class="rect4"></div>
+                                  <div class="rect5"></div>
+                                </div>
                             </div>
                             <div class="footer">
                                 <div>
@@ -397,7 +415,7 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
                             <input type="hidden" name="swish" value="1" />
                             <div class="row">
                                 <div class="mulang" data-mulang="easily_pay_with_swish_mobile">Pay with Swish Mobile</div>
-                                <img class="swish-img" src="https://cdn-02.mondido.com/www/img/swish_tre_mobiler.png" alt="Swish"/>
+                                <img class="swish-img lazy" data-original="https://cdn-02.mondido.com/www/img/swish_tre_mobiler.png" alt="Swish"/>
                             </div>
                             <div class="row spacer col-xs-12">
                                 <input novalidate type="tel" autocomplete="cc-number" class="form-control cc-number" id="swish_number" name="swish_number" placeholder="4670112233" value="" tabindex="1" coolname="Telefonnummer" autofocus="true" />
@@ -432,7 +450,7 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
                             <div class="row spacer">
                                 <div style="margin-bottom:30px;">Pay with MasterPass</div>
                                 <a href="#" id="checkoutButtonDiv">
-                                <img src="https://cdn-02.mondido.com/www/img/mcpp_wllt_btn_chk_147x034px.png" alt="Buy with MasterPass" >
+                                <img class="lazy" data-original="https://cdn-02.mondido.com/www/img/mcpp_wllt_btn_chk_147x034px.png" alt="Buy with MasterPass" >
                                 </a>
                             </div>
                             <div id="mpspin" style="">
