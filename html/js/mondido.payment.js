@@ -328,6 +328,7 @@ jQuery(function($) {
 
       $('#row-customer-details').removeClass('hidden');
       $('#row-ssn-details-error').addClass('hidden');
+      $('#row-ssn-details-loading').addClass('hidden');
 
     } else {
 
