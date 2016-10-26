@@ -2,16 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Mondido PayOut v2.0, (c) Mondido Payments AB 2016, hello@mondido.com -->
+  <!-- Mondido PayOut v2.1, (c) Mondido Payments AB 2016, hello@mondido.com -->
   <script>
     var mondidoSettings = {
 
       /// Company layout settings
       layout: {
-        name: "{{ transaction.merchant.settings_hosted['v2']['layout']['name'] | default_string_empty_name  }}  ",
-        show_logo: {{ transaction.merchant.settings_hosted['v2']['layout']['show_logo'] | default_true }},
+        name: "{{ transaction.merchant.settings_hosted['v2']['layout']['name'] | default_string_empty_name  }}",
+        show_logo: {{ transaction.merchant.settings_hosted['v2']['layout']['show_logo'] | default_false  }},
         logo_url: "{{ transaction.merchant.settings_hosted['v2']['layout']['logo_url'] | default_string_empty_logo  }}",
-        terms_and_conditions_url: "{{ transaction.merchant.settings_hosted['v2']['terms_and_conditions']['fallback'] | default_string_empty_terms }}"
+        terms_and_conditions_url: "{{ transaction.merchant.settings_hosted['v2']['terms_and_conditions']['fallback'] | default_string_empty_terms }}",
+        accept_terms_requirement: true
       },
 
       /// Cards/Payment layout settings
@@ -46,10 +47,10 @@
       ],
 
       /// Config settings
-      metadata: '{{ transaction.metadata | replace_metadata }}',
+      metadata: '{{ transaction.metadata | replace: "'", "" }}',
       currency: '{{ transaction.currency }}',
       country_code: '{{ transaction.payment_details.country_code | default_metadata_country }}',
-      metadataCountry: "{{ transaction.metadata['order']['customer']['default_address']['country'] }}",
+      metadataCountry: "{{ transaction.metadata['order']['customer']['default_address']['country'] }}",//
 
       customer: {
         name: "{{ transaction.metadata['customer_firstname'] }} {{ transaction.metadata['customer_last'] }}",
@@ -80,7 +81,6 @@
           log: false,
           payment_js_endpoint: "{{ transaction.merchant.settings_hosted['v2']['system']['endpoint']['payment_js'] | default_payment_js_endpoint  }}",
           lang_endpoint: "{{ transaction.merchant.settings_hosted['v2']['system']['endpoint']['lang'] | default_lang_endpoint  }}",
-          fontawesome: "https://use.fontawesome.com/c66b4c0ee0.js",
           css_endpoint: "{{ transaction.merchant.settings_hosted['v2']['system']['endpoint']['css'] | default_css_endpoint  }}"
         }
       }
@@ -90,26 +90,16 @@
       //problems:[{type: 'swish', message: 'Swish is out of order'},{type: 'credit_card', issuer: 'nordea', message: 'Nordea kräver 3D Secure'}]
       mondidoSettings.systemInfo = document.Mondido.systemInfo;
     }
+    if (document.location.host) { mondidoSettings.config.development = false; } else { mondidoSettings.config.development = true; }
   </script>
-  <script type="text/javascript">
-    if (document.location.host) { mondidoSettings.config.development = false;  } else { mondidoSettings.config.development = true; }
-
-    function load_css(css_url) {
-      document.write('<link href="'+css_url+'" rel="stylesheet" type="text/css" />');
-    }
-    if (mondidoSettings.config.development == true){
-     // load_css("css/multi.css");
-    } else {
-      load_css(mondidoSettings.config.system.css_endpoint);
-    }
-  </script>
-
+  <link href="{{ transaction.merchant.settings_hosted['v2']['system']['endpoint']['css'] | default_css_endpoint  }}" rel="stylesheet" type="text/css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="robots" content="noindex, nofollow"/>
   <title>{{ transaction.merchant.settings_hosted['v2']['layout']['name'] | default_string_empty_name  }} payment window</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
 </head>
 <body>
+
   {% assign show_logo = transaction.merchant.settings_hosted['v2']['layout']['show_logo'] | default_true %}
   {% assign show_credit_card = transaction.merchant.settings_hosted['v2']['credit_card']['active'] | default_true %}
   {% assign show_swish = transaction.merchant.settings_hosted['v2']['swish']['active'] | default_false %}
@@ -201,7 +191,8 @@
           {% if show_invoice == true %}
           <li role="presentation" class="invoice_tab" style="display:none;">
             <a href="#invoice_tab" aria-controls="invoice_tab" role="tab" data-toggle="tab" class="card-tab" >
-              <i class="fa fa-file-text-o"></i>
+
+              <img class="" src="https://cdn-02.mondido.com/pay-out/v2/img/invoice-logo.png" style="max-width: 15px;" alt="PayPal logo"/>
               <small data-mulang="invoice_payment" class="small_tab_text mulang">Invoice</small>
             </a>
           </li>
@@ -277,6 +268,11 @@
                       <input type="tel" class="form-control cc-cvc cc-number" maxlength="4" id="card_cvv" name="card_cvv" placeholder="•••" tabindex="5" required pattern="\d*" autocomplete="off" />
                     </div>
                   </div>
+
+                  <div style="margin: 20px 0px; display:none;" class="accept-payment-terms-div">
+                    <input type="checkbox" id="accept-payment-terms-credit-card" name="accept-payment-terms-credit-card" /> Ja, <a href="{{ transaction.merchant.settings_hosted['v2']['terms_and_conditions']['fallback'] | default_string_empty_terms }}" target="_blank">Jag accepterar villkoren</a>
+                  </div>
+
                   <input data-mulang="pay_button:value" id="paybtn-cc" class="mulang btn btn-lg btn-success btn-block" type="submit" value="Pay" tabindex="6"/>
                   <div id="loading-cc" class="hidden">
                     <span class="mulang" data-mulang="loading">Loading:</span>
@@ -329,19 +325,40 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
 
 {% if show_trustly == true %}
 <!-- trustly -->
-          <div role="tabpanel" class="tab-pane fade" id="trustly_tab" aria-labelledBy="trustly_tab" style="text-align: center;">
+          <div role="tabpanel" class="tab-pane fade text-center" id="trustly_tab" aria-labelledBy="trustly_tab" style="text-align: center;">
             <!-- ######### Trustly ######### - ######### START ######### -->
-            <form action="javascript:void(0);" id="trustlyform" method="post"  target="trustly">
-              <input type="hidden" name="trustly" value="1" />
-              <input type="hidden" name="trustly_locale" value="sv_SE" />
-              <input type="hidden" name="trustly_country" value="SE" />
-            </form>
 
-            <iframe src="" name="trustly" height="400" style="border: 0; width:95%; "></iframe>
-            <div class="mulang" data-mulang="what_is_trustly">What is Trustly?</div>
+              <form action="javascript:void(0);" id="trustlyform" method="post"  class="trustly-frame"  target="trustly">
+                <input type="hidden" name="trustly" value="1" />
+                <input type="hidden" name="trustly_locale" value="sv_SE" />
+                <input type="hidden" name="trustly_country" value="SE" />
+              </form>
+              <iframe src="" name="trustly" class="trustly-frame" height="400" style="border: 0; width:95%; "></iframe>
+
+
+             <div class="row center-block text-center accept-payment-terms-div" style="display:none;">
+              <form action="javascript:void(0);" class="form-signin go-bottom " id="trustlyform-terms" method="post"  >
+
+                <div class="row" style="margin: 20px 0px;">
+                  <div class="mulang" data-mulang="easily_pay_with_trustly">Pay with Trustly</div>
+                </div>
+
+                <div class="row" style="margin: 20px 0px;">
+                  <input type="checkbox" id="accept-payment-terms-trustly" name="accept-payment-terms-trustly" /> Ja, <a href="{{ transaction.merchant.settings_hosted['v2']['terms_and_conditions']['fallback'] | default_string_empty_terms }}" target="_blank">Jag accepterar villkoren</a>
+                </div>
+
+                <div class="row spacer">
+                  <input id="paybtn-trustly" class="btn btn-lg btn-success btn-block" type="submit" value="Betala" tabindex="5">
+                </div>
+
+              </form>
+
+              <div class="mulang" data-mulang="what_is_trustly">What is Trustly?</div>
+
+            </div>
             <!-- ######### TRUSTLY ######### - ######### END ######### -->
           </div>
- <!-- /trustly -->
+<!-- /trustly -->
 {% endif %}
 
 {% if show_swish == true %}
@@ -358,6 +375,11 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
                 <input type="tel"  class="form-control cc-number" id="swish_number" name="swish_number" placeholder="4670112233" value="" tabindex="1" />
                 <label for="swish_number" class="mulang" data-mulang="your_mobile_number">>Your mobile number</label>
               </div>
+
+              <div style="margin: 20px 0px; display:none;" class="accept-payment-terms-div">
+                <input type="checkbox" id="accept-payment-terms-swish" name="accept-payment-terms-swish" /> Ja, <a href="{{ transaction.merchant.settings_hosted['v2']['terms_and_conditions']['fallback'] | default_string_empty_terms }}" target="_blank">Jag accepterar villkoren</a>
+              </div>
+
               <div class="row spacer">
                 <input id="paybtn-swish" class="btn btn-lg btn-success btn-block" type="submit" value="Betala" tabindex="5">
               </div>
@@ -377,6 +399,11 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
                   <div class="mulang" data-mulang="paypal_hl">Pay easily with PayPal</div>
                   <img class="" src="https://cdn-02.mondido.com/pay-out/v2/img/paypal-logo.svg"  style="max-width: 200px;" alt="PayPal logo"/>
                 </div>
+
+                <div style="margin: 20px 0px; display:none;" class="accept-payment-terms-div">
+                  <input type="checkbox" id="accept-payment-terms-paypal" name="accept-payment-terms-paypal" /> Ja, <a href="{{ transaction.merchant.settings_hosted['v2']['terms_and_conditions']['fallback'] | default_string_empty_terms }}" target="_blank">Jag accepterar villkoren</a>
+                </div>
+
                 <div class="row spacer">
                   <input data-mulang="paypal_btn:value" id="paybtn-paypal" class="mulang btn btn-lg btn-success btn-block" type="submit" value="Betala med PayPal" tabindex="5">
                 </div>
@@ -394,6 +421,11 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
               <input type="hidden" name="masterpass" value="1" />
               <div class="row spacer">
                 <div style="margin-bottom:25px;">Pay with MasterPass</div>
+
+                <div style="margin: 20px 0px; display:none;" class="accept-payment-terms-div">
+                  <input type="checkbox" id="accept-payment-terms-masterpass" name="accept-payment-terms-masterpass" /> Ja, <a href="{{ transaction.merchant.settings_hosted['v2']['terms_and_conditions']['fallback'] | default_string_empty_terms }}" target="_blank">Jag accepterar villkoren</a>
+                </div>
+
                 <a href="#" id="checkoutButtonDiv">
                   <img src="https://cdn-02.mondido.com/pay-out/v2/img/buttons/masterpass_btn.png" alt="Buy with MasterPass" >
                 </a>
@@ -521,7 +553,7 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
                   <div class="row ">
                     <div class="col-xs-2">
                       <label class="bigcheck">
-                        <input type="checkbox" class="bigcheck mulang" name="cheese" value="yes"  data-mulang="i_accept:placeholder" tabindex="9"  />
+                        <input type="checkbox" class="bigcheck accept-terms mulang" id="accept-payment-terms-invoice" name="cheese" value="yes"  data-mulang="i_accept:placeholder" tabindex="9"  />
                         <span class="bigcheck-target"></span>
                       </label>
                     </div>
@@ -601,27 +633,12 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
   </div>
 {% endif %}
 
-  <script>
-    function load(script) {
-      document.write('<'+'script src="'+script+'" type="text/javascript"><' + '/script>');
-    }
-
-    load(mondidoSettings.config.system.lang_endpoint);
-    load(mondidoSettings.config.system.payment_js_endpoint);
-  </script>
-
-{% if show_invoice == true %}
-  <script>
-    load(mondidoSettings.config.system.fontawesome);
-  </script>
-{% endif %}
-
+<script src="{{ transaction.merchant.settings_hosted['v2']['system']['endpoint']['lang'] | default_lang_endpoint  }}" type="text/javascript"></script>
+<script src="{{ transaction.merchant.settings_hosted['v2']['system']['endpoint']['payment_js'] | default_payment_js_endpoint  }}" type="text/javascript"></script>
 
 {% if show_masterpass == true %}
-  <script>
-    load("https://static.masterpass.com/lightbox/Switch/integration/MasterPass.client.js");
-    load("https://masterpass.com/lightbox/Switch/assets/js/MasterPass.omniture.js");
-  </script>
+  <script src="https://static.masterpass.com/lightbox/Switch/integration/MasterPass.client.js" type="text/javascript"></script>
+  <script src="https://masterpass.com/lightbox/Switch/assets/js/MasterPass.omniture.js" type="text/javascript"></script>
 {% endif %}
 
 <script type="text/javascript">
@@ -631,5 +648,6 @@ $( document ).ready(function() {
   $('.mondido-payment').fadeIn(500);
 });
 </script>
+
   </body>
 </html>
