@@ -11,6 +11,7 @@ if(!jQuery)throw new Error("Bootstrap requires jQuery");+function(a){"use strict
       console.log(str);
     }
   };
+  window.do_log = do_log;
 
   if (mondidoSettings.config.development == true) { do_log("Development mode is on");  }
 
@@ -722,6 +723,9 @@ function validate_phone(phone_number) {
     return false
   }
   phone_number = phone_number.replace(/\s/g,'');
+  if (phone_number.charAt(0) === "+") {
+      phone_number = phone_number.slice(1);
+  }
   if (phone_number.charAt(0) === "0") {
       phone_number = phone_number.slice(1);
   }
