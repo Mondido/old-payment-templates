@@ -360,16 +360,6 @@ jQuery(function($) {
           $('#ssn').removeClass('hidden');
           $('#ssn').removeClass('invalid');
           $('#ssn').addClass('valid');
-
-          //success
-
-
-            $(document).ajaxStart(function() {
-    
-  });
-
-  $(document).ajaxStop(function() {
-  });
         })
         .fail(function(data) {
           loading_ssn.addClass('hidden');
@@ -377,8 +367,6 @@ jQuery(function($) {
           $('#ow-ssn-details-loading').addClass('hidden');
           $('#ssn').addClass('invalid');
           $('#ssn').removeClass('hidden');
-
-          //fail
         })
         .done(function() {
           $_mondido_ssn_load_value = "";
