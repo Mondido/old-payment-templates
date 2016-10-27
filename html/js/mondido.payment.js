@@ -547,15 +547,6 @@ jQuery(function($) {
     $('#swish_number').val(sn);
   });
 
-  $('#invoiceform').submit(function(e) {
-    if ($('#accept')[0].checked == false) {
-      alert('Du behöver godkänna villkoren.');
-      return false;
-    }
-    return true;
-  });
-
-
   $('#mondidopayform').submit(function(e) {
     var errString = $("#validation-error").text() + "\n";
 
@@ -940,6 +931,23 @@ String.prototype.removeEnd = function(s) {
 };
 
 (function() {
+
+   $('#swishform').on('submit', function() {
+     $('#paybtn-swish').hide();
+   });
+
+   $('#paypalform').on('submit', function() {
+     $('#paybtn-paypal').hide();
+   });
+    $('#invoiceform').submit(function(e) {
+      if ($('#accept')[0].checked == false) {
+        alert('Du behöver godkänna villkoren.');
+        return false;
+      }
+
+      $('#paybtn').hide();
+      return true;
+    });
 
   $('#mondidopayform').on('submit', function() {
     var checks = true;
