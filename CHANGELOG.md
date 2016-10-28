@@ -3,6 +3,7 @@
   - Add process_payment
   - Add accept_terms_requirement option
   - Fix terms link bug
+  - Fix ajax loader bug
   - Fix bugs
 
 ## 2.0
