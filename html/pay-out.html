@@ -148,7 +148,7 @@
       <div role="tabpanel" id="payment-tabpanel">
         <ul id="mondidoPaymentTab" class="nav nav-tabs" role="tablist" >
           {% if show_credit_card == true %}
-          <li role="presentation" class="credit_card_tab" style="display:none;">
+          <li role="presentation" class="credit_card_tab tab-process-payment" style="display:none;">
             <a href="#credit_card_tab" aria-controls="credit_card_tab" role="tab" data-toggle="tab" class="card-tab">
               {% if show_card_mastercard == true %}
               <img class="" src="https://cdn-02.mondido.com/pay-out/v2/img/mastercard-logo.svg" alt="Mastercard logo"/>
@@ -162,7 +162,7 @@
           {% endif %}
 
           {% if show_swish == true %}
-          <li role="presentation" class="swish_tab" style="display:none;">
+          <li role="presentation" class="swish_tab tab-process-payment" style="display:none;">
             <a href="#swish_tab" aria-controls="swish_tab" role="tab" data-toggle="tab">
             <img src="https://cdn-02.mondido.com/pay-out/v2/img/swish-logo.png" alt="Swish">
               <small data-mulang="swish_payment" class="small_tab_text mulang">Swish</small>
@@ -171,7 +171,7 @@
           {% endif %}
 
           {% if show_trustly == true %}
-          <li role="presentation" class="trustly_tab" style="display:none;">
+          <li role="presentation" class="trustly_tab tab-process-payment" style="display:none;">
             <a href="#trustly_tab" aria-controls="trustly_tab" role="tab" data-toggle="tab">
               <img class="" src="https://cdn-02.mondido.com/pay-out/v2/img/trustly-logo.png" style="max-width: 50px;" alt="Trustly logo"/>
               <small data-mulang="bank_payment" class="small_tab_text mulang">Bank</small>
@@ -180,7 +180,7 @@
           {% endif %}
 
           {% if show_paypal == true %}
-          <li role="presentation" class="paypal_tab" style="display:none;">
+          <li role="presentation" class="paypal_tab tab-process-payment" style="display:none;">
             <a href="#paypal_tab" aria-controls="paypal_tab" role="tab" data-toggle="tab">
               <img class="" src="https://cdn-02.mondido.com/pay-out/v2/img/paypal-logo.svg" style="max-width: 50px;" alt="PayPal logo"/>
               <small data-mulang="paypal_payment" class="small_tab_text mulang">PayPal</small>
@@ -189,7 +189,7 @@
           {% endif %}
 
           {% if show_invoice == true %}
-          <li role="presentation" class="invoice_tab" style="display:none;">
+          <li role="presentation" class="invoice_tab tab-process-payment" style="display:none;">
             <a href="#invoice_tab" aria-controls="invoice_tab" role="tab" data-toggle="tab" class="card-tab" >
 
               <img class="" src="https://cdn-02.mondido.com/pay-out/v2/img/invoice-logo.png" style="max-width: 15px;" alt="PayPal logo"/>
@@ -199,9 +199,9 @@
           {% endif %}
 
           {% if show_masterpass == true %}
-          <li role="presentation" class="masterpass_tab" style="display:none;">
+          <li role="presentation" class="masterpass_tab tab-process-payment" style="display:none;">
             <a href="#masterpass_tab" aria-controls="masterpass_tab" role="tab" data-toggle="tab" class="tab" >
-              <img src="https://cdn-02.mondido.com/pay-out/v2/img/masterpass-logo.png" class="masterpass_img_tab" alt="Masterpass" />
+              <img src="https://cdn-02.mondido.com/pay-out/v2/img/masterpass-logo.png" class="masterpass_img_tab " alt="Masterpass" />
               <small class="small_tab_text masterpass_small_text mulang">Masterpass</small>
             </a>
           </li>
@@ -221,9 +221,27 @@
           </div>
         </div>
 
+  <div class="load-process-payment text-center" style="display:none;">
+    <div class="sk-circle">
+      <div class="sk-circle1 sk-child"></div>
+      <div class="sk-circle2 sk-child"></div>
+      <div class="sk-circle3 sk-child"></div>
+      <div class="sk-circle4 sk-child"></div>
+      <div class="sk-circle5 sk-child"></div>
+      <div class="sk-circle6 sk-child"></div>
+      <div class="sk-circle7 sk-child"></div>
+      <div class="sk-circle8 sk-child"></div>
+      <div class="sk-circle9 sk-child"></div>
+      <div class="sk-circle10 sk-child"></div>
+      <div class="sk-circle11 sk-child"></div>
+      <div class="sk-circle12 sk-child"></div>
+    </div>
+    <div data-mulang="processing_secure_payment" class="mulang">Processing secure payment</div>
+  </div>
+
 {% if show_credit_card == true %}
 <!-- card -->
-          <div role="tabpanel" class="tab-pane fade" id="credit_card_tab" aria-labelledBy="credit_card_tab">
+          <div role="tabpanel" class="tab-pane fade mondido-process-payment" id="credit_card_tab" aria-labelledBy="credit_card_tab">
               <!-- ######### CARD ######### - ######### START ######### -->
               <div class="row">
               <form id="mondidopayform" class="form-signin" method="post" autocomplete="on" novalidate>
@@ -274,24 +292,6 @@
                   </div>
 
                   <input data-mulang="pay_button:value" id="paybtn-cc" class="mulang btn btn-lg btn-success btn-block" type="submit" value="Pay" tabindex="6"/>
-                  <div id="loading-cc" class="hidden">
-                    <span class="mulang" data-mulang="loading">Loading:</span>
-
-                    <div class="sk-circle">
-                      <div class="sk-circle1 sk-child"></div>
-                      <div class="sk-circle2 sk-child"></div>
-                      <div class="sk-circle3 sk-child"></div>
-                      <div class="sk-circle4 sk-child"></div>
-                      <div class="sk-circle5 sk-child"></div>
-                      <div class="sk-circle6 sk-child"></div>
-                      <div class="sk-circle7 sk-child"></div>
-                      <div class="sk-circle8 sk-child"></div>
-                      <div class="sk-circle9 sk-child"></div>
-                      <div class="sk-circle10 sk-child"></div>
-                      <div class="sk-circle11 sk-child"></div>
-                      <div class="sk-circle12 sk-child"></div>
-                    </div>
-                  </div>
                   <div class="footer">
                     <div class="row text-center">
                       <div class="col-xs-6">
@@ -325,7 +325,7 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
 
 {% if show_trustly == true %}
 <!-- trustly -->
-          <div role="tabpanel" class="tab-pane fade text-center" id="trustly_tab" aria-labelledBy="trustly_tab" style="text-align: center;">
+          <div role="tabpanel" class="tab-pane fade text-center mondido-process-payment" id="trustly_tab" aria-labelledBy="trustly_tab" style="text-align: center;">
             <!-- ######### Trustly ######### - ######### START ######### -->
 
               <form action="javascript:void(0);" id="trustlyform" method="post"  class="trustly-frame"  target="trustly">
@@ -363,7 +363,7 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
 
 {% if show_swish == true %}
 <!-- swish -->
-          <div role="tabpanel" class="tab-pane fade" id="swish_tab" aria-labelledBy="swish_tab" style="text-align: center;">
+          <div role="tabpanel" class="tab-pane fade mondido-process-payment" id="swish_tab" aria-labelledBy="swish_tab" style="text-align: center;">
             <!-- ######### SWISH ######### - ######### START ######### -->
             <form action="javascript:void(0);" class="form-signin go-bottom" id="swishform" method="post" >
               <input type="hidden" name="swish" value="1" />
@@ -391,7 +391,7 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
 
 {% if show_paypal == true %}
 <!-- paypal-->
-          <div role="tabpanel" class="tab-pane fade" id="paypal_tab" aria-labelledBy="paypal_tab" style="text-align: center;">
+          <div role="tabpanel" class="tab-pane fade mondido-process-payment" id="paypal_tab" aria-labelledBy="paypal_tab" style="text-align: center;">
               <!-- ######### PAYPAL ######### - ######### START ######### -->
               <form action="javascript:void(0);" class="form-signin" id="paypalform" method="post" >
                 <input type="hidden" name="paypal" value="1" />
@@ -415,7 +415,7 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
 
 {% if show_masterpass == true %}
 <!-- masterpass-->
-          <div role="tabpanel" class="tab-pane fade" id="masterpass_tab" aria-labelledBy="masterpass_tab" style="text-align: center;">
+          <div role="tabpanel" class="tab-pane fade mondido-process-payment" id="masterpass_tab" aria-labelledBy="masterpass_tab" style="text-align: center;">
             <!-- ######### MASTERPASS ######### - ######### START ######### -->
             <form action="javascript:void(0);" class="form-signin" id="masterpassform" method="post" >
               <input type="hidden" name="masterpass" value="1" />
@@ -442,7 +442,7 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
 
 {% if show_invoice == true %}
 <!-- invoice -->
-          <div role="tabpanel" class="tab-pane fade" id="invoice_tab" aria-labelledBy="invoice_tab">
+          <div role="tabpanel" class="tab-pane fade mondido-process-payment" id="invoice_tab" aria-labelledBy="invoice_tab">
             <!-- ######### INVOICE ######### - ######### START ######### -->
             <form id="invoiceform" class="form-signin go-bottom" method="post" >
                 <input type="hidden" id="payment_method" name="payment_method"/>
@@ -558,7 +558,7 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
                       </label>
                     </div>
                     <div class="col-xs-10">
-                      <span id="accept_collector" class="mulang accept_collector" data-mulang="invoice_accept_conditions['']" style="font-size: 12px;">
+                      <span id="accept_collector" class="mulang accept_collector" data-mulang="invoice_accept_conditions['{{ transaction.merchant.settings_hosted['v2']['layout']['name'] | default_string_empty_name  }}', '{{ transaction.merchant.settings_hosted['v2']['terms_and_conditions']['fallback'] | default_string_empty_terms }}', '{{ transaction.merchant.settings_hosted['v2']['invoice']['agreement_code'] }}', '{{ transaction.merchant.settings_hosted['v2']['invoice']['agreement_code'] }}']" style="font-size: 12px;">
                         Yes, I have read and accept Collector Bank\'s
                         <a target="new" href="https://www.collector.se/upload/Partners/Agreements/AgreementCode/Credit_terms_All_SE.pdf">
                         General Conditions For Invoice And Credit Accounts </a>
@@ -570,7 +570,7 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
                     </div>
                   </div>
                   <div class="row">
-                    <input data-mulang="pay_button:value" id="paybtn" class="btn btn-lg btn-success btn-block mulang" type="submit" value="Pay" tabindex="9"/>
+                    <input data-mulang="pay_button:value" id="paybtn-invoice" class="btn btn-lg btn-success btn-block mulang" type="submit" value="Pay" tabindex="9"/>
                   </div>
                 </div>
 
@@ -592,14 +592,14 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
     </div>
   </div>
 
-  <div class="row mondido-payment" style="display:none;">
+  <div class="row mondido-payment mondido-process-payment" style="display:none;">
       <div class="col-xs-12" style="text-align:center;">
          <span class="" id="languages" ></span>
       </div>
   </div>
 
 {% if show_powered_by == true %}
-  <div class="row mondido-payment" id="poweredBy" style="display:none;">
+  <div class="row mondido-payment mondido-process-payment" id="poweredBy" style="display:none;">
     <div class="col-xs-12" style="text-align:center;">
       <span class="mulang" data-mulang="powered_by">Powered by</span>
       <a href="https://www.mondido.com/en/about-us" target="_blank">
@@ -633,21 +633,20 @@ Your payment is made safe by Mondido. The store will never be in contact with yo
   </div>
 {% endif %}
 
-<script src="{{ transaction.merchant.settings_hosted['v2']['system']['endpoint']['lang'] | default_lang_endpoint  }}" type="text/javascript"></script>
-<script src="{{ transaction.merchant.settings_hosted['v2']['system']['endpoint']['payment_js'] | default_payment_js_endpoint  }}" type="text/javascript"></script>
+  <script src="{{ transaction.merchant.settings_hosted['v2']['system']['endpoint']['lang'] | default_lang_endpoint  }}" type="text/javascript"></script>
+  <script src="{{ transaction.merchant.settings_hosted['v2']['system']['endpoint']['payment_js'] | default_payment_js_endpoint  }}" type="text/javascript"></script>
 
 {% if show_masterpass == true %}
   <script src="https://static.masterpass.com/lightbox/Switch/integration/MasterPass.client.js" type="text/javascript"></script>
   <script src="https://masterpass.com/lightbox/Switch/assets/js/MasterPass.omniture.js" type="text/javascript"></script>
 {% endif %}
 
-<script type="text/javascript">
-$( document ).ready(function() {
-  console.log( "mondido-payment ready!" );
-  $('.mondido-load').hide();
-  $('.mondido-payment').fadeIn(500);
-});
-</script>
-
+  <script type="text/javascript">
+  $( document ).ready(function() {
+    console.log( "mondido-payment ready!" );
+    $('.mondido-load').hide();
+    $('.mondido-payment').fadeIn(500);
+  });
+  </script>
   </body>
 </html>

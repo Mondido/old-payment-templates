@@ -11,6 +11,7 @@ if(!jQuery)throw new Error("Bootstrap requires jQuery");+function(a){"use strict
       console.log(str);
     }
   };
+  window.do_log = do_log;
 
   if (mondidoSettings.config.development == true) { do_log("Development mode is on");  }
 
@@ -67,14 +68,14 @@ if(!jQuery)throw new Error("Bootstrap requires jQuery");+function(a){"use strict
     $('#country_code').val(str);
   }
 
-  switch (mondidoSettings.metadataCountry) {
-    case 'Sweden':
+  switch (mondidoSettings.metadataCountry.toLowerCase()) {
+    case 'sweden':
       setCountryCode('swe');
       break;
-    case 'Norway':
+    case 'norway':
       setCountryCode('nor');
       break;
-    case 'Finland':
+    case 'finland':
       setCountryCode('fin');
       break;
     default:
@@ -167,6 +168,14 @@ jQuery(function($) {
     $('#mondidoPaymentTab a:last').tab('show')
   } else {
     $("#mondidoPaymentTab a[href='#" + mondidoSettings.activePaymentMethod + "']").tab('show')
+  }
+
+  function process_payment(){
+    $('.payment-div').hide();
+    $('.mondido-process-payment').hide();
+    $("img").addClass("img-process-payment");
+    $('.load-process-payment').show();
+
   }
 
   ///// invoice
@@ -264,10 +273,6 @@ jQuery(function($) {
       ssn = ssn.slice(2);
     }
 
-    console.log("country_code ->" + country_code.toLowerCase());
-    console.log("ssn length ->" +ssn.length);
-    console.log( $_mondido_ssn_load_value);
-
     if (ssn_value == $_mondido_ssn_load_value) {
       return false;
     }
@@ -275,7 +280,6 @@ jQuery(function($) {
     if (country_code.toLowerCase() == "swe" && ssn.length < 10) {
       $('#row-customer-details').addClass('hidden');
       $('#row-ssn-details-loading').addClass('hidden');
-      console.log("lock ssn" + country_code.toLowerCase());
       return false;
     }
 
@@ -339,6 +343,9 @@ jQuery(function($) {
     } else {
 
       $('#ssn').addClass('hidden');
+      var loading_ssn = $("#row-ssn-details-loading");
+      loading_ssn.removeClass('hidden');
+
       var jqxhr = $.get(ssn_url, function() {}).done(function(address) {
           $_mondido_ssn_load_value = ssn;
 
@@ -385,6 +392,7 @@ jQuery(function($) {
             });
 
           }
+          loading_ssn.addClass('hidden');
         });
     }
   }
@@ -414,6 +422,9 @@ jQuery(function($) {
     $(this).tab('show');
 
     var is_focus = false;
+
+    $("#errors").hide();
+
     $('input:visible:enabled').each(function(i) {
       if (isBlank($(this).val()) && is_focus == false) {
         $(this).focus();
@@ -536,6 +547,8 @@ jQuery(function($) {
         return false;
       }
     }
+    $('#paybtn-invoice').hide();
+    process_payment();
     return true;
   });
 
@@ -580,7 +593,8 @@ jQuery(function($) {
     }
 
     $('#swish_number').val(sn);
-
+    $('#paybtn-swish').hide();
+    process_payment();
     return true;
   });
 
@@ -591,6 +605,9 @@ jQuery(function($) {
         return false;
       }
     }
+
+    process_payment();
+    $('#paybtn-paypal').hide();
     return true;
   });
 
@@ -646,7 +663,7 @@ jQuery(function($) {
       return false;
     } else {
       $('#paybtn-cc').hide();
-      $('#loading-cc').removeClass('hidden');
+      process_payment();
     }
     return true;
   });
@@ -677,6 +694,7 @@ jQuery(function($) {
     );
 
     $("#errors").hide();
+
     return true;
   });
 
@@ -811,7 +829,14 @@ function validate_phone(phone_number) {
   if (phone_number == null) {
     return false
   }
-
+  phone_number = phone_number.replace(/\s/g,'');
+  if (phone_number.charAt(0) === "+") {
+      phone_number = phone_number.slice(1);
+  }
+  if (phone_number.charAt(0) === "0") {
+      phone_number = phone_number.slice(1);
+  }
+  $('#phone').val(phone_number);
   valid = ((phone_number.length >= 8) && (phone_number.length <= 11));
   if (valid) {
     $('#phone').addClass('valid');
